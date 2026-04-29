@@ -1033,8 +1033,6 @@ function generateCleanHTML() {
   editBtn.textContent = '✏️';
   // Reset all fade-in to visible
   document.querySelectorAll('.fade-in').forEach(el => el.classList.add('visible'));
-  // Remove publish progress if any
-  document.querySelectorAll('.publish-progress').forEach(el => el.remove());
   // Generate full HTML
   return '<!DOCTYPE html>\n<html lang="zh-CN">\n' + document.documentElement.innerHTML + '\n</html>';
 }
@@ -1050,16 +1048,17 @@ async function publishToGitHub() {
     }
   }
 
-  // Show progress
+  // Generate clean HTML FIRST (before showing progress, so progress isn't captured)
+  const html = generateCleanHTML();
+  const content = btoa(unescape(encodeURIComponent(html)));
+
+  // Show progress AFTER generating HTML
   const progress = document.createElement('div');
   progress.className = 'publish-progress';
   progress.innerHTML = '<div class="publish-spinner"></div><span>正在发布到 GitHub...</span>';
   document.body.appendChild(progress);
 
   try {
-    const html = generateCleanHTML();
-    const content = btoa(unescape(encodeURIComponent(html)));
-
     // Get current file SHA (needed for update)
     const getRes = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/${GITHUB_FILE}`, {
       headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github+json' }
