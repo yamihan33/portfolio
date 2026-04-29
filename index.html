@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>韩爽 — AIGC 创意设计运营</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ===== RESET & VARS ===== */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#fafafa; --bg-alt:#f0f0f5; --bg-card:#fff;
+  --bg-dark:#09090b; --bg-dark-card:rgba(255,255,255,0.05);
+  --text:#18181b; --text-sec:#71717a;
+  --text-on-dark:#f4f4f5; --text-on-dark-sec:rgba(255,255,255,0.5);
+  --accent:#6366f1; --accent-hover:#4f46e5;
+  --accent-grad:linear-gradient(135deg,#6366f1,#8b5cf6,#a78bfa);
+  --radius:16px; --radius-sm:10px; --radius-xs:6px;
+  --shadow:0 1px 3px rgba(0,0,0,0.06),0 4px 16px rgba(0,0,0,0.04);
+  --shadow-lg:0 8px 30px rgba(0,0,0,0.08);
+  --glow:0 0 40px rgba(99,102,241,0.15);
+  --max-w:1200px;
+  --font:'Inter','Noto Sans SC',system-ui,-apple-system,sans-serif;
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+img,video{max-width:100%;display:block}
+
+/* ===== NAV ===== */
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 24px;transition:all .35s}
+.nav.scrolled{background:rgba(250,250,250,0.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);box-shadow:0 1px 0 rgba(0,0,0,0.05)}
+.nav.hidden{transform:translateY(-100%)}
+.nav-inner{max-width:var(--max-w);margin:0 auto;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{font-weight:700;font-size:1.1rem;display:flex;align-items:center;gap:8px}
+.nav-logo span{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:8px;background:var(--accent-grad);color:#fff;font-size:0.85rem;font-weight:800}
+.nav-links{display:flex;gap:32px;list-style:none}
+.nav-links a{font-size:0.9rem;font-weight:500;color:var(--text-sec);transition:color .2s}
+.nav-links a:hover{color:var(--accent)}
+.nav-mobile{display:none;background:none;border:none;cursor:pointer;color:var(--text)}
+.nav-m-menu{display:none;position:fixed;top:64px;left:0;right:0;background:rgba(250,250,250,0.98);backdrop-filter:blur(20px);padding:16px 24px;flex-direction:column;gap:16px;border-bottom:1px solid rgba(0,0,0,0.05)}
+.nav-m-menu.active{display:flex}
+.nav-m-menu a{font-size:1rem;font-weight:500;color:var(--text-sec);padding:8px 0}
+
+/* ===== HERO ===== */
+.hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden;padding:120px 24px 80px}
+.hero-bg{position:absolute;inset:0;overflow:hidden}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(99,102,241,0.05) 1px,transparent 1px),linear-gradient(90deg,rgba(99,102,241,0.05) 1px,transparent 1px);background-size:60px 60px;mask-image:radial-gradient(ellipse 60% 50% at 50% 50%,black 30%,transparent 70%)}
+.hero-orb{position:absolute;border-radius:50%;filter:blur(80px);opacity:0.4;animation:orbFloat 20s infinite}
+.hero-orb-1{width:500px;height:500px;background:radial-gradient(circle,rgba(99,102,241,0.4),transparent 70%);top:-100px;right:-100px;animation-delay:0s}
+.hero-orb-2{width:400px;height:400px;background:radial-gradient(circle,rgba(139,92,246,0.3),transparent 70%);bottom:-50px;left:-50px;animation-delay:-7s}
+.hero-orb-3{width:300px;height:300px;background:radial-gradient(circle,rgba(167,139,250,0.25),transparent 70%);top:40%;left:50%;animation-delay:-14s}
+@keyframes orbFloat{0%,100%{transform:translate(0,0)}25%{transform:translate(30px,-40px)}50%{transform:translate(-20px,30px)}75%{transform:translate(40px,20px)}}
+.hero-content{position:relative;text-align:center;max-width:800px}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;padding:8px 20px;border-radius:99px;border:1px solid rgba(99,102,241,0.2);background:rgba(99,102,241,0.06);font-size:0.82rem;font-weight:600;letter-spacing:0.04em;color:var(--accent);margin-bottom:32px}
+.hero-badge .dot{width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 12px var(--accent);animation:dotPulse 2s infinite}
+@keyframes dotPulse{0%,100%{opacity:1}50%{opacity:0.4}}
+.hero h1{font-size:clamp(2.4rem,5.5vw,4.2rem);font-weight:800;line-height:1.15;letter-spacing:-0.03em;margin-bottom:24px}
+.gd{background:var(--accent-grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero p{font-size:1.15rem;color:var(--text-sec);max-width:600px;margin:0 auto 40px;line-height:1.7}
+.hero-cta{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.btn-p{padding:14px 36px;border-radius:12px;background:var(--accent-grad);color:#fff;font-weight:600;font-size:0.95rem;transition:all .25s;box-shadow:0 4px 20px rgba(99,102,241,0.3)}
+.btn-p:hover{transform:translateY(-2px);box-shadow:0 6px 30px rgba(99,102,241,0.45)}
+.btn-s{padding:14px 36px;border-radius:12px;border:1.5px solid rgba(0,0,0,0.12);font-weight:600;font-size:0.95rem;color:var(--text);transition:all .25s;background:rgba(255,255,255,0.6);backdrop-filter:blur(8px)}
+.btn-s:hover{border-color:var(--accent);color:var(--accent)}
+
+/* ===== SECTIONS ===== */
+.section{padding:100px 24px;max-width:var(--max-w);margin:0 auto}
+.section-header{text-align:center;margin-bottom:60px}
+.section-label{display:inline-block;font-size:0.8rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent);margin-bottom:12px}
+.section-title{font-size:clamp(2rem,4vw,2.8rem);font-weight:800;letter-spacing:-0.02em;margin-bottom:16px}
+.section-desc{font-size:1.05rem;color:var(--text-sec);max-width:550px;margin:0 auto}
+
+/* ===== VIDEO GRID ===== */
+.video-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-bottom:40px}
+.video-card{background:var(--bg-card);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;transition:all .3s;position:relative}
+.video-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
+.v-placeholder{position:relative;aspect-ratio:16/9;overflow:hidden;background:#1a1a2e;display:flex;align-items:center;justify-content:center}
+.v-placeholder-bg{position:absolute;inset:0;background:linear-gradient(135deg,#1a1a2e,#16213e,#0f3460);animation:shimmer 3s infinite}
+@keyframes shimmer{0%{opacity:0.6}50%{opacity:1}100%{opacity:0.6}}
+.v-placeholder-icon{position:relative;z-index:1;width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+.v-placeholder-icon svg{width:20px;height:20px;fill:rgba(255,255,255,0.7);margin-left:3px}
+.video-info{padding:20px}
+.video-info h3{font-size:1.05rem;font-weight:700;margin-bottom:6px}
+.video-info p{font-size:0.88rem;color:var(--text-sec);margin-bottom:12px}
+.tags{display:flex;gap:6px;flex-wrap:wrap}
+.tag{padding:4px 12px;border-radius:99px;background:rgba(99,102,241,0.08);color:var(--accent);font-size:0.75rem;font-weight:600}
+
+/* ===== IMAGE GALLERY ===== */
+.image-gallery{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:40px}
+.image-card{position:relative;border-radius:var(--radius);overflow:hidden;background:var(--bg-card);box-shadow:var(--shadow);transition:all .3s;aspect-ratio:1/1}
+.image-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg)}
+.img-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.img-placeholder-bg{position:absolute;inset:0;background:linear-gradient(135deg,#e8e0f0,#d4c4e8,#c8b4e0);animation:shimmer 3s infinite}
+.img-placeholder-icon{position:relative;z-index:1;opacity:0.3}
+.img-placeholder-icon svg{width:40px;height:40px;fill:none;stroke:#666;stroke-width:1.5}
+.image-card-info{position:absolute;bottom:0;left:0;right:0;padding:16px;background:linear-gradient(transparent,rgba(0,0,0,0.65));color:#fff;opacity:0;transition:opacity .3s}
+.image-card:hover .image-card-info{opacity:1}
+.image-card-info h4{font-size:0.95rem;font-weight:600}
+.image-card-info p{font-size:0.8rem;opacity:0.8}
+
+/* ===== DARK SECTION (AGENTS) ===== */
+.section-dark{background:var(--bg-dark);padding:100px 24px}
+.section-dark-inner{max-width:var(--max-w);margin:0 auto}
+.section-dark .section-desc{color:var(--text-on-dark-sec)}
+.agent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:24px;margin-bottom:40px}
+.agent-card{background:var(--bg-dark-card);border:1px solid rgba(255,255,255,0.08);border-radius:var(--radius);overflow:hidden;transition:all .3s;position:relative}
+.agent-card:hover{border-color:rgba(99,102,241,0.3);box-shadow:var(--glow);transform:translateY(-4px)}
+.ag-placeholder{position:relative;aspect-ratio:16/10;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.ag-placeholder-bg{position:absolute;inset:0;background:linear-gradient(135deg,#1e1b4b,#312e81,#3730a3);animation:shimmer 3s infinite}
+.ag-placeholder-icon{position:relative;z-index:1;opacity:0.3}
+.ag-placeholder-icon svg{width:48px;height:48px;fill:rgba(255,255,255,0.5)}
+.agent-info{padding:20px}
+.agent-info h3{font-size:1.05rem;font-weight:700;color:var(--text-on-dark);margin-bottom:6px}
+.agent-info p{font-size:0.88rem;color:var(--text-on-dark-sec);margin-bottom:12px}
+.agent-meta{display:flex;gap:16px}
+.agent-meta-item{font-size:0.78rem;color:var(--text-on-dark-sec)}
+.agent-meta-item span{color:var(--accent);font-weight:600}
+
+/* ===== DATA SECTION ===== */
+.data-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-bottom:48px}
+.stat-card{background:var(--bg-card);border-radius:var(--radius);padding:32px 24px;text-align:center;box-shadow:var(--shadow);transition:all .3s;border:1px solid transparent}
+.stat-card:hover{border-color:rgba(99,102,241,0.15);box-shadow:var(--glow)}
+.stat-number{font-size:2.2rem;font-weight:800;background:var(--accent-grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:4px}
+.stat-label{font-weight:600;font-size:0.95rem;margin-bottom:2px}
+.stat-sub{font-size:0.8rem;color:var(--text-sec)}
+.data-charts{display:grid;grid-template-columns:repeat(2,1fr);gap:24px}
+.chart-card{background:var(--bg-card);border-radius:var(--radius);padding:32px;box-shadow:var(--shadow)}
+.chart-card h3{font-size:1.1rem;font-weight:700;margin-bottom:24px}
+.chart-bar-group{display:flex;flex-direction:column;gap:16px}
+.chart-bar-item label{display:flex;justify-content:space-between;font-size:0.85rem;font-weight:500;margin-bottom:6px}
+.chart-bar{height:10px;background:var(--bg-alt);border-radius:99px;overflow:hidden}
+.chart-bar-fill{height:100%;background:var(--accent-grad);border-radius:99px;transition:width 1.2s cubic-bezier(0.16,1,0.3,1)}
+
+/* ===== UPLOAD ZONE ===== */
+.upload-zone{display:none;flex-direction:column;align-items:center;justify-content:center;padding:40px;border:2px dashed rgba(0,0,0,0.12);border-radius:var(--radius);cursor:pointer;transition:all .3s;text-align:center;position:relative;margin-top:24px}
+.upload-zone:hover{border-color:var(--accent);background:rgba(99,102,241,0.03)}
+.upload-zone input{position:absolute;inset:0;opacity:0;cursor:pointer}
+.u-icon{font-size:2rem;margin-bottom:8px}
+.upload-zone p{font-size:0.95rem;color:var(--text-sec)}
+.u-hint{font-size:0.8rem!important;color:var(--text-sec);opacity:0.5;margin-top:4px}
+
+/* ===== REMOVE BTN ===== */
+.remove-btn{display:none;position:absolute;top:12px;right:12px;width:28px;height:28px;border-radius:50%;border:none;background:rgba(239,68,68,0.9);color:#fff;font-size:1rem;cursor:pointer;align-items:center;justify-content:center;z-index:10;transition:all .2s}
+.remove-btn:hover{background:#dc2626;transform:scale(1.1)}
+
+/* ===== EDIT BTN ===== */
+.edit-btn{position:fixed;bottom:32px;right:32px;width:56px;height:56px;border-radius:50%;border:none;background:var(--accent-grad);color:#fff;font-size:1.4rem;cursor:pointer;box-shadow:0 4px 20px rgba(99,102,241,0.35);z-index:200;transition:all .3s;display:flex;align-items:center;justify-content:center}
+.edit-btn:hover{transform:scale(1.1);box-shadow:0 6px 30px rgba(99,102,241,0.5)}
+.edit-btn.active{background:linear-gradient(135deg,#22c55e,#16a34a);box-shadow:0 4px 20px rgba(34,197,94,0.35)}
+.editing{outline:2px dashed var(--accent)!important;outline-offset:2px;min-height:1.5em}
+
+/* ===== FOOTER ===== */
+.footer{text-align:center;padding:60px 24px;border-top:1px solid rgba(0,0,0,0.06)}
+.footer-links{display:flex;justify-content:center;gap:32px;margin-bottom:20px}
+.footer-links a{font-size:0.9rem;font-weight:500;color:var(--text-sec);transition:color .2s}
+.footer-links a:hover{color:var(--accent)}
+.footer p{font-size:0.85rem;color:var(--text-sec);opacity:0.6}
+
+/* ===== LIGHTBOX ===== */
+.lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.9);z-index:300;background-size:contain;background-repeat:no-repeat;background-position:center;cursor:zoom-out}
+.lightbox.active{display:block}
+.lightbox-close{position:absolute;top:20px;right:24px;background:none;border:none;color:#fff;font-size:2rem;cursor:pointer;opacity:0.7;transition:opacity .2s}
+.lightbox-close:hover{opacity:1}
+
+/* ===== AUTH OVERLAY ===== */
+.auth-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);backdrop-filter:blur(8px);z-index:400;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .3s}
+.auth-overlay.active{opacity:1}
+.auth-box{background:#fff;border-radius:20px;padding:40px;width:360px;max-width:90vw;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,0.15);transform:scale(0.95);transition:transform .3s}
+.auth-overlay.active .auth-box{transform:scale(1)}
+.auth-icon{font-size:2.5rem;margin-bottom:16px}
+.auth-box h3{font-size:1.2rem;font-weight:700;margin-bottom:6px}
+.auth-box>p{font-size:0.9rem;color:var(--text-sec);margin-bottom:24px}
+.auth-input{width:100%;padding:14px 18px;border:1.5px solid rgba(0,0,0,0.1);border-radius:12px;font-size:1rem;font-family:var(--font);outline:none;transition:border-color .2s}
+.auth-input:focus{border-color:var(--accent)}
+.auth-actions{display:flex;gap:12px;margin-top:20px}
+.auth-cancel{flex:1;padding:12px;border-radius:12px;border:1.5px solid rgba(0,0,0,0.1);background:#fff;font-weight:600;font-size:0.9rem;cursor:pointer;font-family:var(--font);transition:all .2s}
+.auth-cancel:hover{background:var(--bg-alt)}
+.auth-confirm{flex:1;padding:12px;border-radius:12px;border:none;background:var(--accent-grad);color:#fff;font-weight:600;font-size:0.9rem;cursor:pointer;font-family:var(--font);transition:all .2s}
+.auth-confirm:hover{opacity:0.9;transform:translateY(-1px)}
+.auth-error{color:#ef4444;font-size:0.85rem;margin-top:12px;font-weight:500}
+
+/* ===== FADE-IN ANIMATION ===== */
+.fade-in{opacity:0;transform:translateY(24px);transition:opacity .6s,transform .6s}
+.fade-in.visible{opacity:1;transform:translateY(0)}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:768px){
+  .nav-links{display:none}
+  .nav-mobile{display:block}
+  .video-grid{grid-template-columns:1fr}
+  .image-gallery{grid-template-columns:repeat(2,1fr)}
+  .agent-grid{grid-template-columns:1fr}
+  .data-stats{grid-template-columns:repeat(2,1fr)}
+  .data-charts{grid-template-columns:1fr}
+}
+@media(max-width:480px){
+  .image-gallery{grid-template-columns:1fr}
+  .data-stats{grid-template-columns:1fr}
+}
+/* ===== SHOW MORE BUTTON ===== */
+.show-more-btn{display:block;margin:40px auto 0;padding:14px 40px;background:transparent;border:2px solid var(--accent);color:var(--accent);font-size:.95rem;font-weight:600;border-radius:999px;cursor:pointer;transition:all .3s;letter-spacing:.5px}
+.show-more-btn:hover{background:var(--accent);color:#fff;transform:translateY(-2px);box-shadow:0 8px 25px rgba(99,102,241,0.3)}
+.show-more-btn.expanded{border-color:var(--text-sec);color:var(--text-sec)}
+.show-more-btn.expanded:hover{background:var(--text-sec);color:#fff}
+.more-section{overflow:hidden;transition:max-height .5s ease,opacity .4s ease;max-height:0;opacity:0}
+.more-section.active{max-height:none;opacity:1;margin-top:24px}
+.more-section .video-grid,.more-section .image-gallery{padding:0}
+@keyframes fadeUp{from{opacity:0;transform:translate(-50%,20px)}to{opacity:1;transform:translate(-50%,0)}}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo"><span>HS</span> Portfolio</a>
+    <ul class="nav-links">
+      <li><a href="#videos">视频作品</a></li>
+      <li><a href="#images">图片作品</a></li>
+      <li><a href="#agents">Agent 展示</a></li>
+      <li><a href="#data">数据展示</a></li>
+    </ul>
+    <button class="nav-mobile" onclick="document.querySelector('.nav-m-menu').classList.toggle('active')">
+      <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+    </button>
+    <div class="nav-m-menu">
+      <a href="#videos" onclick="this.parentElement.classList.remove('active')">视频作品</a>
+      <a href="#images" onclick="this.parentElement.classList.remove('active')">图片作品</a>
+      <a href="#agents" onclick="this.parentElement.classList.remove('active')">Agent 展示</a>
+      <a href="#data" onclick="this.parentElement.classList.remove('active')">数据展示</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg">
+    <div class="hero-orb hero-orb-1"></div>
+    <div class="hero-orb hero-orb-2"></div>
+    <div class="hero-orb hero-orb-3"></div>
+    <div class="hero-grid"></div>
+  </div>
+  <div class="hero-content fade-in">
+    <div class="hero-badge"><div class="dot"></div>AIGC Creative Designer</div>
+    <h1>你好，我是<span class="gd">韩爽</span><br><span class="gd">AIGC</span> 创意设计运营</h1>
+    <p>专注于 AI 驱动的创意内容生产、广告素材设计与运营策略，用技术赋能创意，让每一个像素都有商业价值。</p>
+    <div class="hero-cta">
+      <a href="#videos" class="btn-p">查看作品</a>
+      <a href="#data" class="btn-s">数据表现</a>
+    </div>
+  </div>
+</section>
+
+<!-- VIDEO SECTION -->
+<section class="section" id="videos">
+  <div class="section-header fade-in">
+    <span class="section-label">Video Works</span>
+    <h2 class="section-title">视频作品</h2>
+    <p class="section-desc">AIGC 驱动的创意视频内容，覆盖广告投放、品牌宣传等多个场景</p>
+  </div>
+  <div class="video-grid" id="videoGrid">
+    <div class="video-card fade-in">
+      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"/></svg></div></div>
+      <div class="video-info">
+        <h3 class="editable" contenteditable="false">作品标题</h3>
+        <p class="editable" contenteditable="false">点击编辑按钮后可修改描述</p>
+        <div class="tags"><span class="tag">AIGC</span><span class="tag">广告</span></div>
+      </div>
+      <button class="remove-btn" onclick="removeCard(this)">×</button>
+    </div>
+    <div class="video-card fade-in">
+      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"/></svg></div></div>
+      <div class="video-info">
+        <h3 class="editable" contenteditable="false">作品标题</h3>
+        <p class="editable" contenteditable="false">点击编辑按钮后可修改描述</p>
+        <div class="tags"><span class="tag">短视频</span><span class="tag">创意</span></div>
+      </div>
+      <button class="remove-btn" onclick="removeCard(this)">×</button>
+    </div>
+    <div class="video-card fade-in">
+      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"/></svg></div></div>
+      <div class="video-info">
+        <h3 class="editable" contenteditable="false">作品标题</h3>
+        <p class="editable" contenteditable="false">点击编辑按钮后可修改描述</p>
+        <div class="tags"><span class="tag">品牌</span><span class="tag">运营</span></div>
+      </div>
+      <button class="remove-btn" onclick="removeCard(this)">×</button>
+    </div>
+    <div class="video-card fade-in">
+      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"/></svg></div></div>
+      <div class="video-info">
+        <h3 class="editable" contenteditable="false">作品标题</h3>
+        <p class="editable" contenteditable="false">点击编辑按钮后可修改描述</p>
+        <div class="tags"><span class="tag">产品</span><span class="tag">展示</span></div>
+      </div>
+      <button class="remove-btn" onclick="removeCard(this)">×</button>
+    </div>
+    <div class="video-card fade-in">
+      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"/></svg></div></div>
+      <div class="video-info">
+        <h3 class="editable" contenteditable="false">作品标题</h3>
+        <p class="editable" contenteditable="false">点击编辑按钮后可修改描述</p>
+        <div class="tags"><span class="tag">效果</span><span class="tag">投放</span></div>
+      </div>
+      <button class="remove-btn" onclick="removeCard(this)">×</button>
+    </div>
+    <div class="video-card fade-in">
+      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"/></svg></div></div>
+      <div class="video-info">
+        <h3 class="editable" contenteditable="false">作品标题</h3>
+        <p class="editable" contenteditable="false">点击编辑按钮后可修改描述</p>
+        <div class="tags"><span class="tag">动态</span><span class="tag">素材</span></div>
+      </div>
+      <button class="remove-btn" onclick="removeCard(this)">×</button>
+    </div>
+  </div>
+  <div class="more-section" id="videoMore" style="display:none">
+    <div class="video-grid">
+    <div class="video-card fade-in">
+      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"/></svg></div></div>
+      <div class="video-info">
+        <h3 class="editable" contenteditable="false">作品标题</h3>
+        <p class="editable" contenteditable="false">点击编辑按钮后可修改描述</p>
+        <div class="tags"><span class="tag">脚本</span><span class="tag">创作</span></div>
+      </div>
+      <button class="remove-btn" onclick="removeCard(this)">×</button>
+    </div>
+    <div class="video-card fade-in">
+      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"/></svg></div></div>
+      <div class="video-info">
+        <h3 class="editable" contenteditable="false">作品标题</h3>
+        <p class="editable" contenteditable="false">点击编辑按钮后可修改描述</p>
+        <div class="tags"><span class="tag">剪辑</span><span class="tag">包装</span></div>
+      </div>
+      <button class="remove-btn" onclick="removeCard(this)">×</button>
+    </div>
+    <div class="video-card fade-in">
+      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"/></svg></div></div>
+      <div class="video-info">
+        <h3 class="editable" contenteditable="false">作品标题</h3>
+        <p class="editable" contenteditable="false">点击编辑按钮后可修改描述</p>
+        <div class="tags"><span class="tag">营销</span><span class="tag">推广</span></div>
+      </div>
+      <button class="remove-btn" onclick="removeCard(this)">×</button>
+    </div>
+    <div class="video-card fade-in">
+      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"/></svg></div></div>
+      <div class="video-info">
+        <h3 class="editable" contenteditable="false">作品标题</h3>
+        <p class="editable" contenteditable="false">点击编辑按钮后可修改描述</p>
+        <div class="tags"><span class="tag">信息流</span><span class="tag">投放</span></div>
+      </div>
+      <button class="remove-btn" onclick="removeCard(this)">×</button>
+    </div>
+    <div class="video-card fade-in">
+      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"/></svg></div></div>
+      <div class="video-info">
+        <h3 class="editable" contenteditable="false">作品标题</h3>
+        <p class="editable" contenteditable="false">点击编辑按钮后可修改描述</p>
+        <div class="tags"><span class="tag">竖版</span><span class="tag">短视频</span></div>
+      </div>
+      <button class="remove-btn" onclick="removeCard(this)">×</button>
+    </div>
+    <div class="video-card fade-in">
+      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"/></svg></div></div>
+      <div class="video-info">
+        <h3 class="editable" contenteditable="false">作品标题</h3>
+        <p class="editable" contenteditable="false">点击编辑按钮后可修改描述</p>
+        <div class="tags"><span class="tag">UGC</span><span class="tag">风格</span></div>
+      </div>
+      <button class="remove-btn" onclick="removeCard(this)">×</button>
+    </div>
+    <div class="video-card fade-in">
+      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"/></svg></div></div>
+      <div class="video-info">
+        <h3 class="editable" contenteditable="false">作品标题</h3>
+        <p class="editable" contenteditable="false">点击编辑按钮后可修改描述</p>
+        <div class="tags"><span class="tag">口播</span><span class="tag">脚本</span></div>
+      </div>
+      <button class="remove-btn" onclick="removeCard(this)">×</button>
+    </div>
+    <div class="video-card fade-in">
+      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"/></svg></div></div>
+      <div class="video-info">
+        <h3 class="editable" contenteditable="false">作品标题</h3>
+        <p class="editable" contenteditable="false">点击编辑按钮后可修改描述</p>
+        <div class="tags"><span class="tag">开箱</span><span class="tag">测评</span></div>
+      </div>
+      <button class="remove-btn" onclick="removeCard(this)">×</button>
+    </div>
+    <div class="video-card fade-in">
+      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"/></svg></div></div>
+      <div class="video-info">
+        <h3 class="editable" contenteditable="false">作品标题</h3>
+        <p class="editable" contenteditable="false">点击编辑按钮后可修改描述</p>
+        <div class="tags"><span class="tag">对比</span><span class="tag">展示</span></div>
+      </div>
+      <button class="remove-btn" onclick="removeCard(this)">×</button>
+    </div>
+    <div class="video-card fade-in">
+      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"/></svg></div></div>
+      <div class="video-info">
+        <h3 class="editable" contenteditable="false">作品标题</h3>
+        <p class="editable" contenteditable="false">点击编辑按钮后可修改描述</p>
+        <div class="tags"><span class="tag">故事</span><span class="tag">叙事</span></div>
+      </div>
+      <button class="remove-btn" onclick="removeCard(this)">×</button>
+    </div>
+    <div class="video-card fade-in">
+      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"/></svg></div></div>
+      <div class="video-info">
+        <h3 class="editable" contenteditable="false">作品标题</h3>
+        <p class="editable" contenteditable="false">点击编辑按钮后可修改描述</p>
+        <div class="tags"><span class="tag">产品</span><span class="tag">特写</span></div>
+      </div>
+      <button class="remove-btn" onclick="removeCard(this)">×</button>
+    </div>
+    <div class="video-card fade-in">
+      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"/></svg></div></div>
+      <div class="video-info">
+        <h3 class="editable" contenteditable="false">作品标题</h3>
+        <p class="editable" contenteditable="false">点击编辑按钮后可修改描述</p>
+        <div class="tags"><span class="tag">生活</span><span class="tag">场景</span></div>
+      </div>
+      <button class="remove-btn" onclick="removeCard(this)">×</button>
+    </div>
+    <div class="video-card fade-in">
+      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"/></svg></div></div>
+      <div class="video-info">
+        <h3 class="editable" contenteditable="false">作品标题</h3>
+        <p class="editable" contenteditable="false">点击编辑按钮后可修改描述</p>
+        <div class="tags"><span class="tag">痛点</span><span class="tag">呈现</span></div>
+      </div>
+      <button class="remove-btn" onclick="removeCard(this)">×</button>
+    </div>
+    <div class="video-card fade-in">
+      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"/></svg></div></div>
+      <div class="video-info">
+        <h3 class="editable" contenteditable="false">作品标题</h3>
+        <p class="editable" contenteditable="false">点击编辑按钮后可修改描述</p>
+        <div class="tags"><span class="tag">解决方案</span><span class="tag">展示</span></div>
+      </div>
+      <button class="remove-btn" onclick="removeCard(this)">×</button>
+    </div>
+    <div class="video-card fade-in">
+      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"/></svg></div></div>
+      <div class="video-info">
+        <h3 class="editable" contenteditable="false">作品标题</h3>
+        <p class="editable" contenteditable="false">点击编辑按钮后可修改描述</p>
+        <div class="tags"><span class="tag">功效</span><span class="tag">演示</span></div>
+      </div>
+      <button class="remove-btn" onclick="removeCard(this)">×</button>
+    </div>
+    <div class="video-card fade-in">
+      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"/></svg></div></div>
+      <div class="video-info">
+        <h3 class="editable" contenteditable="false">作品标题</h3>
+        <p class="editable" contenteditable="false">点击编辑按钮后可修改描述</p>
+        <div class="tags"><span class="tag">before</span><span class="tag">after</span></div>
+      </div>
+      <button class="remove-btn" onclick="removeCard(this)">×</button>
+    </div>
+    <div class="video-card fade-in">
+      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"/></svg></div></div>
+      <div class="video-info">
+        <h3 class="editable" contenteditable="false">作品标题</h3>
+        <p class="editable" contenteditable="false">点击编辑按钮后可修改描述</p>
+        <div class="tags"><span class="tag">用户</span><span class="tag">证言</span></div>
+      </div>
+      <button class="remove-btn" onclick="removeCard(this)">×</button>
+    </div>
+    <div class="video-card fade-in">
+      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"/></svg></div></div>
+      <div class="video-info">
+        <h3 class="editable" contenteditable="false">作品标题</h3>
+        <p class="editable" contenteditable="false">点击编辑按钮后可修改描述</p>
+        <div class="tags"><span class="tag">限时</span><span class="tag">促销</span></div>
+      </div>
+      <button class="remove-btn" onclick="removeCard(this)">×</button>
+    </div>
+    <div class="video-card fade-in">
+      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"/></svg></div></div>
+      <div class="video-info">
+        <h3 class="editable" contenteditable="false">作品标题</h3>
+        <p class="editable" contenteditable="false">点击编辑按钮后可修改描述</p>
+        <div class="tags"><span class="tag">节日</span><span class="tag">主题</span></div>
+      </div>
+      <button class="remove-btn" onclick="removeCard(this)">×</button>
+    </div>
+    <div class="video-card fade-in">
+      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"/></svg></div></div>
+      <div class="video-info">
+        <h3 class="editable" contenteditable="false">作品标题</h3>
+        <p class="editable" contenteditable="false">点击编辑按钮后可修改描述</p>
+        <div class="tags"><span class="tag">系列</span><span class="tag">广告</span></div>
+      </div>
+      <button class="remove-btn" onclick="removeCard(this)">×</button>
+    </div>
+    <div class="video-card fade-in">
+      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"/></svg></div></div>
+      <div class="video-info">
+        <h3 class="editable" contenteditable="false">作品标题</h3>
+        <p class="editable" contenteditable="false">点击编辑按钮后可修改描述</p>
+        <div class="tags"><span class="tag">A/B</span><span class="tag">测试</span></div>
+      </div>
+      <button class="remove-btn" onclick="removeCard(this)">×</button>
+    </div>
+    <div class="video-card fade-in">
+      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"/></svg></div></div>
+      <div class="video-info">
+        <h3 class="editable" contenteditable="false">作品标题</h3>
+        <p class="editable" contenteditable="false">点击编辑按钮后可修改描述</p>
+        <div class="tags"><span class="tag">爆款</span><span class="tag">复刻</span></div>
+      </div>
+      <button class="remove-btn" onclick="removeCard(this)">×</button>
+    </div>
+    <div class="video-card fade-in">
+      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"/></svg></div></div>
+      <div class="video-info">
+        <h3 class="editable" contenteditable="false">作品标题</h3>
+        <p class="editable" contenteditable="false">点击编辑按钮后可修改描述</p>
+        <div class="tags"><span class="tag">数据</span><span class="tag">驱动</span></div>
+      </div>
+      <button class="remove-btn" onclick="removeCard(this)">×</button>
+    </div>
+    <div class="video-card fade-in">
+      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"/></svg></div></div>
+      <div class="video-info">
+        <h3 class="editable" contenteditable="false">作品标题</h3>
+        <p class="editable" contenteditable="false">点击编辑按钮后可修改描述</p>
+        <div class="tags"><span class="tag">迭代</span><span class="tag">优化</span></div>
+      </div>
+      <button class="remove-btn" onclick="removeCard(this)">×</button>
+    </div>
+    </div>
+  </div>
+  <button class="show-more-btn" id="videoMoreBtn" onclick="toggleMore('video')">查看更多视频 ↓</button>
+  <div class="upload-zone" id="videoUpload">
+    <input type="file" accept="video/*" multiple onchange="handleVideoUpload(this.files)">
+    <div class="u-icon">🎬</div>
+    <p>拖拽或点击上传视频</p>
+    <p class="u-hint">支持 MP4、MOV、WebM 格式</p>
+  </div>
+</section>
+
+<!-- IMAGE SECTION -->
+<section class="section" id="images">
+  <div class="section-header fade-in">
+    <span class="section-label">Design Works</span>
+    <h2 class="section-title">图片作品</h2>
+    <p class="section-desc">广告素材、视觉设计、创意海报等 AIGC 生成作品</p>
+  </div>
+  <div class="image-gallery" id="imageGallery">
+    <div class="image-card fade-in">
+      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div></div>
+      <div class="image-card-info"><h4 class="editable" contenteditable="false">设计作品</h4><p class="editable" contenteditable="false">点击编辑可修改</p></div>
+      <button class="remove-btn" onclick="removeCard(this)">×</button>
+    </div>
+    <div class="image-card fade-in">
+      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div></div>
+      <div class="image-card-info"><h4 class="editable" contenteditable="false">设计作品</h4><p class="editable" contenteditable="false">点击编辑可修改</p></div>
+      <button class="remove-btn" onclick="removeCard(this)">×</button>
+    </div>
+    <div class="image-card fade-in">
+      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div></div>
+      <div class="image-card-info"><h4 class="editable" contenteditable="false">设计作品</h4><p class="editable" contenteditable="false">点击编辑可修改</p></div>
+      <button class="remove-btn" onclick="removeCard(this)">×</button>
+    </div>
+    <div class="image-card fade-in">
+      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div></div>
+      <div class="image-card-info"><h4 class="editable" contenteditable="false">设计作品</h4><p class="editable" contenteditable="false">点击编辑可修改</p></div>
+      <button class="remove-btn" onclick="removeCard(this)">×</button>
+    </div>
+    <div class="image-card fade-in">
+      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div></div>
+      <div class="image-card-info"><h4 class="editable" contenteditable="false">设计作品</h4><p class="editable" contenteditable="false">点击编辑可修改</p></div>
+      <button class="remove-btn" onclick="removeCard(this)">×</button>
+    </div>
+    <div class="image-card fade-in">
+      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div></div>
+      <div class="image-card-info"><h4 class="editable" contenteditable="false">设计作品</h4><p class="editable" contenteditable="false">点击编辑可修改</p></div>
+      <button class="remove-btn" onclick="removeCard(this)">×</button>
+    </div>
+    <div class="image-card fade-in">
+      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div></div>
+      <div class="image-card-info"><h4 class="editable" contenteditable="false">设计作品</h4><p class="editable" contenteditable="false">点击编辑可修改</p></div>
+      <button class="remove-btn" onclick="removeCard(this)">×</button>
+    </div>
+    <div class="image-card fade-in">
+      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div></div>
+      <div class="image-card-info"><h4 class="editable" contenteditable="false">设计作品</h4><p class="editable" contenteditable="false">点击编辑可修改</p></div>
+      <button class="remove-btn" onclick="removeCard(this)">×</button>
+    </div>
+  </div>
+  <div class="more-section" id="imageMore" style="display:none">
+    <div class="image-gallery">
+    <div class="image-card fade-in">
+      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div></div>
+      <div class="image-card-info"><h4 class="editable" contenteditable="false">设计作品</h4><p class="editable" contenteditable="false">点击编辑可修改</p></div>
+      <button class="remove-btn" onclick="removeCard(this)">×</button>
+    </div>
+    <div class="image-card fade-in">
+      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div></div>
+      <div class="image-card-info"><h4 class="editable" contenteditable="false">设计作品</h4><p class="editable" contenteditable="false">点击编辑可修改</p></div>
+      <button class="remove-btn" onclick="removeCard(this)">×</button>
+    </div>
+    <div class="image-card fade-in">
+      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div></div>
+      <div class="image-card-info"><h4 class="editable" contenteditable="false">设计作品</h4><p class="editable" contenteditable="false">点击编辑可修改</p></div>
+      <button class="remove-btn" onclick="removeCard(this)">×</button>
+    </div>
+    <div class="image-card fade-in">
+      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div></div>
+      <div class="image-card-info"><h4 class="editable" contenteditable="false">设计作品</h4><p class="editable" contenteditable="false">点击编辑可修改</p></div>
+      <button class="remove-btn" onclick="removeCard(this)">×</button>
+    </div>
+    <div class="image-card fade-in">
+      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div></div>
+      <div class="image-card-info"><h4 class="editable" contenteditable="false">设计作品</h4><p class="editable" contenteditable="false">点击编辑可修改</p></div>
+      <button class="remove-btn" onclick="removeCard(this)">×</button>
+    </div>
+    <div class="image-card fade-in">
+      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div></div>
+      <div class="image-card-info"><h4 class="editable" contenteditable="false">设计作品</h4><p class="editable" contenteditable="false">点击编辑可修改</p></div>
+      <button class="remove-btn" onclick="removeCard(this)">×</button>
+    </div>
+    <div class="image-card fade-in">
+      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div></div>
+      <div class="image-card-info"><h4 class="editable" contenteditable="false">设计作品</h4><p class="editable" contenteditable="false">点击编辑可修改</p></div>
+      <button class="remove-btn" onclick="removeCard(this)">×</button>
+    </div>
+    <div class="image-card fade-in">
+      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div></div>
+      <div class="image-card-info"><h4 class="editable" contenteditable="false">设计作品</h4><p class="editable" contenteditable="false">点击编辑可修改</p></div>
+      <button class="remove-btn" onclick="removeCard(this)">×</button>
+    </div>
+    <div class="image-card fade-in">
+      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div></div>
+      <div class="image-card-info"><h4 class="editable" contenteditable="false">设计作品</h4><p class="editable" contenteditable="false">点击编辑可修改</p></div>
+      <button class="remove-btn" onclick="removeCard(this)">×</button>
+    </div>
+    <div class="image-card fade-in">
+      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div></div>
+      <div class="image-card-info"><h4 class="editable" contenteditable="false">设计作品</h4><p class="editable" contenteditable="false">点击编辑可修改</p></div>
+      <button class="remove-btn" onclick="removeCard(this)">×</button>
+    </div>
+    <div class="image-card fade-in">
+      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div></div>
+      <div class="image-card-info"><h4 class="editable" contenteditable="false">设计作品</h4><p class="editable" contenteditable="false">点击编辑可修改</p></div>
+      <button class="remove-btn" onclick="removeCard(this)">×</button>
+    </div>
+    <div class="image-card fade-in">
+      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div></div>
+      <div class="image-card-info"><h4 class="editable" contenteditable="false">设计作品</h4><p class="editable" contenteditable="false">点击编辑可修改</p></div>
+      <button class="remove-btn" onclick="removeCard(this)">×</button>
+    </div>
+    <div class="image-card fade-in">
+      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div></div>
+      <div class="image-card-info"><h4 class="editable" contenteditable="false">设计作品</h4><p class="editable" contenteditable="false">点击编辑可修改</p></div>
+      <button class="remove-btn" onclick="removeCard(this)">×</button>
+    </div>
+    <div class="image-card fade-in">
+      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div></div>
+      <div class="image-card-info"><h4 class="editable" contenteditable="false">设计作品</h4><p class="editable" contenteditable="false">点击编辑可修改</p></div>
+      <button class="remove-btn" onclick="removeCard(this)">×</button>
+    </div>
+    <div class="image-card fade-in">
+      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div></div>
+      <div class="image-card-info"><h4 class="editable" contenteditable="false">设计作品</h4><p class="editable" contenteditable="false">点击编辑可修改</p></div>
+      <button class="remove-btn" onclick="removeCard(this)">×</button>
+    </div>
+    <div class="image-card fade-in">
+      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div></div>
+      <div class="image-card-info"><h4 class="editable" contenteditable="false">设计作品</h4><p class="editable" contenteditable="false">点击编辑可修改</p></div>
+      <button class="remove-btn" onclick="removeCard(this)">×</button>
+    </div>
+    </div>
+  </div>
+  <button class="show-more-btn" id="imageMoreBtn" onclick="toggleMore('image')">查看更多图片 ↓</button>
+  <div class="upload-zone" id="imageUpload">
+    <input type="file" accept="image/*" multiple onchange="handleImageUpload(this.files)">
+    <div class="u-icon">🖼️</div>
+    <p>拖拽或点击上传图片</p>
+    <p class="u-hint">支持 JPG、PNG、WebP 格式</p>
+  </div>
+</section>
+
+<!-- AGENT SECTION -->
+<section class="section-dark" id="agents">
+  <div class="section-dark-inner">
+    <div class="section-header fade-in">
+      <span class="section-label">AI Agents</span>
+      <h2 class="section-title" style="color:var(--text-on-dark)">个人 Agent 展示</h2>
+      <p class="section-desc">我构建的 AI Agent 工具，提升创意生产效率</p>
+    </div>
+    <div class="agent-grid" id="agentGrid">
+      <div class="agent-card fade-in">
+        <div class="ag-placeholder"><div class="ag-placeholder-bg"></div><div class="ag-placeholder-icon"><svg viewBox="0 0 24 24"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1.27A7 7 0 0 1 14 22h-4a7 7 0 0 1-6.73-3H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73A2 2 0 0 1 12 2M9 17a1 1 0 1 0 0-2 1 1 0 0 0 0 2m6 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2"/></svg></div></div>
+        <div class="agent-info">
+          <h3 class="editable" contenteditable="false">Agent 名称</h3>
+          <p class="editable" contenteditable="false">Agent 功能描述，点击编辑按钮后可修改</p>
+          <div class="agent-meta"><div class="agent-meta-item">类型: <span>创意生成</span></div><div class="agent-meta-item">状态: <span>运行中</span></div></div>
+        </div>
+        <button class="remove-btn" onclick="removeCard(this)">×</button>
+      </div>
+      <div class="agent-card fade-in">
+        <div class="ag-placeholder"><div class="ag-placeholder-bg"></div><div class="ag-placeholder-icon"><svg viewBox="0 0 24 24"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1.27A7 7 0 0 1 14 22h-4a7 7 0 0 1-6.73-3H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73A2 2 0 0 1 12 2M9 17a1 1 0 1 0 0-2 1 1 0 0 0 0 2m6 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2"/></svg></div></div>
+        <div class="agent-info">
+          <h3 class="editable" contenteditable="false">Agent 名称</h3>
+          <p class="editable" contenteditable="false">Agent 功能描述，点击编辑按钮后可修改</p>
+          <div class="agent-meta"><div class="agent-meta-item">类型: <span>数据分析</span></div><div class="agent-meta-item">状态: <span>运行中</span></div></div>
+        </div>
+        <button class="remove-btn" onclick="removeCard(this)">×</button>
+      </div>
+      <div class="agent-card fade-in">
+        <div class="ag-placeholder"><div class="ag-placeholder-bg"></div><div class="ag-placeholder-icon"><svg viewBox="0 0 24 24"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1.27A7 7 0 0 1 14 22h-4a7 7 0 0 1-6.73-3H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73A2 2 0 0 1 12 2M9 17a1 1 0 1 0 0-2 1 1 0 0 0 0 2m6 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2"/></svg></div></div>
+        <div class="agent-info">
+          <h3 class="editable" contenteditable="false">Agent 名称</h3>
+          <p class="editable" contenteditable="false">Agent 功能描述，点击编辑按钮后可修改</p>
+          <div class="agent-meta"><div class="agent-meta-item">类型: <span>素材优化</span></div><div class="agent-meta-item">状态: <span>运行中</span></div></div>
+        </div>
+        <button class="remove-btn" onclick="removeCard(this)">×</button>
+      </div>
+    </div>
+    <div class="upload-zone" id="agentUpload" style="border-color:rgba(255,255,255,0.15)">
+      <input type="file" accept="image/*" multiple onchange="handleAgentUpload(this.files)">
+      <div class="u-icon">🤖</div>
+      <p style="color:var(--text-on-dark-sec)">拖拽或点击上传 Agent 截图</p>
+      <p class="u-hint" style="color:rgba(255,255,255,0.3)">支持 JPG、PNG、WebP 格式</p>
+    </div>
+  </div>
+</section>
+
+<!-- DATA SECTION -->
+<section class="section" id="data">
+  <div class="section-header fade-in">
+    <span class="section-label">Performance Data</span>
+    <h2 class="section-title">数据展示</h2>
+    <p class="section-desc">素材投放效果与创意产出的核心数据指标</p>
+  </div>
+  <div class="data-stats fade-in">
+    <div class="stat-card"><div class="stat-number editable" contenteditable="false">1,200+</div><div class="stat-label">素材总产出</div><div class="stat-sub">视频 + 图片</div></div>
+    <div class="stat-card"><div class="stat-number editable" contenteditable="false">5.8M</div><div class="stat-label">总曝光量</div><div class="stat-sub">DSP 投放累计</div></div>
+    <div class="stat-card"><div class="stat-number editable" contenteditable="false">3.2%</div><div class="stat-label">平均 CTR</div><div class="stat-sub">高于行业均值</div></div>
+    <div class="stat-card"><div class="stat-number editable" contenteditable="false">$0.42</div><div class="stat-label">平均 CPC</div><div class="stat-sub">持续优化中</div></div>
+  </div>
+  <div class="data-charts fade-in">
+    <div class="chart-card">
+      <h3>素材类型分布</h3>
+      <div class="chart-bar-group">
+        <div class="chart-bar-item"><label><span>视频广告</span><span>45%</span></label><div class="chart-bar"><div class="chart-bar-fill" style="width:45%"></div></div></div>
+        <div class="chart-bar-item"><label><span>静态图片</span><span>30%</span></label><div class="chart-bar"><div class="chart-bar-fill" style="width:30%"></div></div></div>
+        <div class="chart-bar-item"><label><span>GIF 动图</span><span>15%</span></label><div class="chart-bar"><div class="chart-bar-fill" style="width:15%"></div></div></div>
+        <div class="chart-bar-item"><label><span>轮播素材</span><span>10%</span></label><div class="chart-bar"><div class="chart-bar-fill" style="width:10%"></div></div></div>
+      </div>
+    </div>
+    <div class="chart-card">
+      <h3>月度产出趋势</h3>
+      <div class="chart-bar-group">
+        <div class="chart-bar-item"><label><span>1月</span><span>86</span></label><div class="chart-bar"><div class="chart-bar-fill" style="width:43%"></div></div></div>
+        <div class="chart-bar-item"><label><span>2月</span><span>124</span></label><div class="chart-bar"><div class="chart-bar-fill" style="width:62%"></div></div></div>
+        <div class="chart-bar-item"><label><span>3月</span><span>168</span></label><div class="chart-bar"><div class="chart-bar-fill" style="width:84%"></div></div></div>
+        <div class="chart-bar-item"><label><span>4月</span><span>200</span></label><div class="chart-bar"><div class="chart-bar-fill" style="width:100%"></div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-links"><a href="#">Email</a><a href="#">WeChat</a><a href="#">LinkedIn</a></div>
+  <p>© 2026 韩爽 — AIGC 创意设计运营</p>
+</footer>
+
+<!-- EDIT BUTTON -->
+<button class="edit-btn" onclick="toggleEditMode()" title="编辑模式">✏️</button>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()"><button class="lightbox-close">×</button></div>
+<script>
+/* ===== STATE ===== */
+let editMode = false;
+let isAuthed = false;
+const EDIT_HASH = 'a917280e86085553956196f50dfd2e37cb255032abffa8cad1bf014d1f63ef13';
+
+/* ===== AUTH ===== */
+async function sha256(str) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+}
+
+async function checkAuth() {
+  if (isAuthed) return true;
+  const saved = sessionStorage.getItem('pf_auth');
+  if (saved === '1') { isAuthed = true; return true; }
+  return new Promise(resolve => {
+    const overlay = document.createElement('div');
+    overlay.className = 'auth-overlay';
+    overlay.innerHTML = `
+      <div class="auth-box">
+        <div class="auth-icon">🔐</div>
+        <h3>进入编辑模式</h3>
+        <p>请输入管理密码</p>
+        <input type="password" class="auth-input" placeholder="输入密码..." autofocus>
+        <div class="auth-actions">
+          <button class="auth-cancel">取消</button>
+          <button class="auth-confirm">确认</button>
+        </div>
+        <div class="auth-error" style="display:none">密码错误，请重试</div>
+      </div>`;
+    document.body.appendChild(overlay);
+    requestAnimationFrame(() => overlay.classList.add('active'));
+    const input = overlay.querySelector('.auth-input');
+    const errEl = overlay.querySelector('.auth-error');
+    const close = (result) => {
+      overlay.classList.remove('active');
+      setTimeout(() => overlay.remove(), 300);
+      resolve(result);
+    };
+    overlay.querySelector('.auth-cancel').onclick = () => close(false);
+    overlay.querySelector('.auth-confirm').onclick = async () => {
+      const hash = await sha256(input.value);
+      if (hash === EDIT_HASH) {
+        isAuthed = true;
+        sessionStorage.setItem('pf_auth', '1');
+        close(true);
+      } else {
+        errEl.style.display = 'block';
+        input.value = '';
+        input.focus();
+        errEl.animate([{opacity:0},{opacity:1}], 200);
+      }
+    };
+    input.addEventListener('keydown', e => {
+      if (e.key === 'Enter') overlay.querySelector('.auth-confirm').click();
+      if (e.key === 'Escape') close(false);
+    });
+    input.focus();
+  });
+}
+
+/* ===== EDIT MODE ===== */
+async function toggleEditMode() {
+  if (!editMode) {
+    const ok = await checkAuth();
+    if (!ok) return;
+  }
+  editMode = !editMode;
+  const btn = document.querySelector('.edit-btn');
+  btn.classList.toggle('active', editMode);
+  btn.textContent = editMode ? '💾' : '✏️';
+  btn.title = editMode ? '保存并退出编辑' : '编辑模式';
+  document.querySelectorAll('.editable').forEach(el => {
+    el.contentEditable = editMode;
+    el.classList.toggle('editing', editMode);
+  });
+  document.querySelectorAll('.upload-zone').forEach(el => el.style.display = editMode ? 'flex' : 'none');
+  document.querySelectorAll('.remove-btn').forEach(el => el.style.display = editMode ? 'flex' : 'none');
+  if (!editMode) {
+    saveAndDownload();
+  }
+}
+
+/* ===== REMOVE CARD ===== */
+function removeCard(btn) {
+  btn.parentElement.remove();
+}
+
+/* ===== SHOW MORE TOGGLE ===== */
+function toggleMore(type) {
+  const moreEl = document.getElementById(type + 'More');
+  const btn = document.getElementById(type + 'MoreBtn');
+  const isOpen = moreEl.classList.contains('active');
+  if (isOpen) {
+    moreEl.classList.remove('active');
+    moreEl.style.maxHeight = '0';
+    btn.classList.remove('expanded');
+    btn.textContent = type === 'video' ? '查看更多视频 ↓' : '查看更多图片 ↓';
+  } else {
+    moreEl.style.display = '';
+    moreEl.classList.add('active');
+    moreEl.style.maxHeight = moreEl.scrollHeight + 'px';
+    btn.classList.add('expanded');
+    btn.textContent = type === 'video' ? '收起视频 ↑' : '收起图片 ↑';
+    moreEl.querySelectorAll('.fade-in:not(.visible)').forEach(el => {
+      el.classList.add('visible');
+    });
+  }
+}
+
+/* ===== FILE TO BASE64 ===== */
+function fileToBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = () => reject(reader.error);
+    reader.readAsDataURL(file);
+  });
+}
+
+/* ===== FILE UPLOADS ===== */
+async function handleVideoUpload(files) {
+  const grid = document.getElementById('videoGrid');
+  for (const f of Array.from(files)) {
+    const dataURL = await fileToBase64(f);
+    const card = document.createElement('div');
+    card.className = 'video-card fade-in visible';
+    card.innerHTML = `
+      <video src="${dataURL}" controls preload="metadata" style="width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:var(--radius) var(--radius) 0 0;background:#000"></video>
+      <div class="video-info">
+        <h3 class="editable editing" contenteditable="true">${f.name.replace(/\.[^.]+$/,'')}</h3>
+        <p class="editable editing" contenteditable="true">添加描述</p>
+        <div class="tags"><span class="tag">视频</span></div>
+      </div>
+      <button class="remove-btn" style="display:flex" onclick="removeCard(this)">×</button>`;
+    grid.appendChild(card);
+  }
+}
+
+async function handleImageUpload(files) {
+  const gallery = document.getElementById('imageGallery');
+  for (const f of Array.from(files)) {
+    const dataURL = await fileToBase64(f);
+    const card = document.createElement('div');
+    card.className = 'image-card fade-in visible';
+    card.innerHTML = `
+      <img src="${dataURL}" alt="${f.name}" style="width:100%;height:100%;object-fit:cover;cursor:pointer" onclick="openLightbox(this.src)">
+      <div class="image-card-info">
+        <h4 class="editable editing" contenteditable="true">${f.name.replace(/\.[^.]+$/,'')}</h4>
+        <p class="editable editing" contenteditable="true">添加描述</p>
+      </div>
+      <button class="remove-btn" style="display:flex" onclick="removeCard(this)">×</button>`;
+    gallery.appendChild(card);
+  }
+}
+
+async function handleAgentUpload(files) {
+  const grid = document.getElementById('agentGrid');
+  for (const f of Array.from(files)) {
+    const dataURL = await fileToBase64(f);
+    const card = document.createElement('div');
+    card.className = 'agent-card fade-in visible';
+    card.innerHTML = `
+      <img src="${dataURL}" alt="${f.name}" style="width:100%;border-radius:var(--radius) var(--radius) 0 0;aspect-ratio:16/10;object-fit:cover">
+      <div class="agent-info">
+        <h3 class="editable editing" contenteditable="true">${f.name.replace(/\.[^.]+$/,'')}</h3>
+        <p class="editable editing" contenteditable="true">添加 Agent 描述</p>
+        <div class="agent-meta"><div class="agent-meta-item">类型: <span>自定义</span></div><div class="agent-meta-item">状态: <span>运行中</span></div></div>
+      </div>
+      <button class="remove-btn" style="display:flex" onclick="removeCard(this)">×</button>`;
+    grid.appendChild(card);
+  }
+}
+
+/* ===== SAVE & DOWNLOAD ===== */
+function saveAndDownload() {
+  // Clean up before saving: reset edit state in DOM
+  document.querySelectorAll('.editable').forEach(el => {
+    el.contentEditable = 'false';
+    el.classList.remove('editing');
+  });
+  document.querySelectorAll('.upload-zone').forEach(el => el.style.display = 'none');
+  document.querySelectorAll('.remove-btn').forEach(el => el.style.display = 'none');
+  // Reset "show more" sections to collapsed state
+  ['video', 'image'].forEach(type => {
+    const moreEl = document.getElementById(type + 'More');
+    const btn = document.getElementById(type + 'MoreBtn');
+    if (moreEl && moreEl.classList.contains('active')) {
+      moreEl.classList.remove('active');
+      moreEl.style.maxHeight = '0';
+      moreEl.style.display = 'none';
+      if (btn) {
+        btn.classList.remove('expanded');
+        btn.textContent = type === 'video' ? '查看更多视频 ↓' : '查看更多图片 ↓';
+      }
+    }
+  });
+  // Reset edit button
+  const editBtn = document.querySelector('.edit-btn');
+  editBtn.classList.remove('active');
+  editBtn.textContent = '✏️';
+  // Reset all fade-in to visible (so they don't re-animate)
+  document.querySelectorAll('.fade-in').forEach(el => el.classList.add('visible'));
+  // Remove any placeholder cards that haven't been filled
+  // (keep cards that have real content — video/img src or edited text)
+
+  // Get the full HTML
+  const html = '<!DOCTYPE html>\n<html lang="zh-CN">\n' + document.documentElement.innerHTML + '\n</html>';
+  
+  // Download
+  const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'portfolio.html';
+  a.click();
+  URL.revokeObjectURL(url);
+
+  // Show toast
+  showToast('✅ 文件已保存！用下载的 portfolio.html 替换旧文件即可');
+}
+
+function showToast(msg) {
+  const t = document.createElement('div');
+  t.style.cssText = 'position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:#1e1e2e;color:#fff;padding:16px 28px;border-radius:12px;font-size:.95rem;z-index:99999;box-shadow:0 8px 32px rgba(0,0,0,0.3);border:1px solid rgba(99,102,241,0.3);animation:fadeUp .3s ease';
+  t.textContent = msg;
+  document.body.appendChild(t);
+  setTimeout(() => { t.style.opacity = '0'; t.style.transition = 'opacity .3s'; setTimeout(() => t.remove(), 300); }, 4000);
+}
+
+/* ===== LIGHTBOX ===== */
+function openLightbox(src) {
+  if (editMode) return;
+  const lb = document.getElementById('lightbox');
+  lb.style.backgroundImage = `url(${src})`;
+  lb.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox() {
+  const lb = document.getElementById('lightbox');
+  lb.classList.remove('active');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
+/* ===== SCROLL ANIMATIONS ===== */
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.01, rootMargin: '0px 0px 100px 0px' });
+
+function initAnimations() {
+  document.querySelectorAll('.fade-in').forEach(el => {
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight + 100) {
+      el.classList.add('visible');
+    } else {
+      observer.observe(el);
+    }
+  });
+}
+
+/* ===== NAV SCROLL ===== */
+let lastScroll = 0;
+window.addEventListener('scroll', () => {
+  const nav = document.querySelector('.nav');
+  const y = window.scrollY;
+  if (y > 80) {
+    nav.classList.add('scrolled');
+    if (y > lastScroll && y > 200) nav.classList.add('hidden');
+    else nav.classList.remove('hidden');
+  } else {
+    nav.classList.remove('scrolled', 'hidden');
+  }
+  lastScroll = y;
+});
+
+/* ===== SMOOTH SCROLL ===== */
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const tgt = document.querySelector(a.getAttribute('href'));
+    if (tgt) tgt.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+
+/* ===== CHART ANIMATION ===== */
+function animateCharts() {
+  document.querySelectorAll('.chart-bar-fill').forEach(bar => {
+    const w = bar.style.width;
+    bar.style.width = '0%';
+    setTimeout(() => { bar.style.width = w; }, 100);
+  });
+}
+const chartObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) { animateCharts(); chartObserver.unobserve(entry.target); }
+  });
+}, { threshold: 0.2 });
+const dc = document.querySelector('.data-charts');
+if (dc) chartObserver.observe(dc);
+
+/* ===== INIT ===== */
+initAnimations();
+</script>
+</body>
+</html>
