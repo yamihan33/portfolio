@@ -207,6 +207,10 @@ img,video{max-width:100%;display:block}
 .more-section.active{max-height:none;opacity:1;margin-top:24px}
 .more-section .video-grid,.more-section .image-gallery{padding:0}
 @keyframes fadeUp{from{opacity:0;transform:translate(-50%,20px)}to{opacity:1;transform:translate(-50%,0)}}
+/* Publish progress overlay */
+.publish-progress{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);display:flex;align-items:center;justify-content:center;gap:16px;z-index:99999;color:#fff;font-size:1.1rem;backdrop-filter:blur(4px)}
+.publish-spinner{width:28px;height:28px;border:3px solid rgba(255,255,255,0.2);border-top-color:#6366f1;border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
 </style>
 </head>
 <body>
@@ -783,6 +787,8 @@ img,video{max-width:100%;display:block}
 let editMode = false;
 let isAuthed = false;
 const EDIT_HASH = 'a917280e86085553956196f50dfd2e37cb255032abffa8cad1bf014d1f63ef13';
+const GITHUB_REPO = 'yamihan33/portfolio';
+const GITHUB_FILE = 'index.html';
 
 /* ===== AUTH ===== */
 async function sha256(str) {
@@ -858,7 +864,7 @@ async function toggleEditMode() {
   document.querySelectorAll('.upload-zone').forEach(el => el.style.display = editMode ? 'flex' : 'none');
   document.querySelectorAll('.remove-btn').forEach(el => el.style.display = editMode ? 'flex' : 'none');
   if (!editMode) {
-    saveAndDownload();
+    await publishToGitHub();
   }
 }
 
@@ -953,9 +959,54 @@ async function handleAgentUpload(files) {
   }
 }
 
-/* ===== SAVE & DOWNLOAD ===== */
-function saveAndDownload() {
-  // Clean up before saving: reset edit state in DOM
+/* ===== GITHUB TOKEN MANAGEMENT ===== */
+function getGitHubToken() {
+  return localStorage.getItem('pf_gh_token');
+}
+
+function promptGitHubToken() {
+  return new Promise(resolve => {
+    const overlay = document.createElement('div');
+    overlay.className = 'auth-overlay';
+    overlay.innerHTML = `
+      <div class="auth-box">
+        <div class="auth-icon">🔑</div>
+        <h3>设置 GitHub Token</h3>
+        <p style="font-size:.85rem;color:#999;margin-bottom:12px">首次发布需要输入 GitHub Personal Access Token<br>（只需设置一次，之后会自动记住）</p>
+        <input type="password" class="auth-input" placeholder="ghp_xxxxxxxxxxxx" autofocus>
+        <div class="auth-actions">
+          <button class="auth-cancel">取消</button>
+          <button class="auth-confirm">保存</button>
+        </div>
+        <div class="auth-error" style="display:none">Token 不能为空</div>
+      </div>`;
+    document.body.appendChild(overlay);
+    requestAnimationFrame(() => overlay.classList.add('active'));
+    const input = overlay.querySelector('.auth-input');
+    const errEl = overlay.querySelector('.auth-error');
+    const close = (val) => {
+      overlay.classList.remove('active');
+      setTimeout(() => overlay.remove(), 300);
+      resolve(val);
+    };
+    overlay.querySelector('.auth-cancel').onclick = () => close(null);
+    overlay.querySelector('.auth-confirm').onclick = () => {
+      const v = input.value.trim();
+      if (!v) { errEl.style.display = 'block'; input.focus(); return; }
+      localStorage.setItem('pf_gh_token', v);
+      close(v);
+    };
+    input.addEventListener('keydown', e => {
+      if (e.key === 'Enter') overlay.querySelector('.auth-confirm').click();
+      if (e.key === 'Escape') close(null);
+    });
+    input.focus();
+  });
+}
+
+/* ===== GENERATE CLEAN HTML ===== */
+function generateCleanHTML() {
+  // Clean up edit state in DOM
   document.querySelectorAll('.editable').forEach(el => {
     el.contentEditable = 'false';
     el.classList.remove('editing');
@@ -980,15 +1031,85 @@ function saveAndDownload() {
   const editBtn = document.querySelector('.edit-btn');
   editBtn.classList.remove('active');
   editBtn.textContent = '✏️';
-  // Reset all fade-in to visible (so they don't re-animate)
+  // Reset all fade-in to visible
   document.querySelectorAll('.fade-in').forEach(el => el.classList.add('visible'));
-  // Remove any placeholder cards that haven't been filled
-  // (keep cards that have real content — video/img src or edited text)
+  // Remove publish progress if any
+  document.querySelectorAll('.publish-progress').forEach(el => el.remove());
+  // Generate full HTML
+  return '<!DOCTYPE html>\n<html lang="zh-CN">\n' + document.documentElement.innerHTML + '\n</html>';
+}
 
-  // Get the full HTML
-  const html = '<!DOCTYPE html>\n<html lang="zh-CN">\n' + document.documentElement.innerHTML + '\n</html>';
-  
-  // Download
+/* ===== PUBLISH TO GITHUB ===== */
+async function publishToGitHub() {
+  let token = getGitHubToken();
+  if (!token) {
+    token = await promptGitHubToken();
+    if (!token) {
+      showToast('❌ 未设置 Token，取消发布');
+      return;
+    }
+  }
+
+  // Show progress
+  const progress = document.createElement('div');
+  progress.className = 'publish-progress';
+  progress.innerHTML = '<div class="publish-spinner"></div><span>正在发布到 GitHub...</span>';
+  document.body.appendChild(progress);
+
+  try {
+    const html = generateCleanHTML();
+    const content = btoa(unescape(encodeURIComponent(html)));
+
+    // Get current file SHA (needed for update)
+    const getRes = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/${GITHUB_FILE}`, {
+      headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github+json' }
+    });
+
+    let sha = null;
+    if (getRes.ok) {
+      const data = await getRes.json();
+      sha = data.sha;
+    }
+
+    // Push update
+    const body = {
+      message: '更新作品集 ' + new Date().toLocaleString('zh-CN'),
+      content: content
+    };
+    if (sha) body.sha = sha;
+
+    const putRes = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/${GITHUB_FILE}`, {
+      method: 'PUT',
+      headers: {
+        'Authorization': `token ${token}`,
+        'Accept': 'application/vnd.github+json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(body)
+    });
+
+    if (putRes.ok) {
+      progress.remove();
+      showToast('✅ 发布成功！网站将在1分钟内更新');
+    } else {
+      const err = await putRes.json();
+      progress.remove();
+      if (putRes.status === 401) {
+        localStorage.removeItem('pf_gh_token');
+        showToast('❌ Token 无效或已过期，请重新设置');
+      } else {
+        showToast('❌ 发布失败: ' + (err.message || putRes.status));
+      }
+    }
+  } catch (e) {
+    progress.remove();
+    showToast('❌ 网络错误: ' + e.message);
+  }
+}
+
+/* ===== SAVE & DOWNLOAD (backup) ===== */
+function saveAndDownload() {
+  const html = generateCleanHTML();
   const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
@@ -996,9 +1117,7 @@ function saveAndDownload() {
   a.download = 'portfolio.html';
   a.click();
   URL.revokeObjectURL(url);
-
-  // Show toast
-  showToast('✅ 文件已保存！用下载的 portfolio.html 替换旧文件即可');
+  showToast('✅ 备份文件已下载');
 }
 
 function showToast(msg) {
