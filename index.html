@@ -211,7 +211,34 @@ img,video{max-width:100%;display:block}
 .publish-progress{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);display:flex;align-items:center;justify-content:center;gap:16px;z-index:99999;color:#fff;font-size:1.1rem;backdrop-filter:blur(4px)}
 .publish-spinner{width:28px;height:28px;border:3px solid rgba(255,255,255,0.2);border-top-color:#6366f1;border-radius:50%;animation:spin .8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
+
+/* ===== FIREBASE AUTH UI ===== */
+.nav-user{margin-left:auto;position:relative}
+.nav-user-btn{padding:6px 16px;border-radius:99px;border:1.5px solid rgba(99,102,241,0.25);background:rgba(99,102,241,0.06);cursor:pointer;font-family:var(--font);font-size:0.82rem;font-weight:600;color:var(--accent);transition:all .2s}
+.nav-user-btn:hover{background:rgba(99,102,241,0.14)}
+.auth-modal{position:fixed;inset:0;background:rgba(0,0,0,0.45);backdrop-filter:blur(6px);z-index:500;display:none;align-items:center;justify-content:center}
+.auth-modal.active{display:flex}
+.auth-box{background:#fff;border-radius:18px;padding:32px;width:340px;max-width:90vw;box-shadow:0 16px 50px rgba(0,0,0,0.18);position:relative}
+.auth-box h3{text-align:center;margin-bottom:20px;font-size:1.1rem}
+.auth-box input{width:100%;padding:12px 14px;border:1.5px solid rgba(0,0,0,0.1);border-radius:10px;font-size:0.9rem;font-family:var(--font);outline:none;margin-bottom:10px;box-sizing:border-box}
+.auth-box input:focus{border-color:var(--accent)}
+.auth-box .abtn{width:100%;padding:12px;border:none;border-radius:10px;background:var(--accent-grad);color:#fff;font-weight:600;font-size:0.9rem;cursor:pointer;font-family:var(--font);margin-top:4px}
+.auth-box .abtn:hover{opacity:0.9}
+.auth-box .aswitch{text-align:center;margin-top:14px;font-size:0.82rem;color:var(--text-sec)}
+.auth-box .aswitch a{color:var(--accent);cursor:pointer;font-weight:600;text-decoration:none}
+.auth-box .amsg{text-align:center;font-size:0.82rem;margin-top:10px;min-height:18px}
+.auth-box .amsg.err{color:#ef4444}
+.auth-box .amsg.ok{color:#22c55e}
+.auth-box .aclose{position:absolute;top:12px;right:14px;background:none;border:none;font-size:1.3rem;cursor:pointer;color:#999}
+.admin-list{max-height:300px;overflow-y:auto;margin-top:16px}
+.admin-item{display:flex;justify-content:space-between;align-items:center;padding:8px 12px;background:var(--bg-alt);border-radius:8px;margin-bottom:6px;font-size:0.82rem}
+.admin-item .arole{padding:2px 8px;border-radius:99px;font-size:0.72rem;font-weight:600}
+.admin-item .arole.owner{background:rgba(245,158,11,0.15);color:#d97706}
+.admin-item .arole.guest{background:rgba(99,102,241,0.12);color:var(--accent)}
 </style>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 </head>
 <body>
 
@@ -228,6 +255,9 @@ img,video{max-width:100%;display:block}
     <button class="nav-mobile" onclick="document.querySelector('.nav-m-menu').classList.toggle('active')">
       <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
     </button>
+    <div class="nav-user">
+      <button class="nav-user-btn" id="navUserBtn" onclick="handleUserBtn()">登录</button>
+    </div>
     <div class="nav-m-menu">
       <a href="#videos" onclick="this.parentElement.classList.remove('active')">视频作品</a>
       <a href="#images" onclick="this.parentElement.classList.remove('active')">图片作品</a>
@@ -777,83 +807,158 @@ img,video{max-width:100%;display:block}
   <p>© 2026 韩爽 — AIGC 创意设计运营</p>
 </footer>
 
-<!-- EDIT BUTTON -->
-<button class="edit-btn" onclick="toggleEditMode()" title="编辑模式">✏️</button>
+<!-- EDIT BUTTON (hidden until owner logs in) -->
+<button class="edit-btn" id="editBtn" onclick="toggleEditMode()" title="编辑模式" style="display:none">✏️</button>
+
+<!-- AUTH MODAL -->
+<div class="auth-modal" id="authModal">
+  <div class="auth-box">
+    <button class="aclose" onclick="closeAuth()">×</button>
+    <h3 id="authTitle">登录</h3>
+    <input type="email" id="authEmail" placeholder="邮箱">
+    <input type="password" id="authPass" placeholder="密码">
+    <button class="abtn" id="authSubmit" onclick="doAuth()">登录</button>
+    <div class="aswitch" id="authSwitch">没有账号？<a onclick="switchAuthMode()">注册</a></div>
+    <div class="amsg" id="authMsg"></div>
+  </div>
+</div>
 
 <!-- LIGHTBOX -->
 <div class="lightbox" id="lightbox" onclick="closeLightbox()"><button class="lightbox-close">×</button></div>
 <script>
-/* ===== STATE ===== */
-let editMode = false;
-let isAuthed = false;
-const EDIT_HASH = 'a917280e86085553956196f50dfd2e37cb255032abffa8cad1bf014d1f63ef13';
+/* ===== FIREBASE INIT ===== */
+firebase.initializeApp({
+  apiKey: "AIzaSyAPmgllefOwgcm9k52Keg789OdUkgn26Jc",
+  authDomain: "shejiwangzhan.firebaseapp.com",
+  projectId: "shejiwangzhan",
+  storageBucket: "shejiwangzhan.firebasestorage.app",
+  messagingSenderId: "689695126769",
+  appId: "1:689695126769:web:01b9df2916dadeb56ce550"
+});
+const auth = firebase.auth();
+const db = firebase.firestore();
+const OWNER_EMAIL = 'nicolehans33@gmail.com';
 const GITHUB_REPO = 'yamihan33/portfolio';
 const GITHUB_FILE = 'index.html';
 
-/* ===== AUTH ===== */
-async function sha256(str) {
-  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
-  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+/* ===== STATE ===== */
+let editMode = false;
+let isOwner = false;
+let currentUser = null;
+
+/* ===== AUTH UI ===== */
+let authIsLogin = true;
+
+function handleUserBtn() {
+  if (currentUser) {
+    // Already logged in - show logout option
+    if (confirm('当前账号: ' + currentUser.email + '\n\n要退出登录吗？')) {
+      auth.signOut();
+    }
+  } else {
+    openAuth();
+  }
 }
 
-async function checkAuth() {
-  if (isAuthed) return true;
-  const saved = sessionStorage.getItem('pf_auth');
-  if (saved === '1') { isAuthed = true; return true; }
-  return new Promise(resolve => {
-    const overlay = document.createElement('div');
-    overlay.className = 'auth-overlay';
-    overlay.innerHTML = `
-      <div class="auth-box">
-        <div class="auth-icon">🔐</div>
-        <h3>进入编辑模式</h3>
-        <p>请输入管理密码</p>
-        <input type="password" class="auth-input" placeholder="输入密码..." autofocus>
-        <div class="auth-actions">
-          <button class="auth-cancel">取消</button>
-          <button class="auth-confirm">确认</button>
-        </div>
-        <div class="auth-error" style="display:none">密码错误，请重试</div>
-      </div>`;
-    document.body.appendChild(overlay);
-    requestAnimationFrame(() => overlay.classList.add('active'));
-    const input = overlay.querySelector('.auth-input');
-    const errEl = overlay.querySelector('.auth-error');
-    const close = (result) => {
-      overlay.classList.remove('active');
-      setTimeout(() => overlay.remove(), 300);
-      resolve(result);
+function openAuth() {
+  authIsLogin = true;
+  document.getElementById('authTitle').textContent = '登录';
+  document.getElementById('authSubmit').textContent = '登录';
+  document.getElementById('authSwitch').innerHTML = '没有账号？<a onclick="switchAuthMode()">注册</a>';
+  document.getElementById('authMsg').textContent = '';
+  document.getElementById('authEmail').value = '';
+  document.getElementById('authPass').value = '';
+  document.getElementById('authModal').classList.add('active');
+}
+
+function closeAuth() {
+  document.getElementById('authModal').classList.remove('active');
+}
+
+function switchAuthMode() {
+  authIsLogin = !authIsLogin;
+  document.getElementById('authTitle').textContent = authIsLogin ? '登录' : '注册';
+  document.getElementById('authSubmit').textContent = authIsLogin ? '登录' : '注册';
+  document.getElementById('authSwitch').innerHTML = authIsLogin
+    ? '没有账号？<a onclick="switchAuthMode()">注册</a>'
+    : '已有账号？<a onclick="switchAuthMode()">登录</a>';
+  document.getElementById('authMsg').textContent = '';
+}
+
+async function doAuth() {
+  const email = document.getElementById('authEmail').value.trim();
+  const pass = document.getElementById('authPass').value;
+  const msgEl = document.getElementById('authMsg');
+  msgEl.className = 'amsg';
+  msgEl.textContent = '';
+  if (!email || !pass) { msgEl.className = 'amsg err'; msgEl.textContent = '请填写邮箱和密码'; return; }
+  try {
+    if (authIsLogin) {
+      await auth.signInWithEmailAndPassword(email, pass);
+    } else {
+      const cred = await auth.createUserWithEmailAndPassword(email, pass);
+      // Save to Firestore
+      await db.collection('users').doc(cred.user.uid).set({
+        email: email,
+        role: email === OWNER_EMAIL ? 'owner' : 'guest',
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+    }
+    closeAuth();
+  } catch (e) {
+    msgEl.className = 'amsg err';
+    const msgs = {
+      'auth/email-already-in-use': '该邮箱已注册',
+      'auth/invalid-email': '邮箱格式不对',
+      'auth/weak-password': '密码至少6位',
+      'auth/user-not-found': '账号不存在',
+      'auth/wrong-password': '密码错误',
+      'auth/invalid-credential': '邮箱或密码错误'
     };
-    overlay.querySelector('.auth-cancel').onclick = () => close(false);
-    overlay.querySelector('.auth-confirm').onclick = async () => {
-      const hash = await sha256(input.value);
-      if (hash === EDIT_HASH) {
-        isAuthed = true;
-        sessionStorage.setItem('pf_auth', '1');
-        close(true);
-      } else {
-        errEl.style.display = 'block';
-        input.value = '';
-        input.focus();
-        errEl.animate([{opacity:0},{opacity:1}], 200);
-      }
-    };
-    input.addEventListener('keydown', e => {
-      if (e.key === 'Enter') overlay.querySelector('.auth-confirm').click();
-      if (e.key === 'Escape') close(false);
-    });
-    input.focus();
-  });
+    msgEl.textContent = msgs[e.code] || e.message;
+  }
+}
+
+/* ===== AUTH STATE LISTENER ===== */
+auth.onAuthStateChanged(async (user) => {
+  currentUser = user;
+  const btn = document.getElementById('navUserBtn');
+  const editBtn = document.getElementById('editBtn');
+  if (user) {
+    isOwner = user.email === OWNER_EMAIL;
+    btn.textContent = isOwner ? '👑 主人' : user.email.split('@')[0];
+    editBtn.style.display = isOwner ? 'flex' : 'none';
+    // Ensure user doc exists in Firestore
+    const doc = await db.collection('users').doc(user.uid).get();
+    if (!doc.exists) {
+      await db.collection('users').doc(user.uid).set({
+        email: user.email,
+        role: user.email === OWNER_EMAIL ? 'owner' : 'guest',
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+    }
+  } else {
+    isOwner = false;
+    btn.textContent = '登录';
+    editBtn.style.display = 'none';
+    if (editMode) { editMode = false; exitEditMode(); }
+  }
+});
+
+function exitEditMode() {
+  const btn = document.getElementById('editBtn');
+  btn.classList.remove('active');
+  btn.textContent = '✏️';
+  document.querySelectorAll('.editable').forEach(el => { el.contentEditable = false; el.classList.remove('editing'); });
+  document.querySelectorAll('.upload-zone').forEach(el => el.style.display = 'none');
+  document.querySelectorAll('.remove-btn').forEach(el => el.style.display = 'none');
 }
 
 /* ===== EDIT MODE ===== */
 async function toggleEditMode() {
-  if (!editMode) {
-    const ok = await checkAuth();
-    if (!ok) return;
-  }
+  if (!isOwner) return;
   editMode = !editMode;
-  const btn = document.querySelector('.edit-btn');
+  const btn = document.getElementById('editBtn');
   btn.classList.toggle('active', editMode);
   btn.textContent = editMode ? '💾' : '✏️';
   btn.title = editMode ? '保存并退出编辑' : '编辑模式';
