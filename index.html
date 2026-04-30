@@ -1064,7 +1064,51 @@ async function handleAgentUpload(files) {
 
 /* ===== WORKER PROXY CONFIG ===== */
 const WORKER_URL = 'https://github-proxy.nicolehans33.workers.dev';
-const WORKER_AUTH = 'yamihan-portfolio-2026';
+
+/* ===== GITHUB TOKEN MANAGEMENT ===== */
+function getGitHubToken() {
+  return localStorage.getItem('pf_gh_token');
+}
+
+function promptGitHubToken() {
+  return new Promise(resolve => {
+    const overlay = document.createElement('div');
+    overlay.className = 'auth-overlay';
+    overlay.innerHTML = `
+      <div class="auth-box">
+        <div class="auth-icon">🔑</div>
+        <h3>设置 GitHub Token</h3>
+        <p style="font-size:.85rem;color:#999;margin-bottom:12px">首次发布需要输入 GitHub Personal Access Token<br>（只需设置一次，之后会自动记住）</p>
+        <input type="password" class="auth-input" placeholder="ghp_..." autofocus>
+        <div class="auth-actions">
+          <button class="auth-cancel">取消</button>
+          <button class="auth-confirm">保存</button>
+        </div>
+        <div class="auth-error" style="display:none">Token 不能为空</div>
+      </div>`;
+    document.body.appendChild(overlay);
+    requestAnimationFrame(() => overlay.classList.add('active'));
+    const input = overlay.querySelector('.auth-input');
+    const errEl = overlay.querySelector('.auth-error');
+    const close = (val) => {
+      overlay.classList.remove('active');
+      setTimeout(() => overlay.remove(), 300);
+      resolve(val);
+    };
+    overlay.querySelector('.auth-cancel').onclick = () => close(null);
+    overlay.querySelector('.auth-confirm').onclick = () => {
+      const v = input.value.trim();
+      if (!v) { errEl.style.display = 'block'; input.focus(); return; }
+      localStorage.setItem('pf_gh_token', v);
+      close(v);
+    };
+    input.addEventListener('keydown', e => {
+      if (e.key === 'Enter') overlay.querySelector('.auth-confirm').click();
+      if (e.key === 'Escape') close(null);
+    });
+    input.focus();
+  });
+}
 
 /* ===== GENERATE CLEAN HTML ===== */
 function generateCleanHTML() {
@@ -1101,6 +1145,15 @@ function generateCleanHTML() {
 
 /* ===== PUBLISH TO GITHUB (via Cloudflare Worker) ===== */
 async function publishToGitHub() {
+  let token = getGitHubToken();
+  if (!token) {
+    token = await promptGitHubToken();
+    if (!token) {
+      showToast('❌ 未设置 Token，取消发布');
+      return;
+    }
+  }
+
   // Generate clean HTML FIRST (before showing progress, so progress isn't captured)
   const html = generateCleanHTML();
   const content = btoa(unescape(encodeURIComponent(html)));
@@ -1114,7 +1167,7 @@ async function publishToGitHub() {
   try {
     // Get current file SHA via Worker
     const getRes = await fetch(`${WORKER_URL}/contents`, {
-      headers: { 'X-Auth-Key': WORKER_AUTH }
+      headers: { 'X-GitHub-Token': token }
     });
     const getData = await getRes.json();
     const sha = getData.sha || null;
@@ -1123,7 +1176,7 @@ async function publishToGitHub() {
     const putRes = await fetch(`${WORKER_URL}/publish`, {
       method: 'PUT',
       headers: {
-        'X-Auth-Key': WORKER_AUTH,
+        'X-GitHub-Token': token,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
@@ -1138,6 +1191,9 @@ async function publishToGitHub() {
 
     if (putRes.ok && result.ok) {
       showToast('✅ 发布成功！网站将在1分钟内更新');
+    } else if (putRes.status === 401 || putRes.status === 403) {
+      localStorage.removeItem('pf_gh_token');
+      showToast('❌ Token 无效或已过期，请重新设置');
     } else {
       showToast('❌ 发布失败: ' + (result.message || result.error || putRes.status));
     }
