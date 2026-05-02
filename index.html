@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>韩爽 — AIGC 创意设计运营</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Noto+Sans+SC:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
 <style>
 /* ===== RESET & VARS ===== */
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
@@ -243,7 +243,7 @@ img,video{max-width:100%;display:block}
 <body>
 
 <!-- NAV -->
-<nav class="nav">
+<nav class="nav scrolled hidden">
   <div class="nav-inner">
     <a href="#" class="nav-logo"><span>HS</span> Portfolio</a>
     <ul class="nav-links">
@@ -253,10 +253,10 @@ img,video{max-width:100%;display:block}
       <li><a href="#data">数据展示</a></li>
     </ul>
     <button class="nav-mobile" onclick="document.querySelector('.nav-m-menu').classList.toggle('active')">
-      <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+      <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"></path></svg>
     </button>
     <div class="nav-user">
-      <button class="nav-user-btn" id="navUserBtn" onclick="handleUserBtn()">登录</button>
+      <button class="nav-user-btn" id="navUserBtn" onclick="handleUserBtn()">👑 主人</button>
     </div>
     <div class="nav-m-menu">
       <a href="#videos" onclick="this.parentElement.classList.remove('active')">视频作品</a>
@@ -275,7 +275,7 @@ img,video{max-width:100%;display:block}
     <div class="hero-orb hero-orb-3"></div>
     <div class="hero-grid"></div>
   </div>
-  <div class="hero-content fade-in">
+  <div class="hero-content fade-in visible">
     <div class="hero-badge"><div class="dot"></div>AIGC Creative Designer</div>
     <h1>你好，我是<span class="gd">韩爽</span><br><span class="gd">AIGC</span> 创意设计运营</h1>
     <p>专注于 AI 驱动的创意内容生产、广告素材设计与运营策略，用技术赋能创意，让每一个像素都有商业价值。</p>
@@ -288,290 +288,291 @@ img,video{max-width:100%;display:block}
 
 <!-- VIDEO SECTION -->
 <section class="section" id="videos">
-  <div class="section-header fade-in">
+  <div class="section-header fade-in visible">
     <span class="section-label">Video Works</span>
     <h2 class="section-title">视频作品</h2>
     <p class="section-desc">AIGC 驱动的创意视频内容，覆盖广告投放、品牌宣传等多个场景</p>
   </div>
   <div class="video-grid" id="videoGrid">
-    <div class="video-card fade-in">
-      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"/></svg></div></div>
-      <div class="video-info">
-        <h3 class="editable" contenteditable="false">作品标题</h3>
-        <p class="editable" contenteditable="false">点击编辑按钮后可修改描述</p>
-        <div class="tags"><span class="tag">AIGC</span><span class="tag">广告</span></div>
-      </div>
-      <button class="remove-btn" onclick="removeCard(this)">×</button>
-    </div>
-    <div class="video-card fade-in">
-      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"/></svg></div></div>
-      <div class="video-info">
-        <h3 class="editable" contenteditable="false">作品标题</h3>
-        <p class="editable" contenteditable="false">点击编辑按钮后可修改描述</p>
-        <div class="tags"><span class="tag">短视频</span><span class="tag">创意</span></div>
-      </div>
-      <button class="remove-btn" onclick="removeCard(this)">×</button>
-    </div>
-    <div class="video-card fade-in">
-      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"/></svg></div></div>
-      <div class="video-info">
-        <h3 class="editable" contenteditable="false">作品标题</h3>
-        <p class="editable" contenteditable="false">点击编辑按钮后可修改描述</p>
-        <div class="tags"><span class="tag">品牌</span><span class="tag">运营</span></div>
-      </div>
-      <button class="remove-btn" onclick="removeCard(this)">×</button>
-    </div>
-    <div class="video-card fade-in">
-      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"/></svg></div></div>
-      <div class="video-info">
-        <h3 class="editable" contenteditable="false">作品标题</h3>
-        <p class="editable" contenteditable="false">点击编辑按钮后可修改描述</p>
-        <div class="tags"><span class="tag">产品</span><span class="tag">展示</span></div>
-      </div>
-      <button class="remove-btn" onclick="removeCard(this)">×</button>
-    </div>
-    <div class="video-card fade-in">
-      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"/></svg></div></div>
-      <div class="video-info">
-        <h3 class="editable" contenteditable="false">作品标题</h3>
-        <p class="editable" contenteditable="false">点击编辑按钮后可修改描述</p>
-        <div class="tags"><span class="tag">效果</span><span class="tag">投放</span></div>
-      </div>
-      <button class="remove-btn" onclick="removeCard(this)">×</button>
-    </div>
-    <div class="video-card fade-in">
-      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"/></svg></div></div>
-      <div class="video-info">
-        <h3 class="editable" contenteditable="false">作品标题</h3>
-        <p class="editable" contenteditable="false">点击编辑按钮后可修改描述</p>
-        <div class="tags"><span class="tag">动态</span><span class="tag">素材</span></div>
-      </div>
-      <button class="remove-btn" onclick="removeCard(this)">×</button>
-    </div>
-  </div>
+    
+    
+    
+    
+    
+    
+  <div class="video-card fade-in visible">
+        <video src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729669021-9c1c73.mp4" controls="" preload="metadata" style="width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:var(--radius) var(--radius) 0 0;background:#000"></video>
+        <div class="video-info">
+          <h3 class="editable" contenteditable="false">一位60岁左右的白人女性，身材略丰满，棕_Seedance2.0_reference2video_1</h3>
+          <p class="editable" contenteditable="false">添加描述</p>
+          <div class="tags"><span class="tag">视频</span></div>
+        </div>
+        <button class="remove-btn" style="display: none;" onclick="removeCard(this)">×</button></div><div class="video-card fade-in visible">
+        <video src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729675445-k1kt91.mp4" controls="" preload="metadata" style="width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:var(--radius) var(--radius) 0 0;background:#000"></video>
+        <div class="video-info">
+          <h3 class="editable" contenteditable="false">[第0-4秒] 清晨金色光线，镜头从郊区_Seedance2.0_reference2video_1 (1)</h3>
+          <p class="editable" contenteditable="false">添加描述</p>
+          <div class="tags"><span class="tag">视频</span></div>
+        </div>
+        <button class="remove-btn" style="display: none;" onclick="removeCard(this)">×</button></div><div class="video-card fade-in visible">
+        <video src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729690115-uflbdg.mp4" controls="" preload="metadata" style="width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:var(--radius) var(--radius) 0 0;background:#000"></video>
+        <div class="video-info">
+          <h3 class="editable" contenteditable="false">绿色拖鞋4</h3>
+          <p class="editable" contenteditable="false">添加描述</p>
+          <div class="tags"><span class="tag">视频</span></div>
+        </div>
+        <button class="remove-btn" style="display: none;" onclick="removeCard(this)">×</button></div><div class="video-card fade-in visible">
+        <video src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729700452-rfmaj4.mp4" controls="" preload="metadata" style="width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:var(--radius) var(--radius) 0 0;background:#000"></video>
+        <div class="video-info">
+          <h3 class="editable" contenteditable="false">蓝色皮筋凉鞋</h3>
+          <p class="editable" contenteditable="false">添加描述</p>
+          <div class="tags"><span class="tag">视频</span></div>
+        </div>
+        <button class="remove-btn" style="display: none;" onclick="removeCard(this)">×</button></div><div class="video-card fade-in visible">
+        <video src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729715457-vtjmpi.mp4" controls="" preload="metadata" style="width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:var(--radius) var(--radius) 0 0;background:#000"></video>
+        <div class="video-info">
+          <h3 class="editable" contenteditable="false">红色凉鞋3</h3>
+          <p class="editable" contenteditable="false">添加描述</p>
+          <div class="tags"><span class="tag">视频</span></div>
+        </div>
+        <button class="remove-btn" style="display: none;" onclick="removeCard(this)">×</button></div><div class="video-card fade-in visible">
+        <video src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729721804-n46r23.mp4" controls="" preload="metadata" style="width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:var(--radius) var(--radius) 0 0;background:#000"></video>
+        <div class="video-info">
+          <h3 class="editable" contenteditable="false">4月13日(3)</h3>
+          <p class="editable" contenteditable="false">添加描述</p>
+          <div class="tags"><span class="tag">视频</span></div>
+        </div>
+        <button class="remove-btn" style="display: none;" onclick="removeCard(this)">×</button></div><div class="video-card fade-in visible">
+        <video src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729748581-54nqqv.mp4" controls="" preload="metadata" style="width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:var(--radius) var(--radius) 0 0;background:#000"></video>
+        <div class="video-info">
+          <h3 class="editable" contenteditable="false">一位56岁左右的白人女性，身材丰满自然，_Seedance2.0_reference2video_1 (1)</h3>
+          <p class="editable" contenteditable="false">添加描述</p>
+          <div class="tags"><span class="tag">视频</span></div>
+        </div>
+        <button class="remove-btn" style="display: none;" onclick="removeCard(this)">×</button></div></div>
   <div class="more-section" id="videoMore" style="display:none">
     <div class="video-grid">
-    <div class="video-card fade-in">
-      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"/></svg></div></div>
+    <div class="video-card fade-in visible">
+      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"></polygon></svg></div></div>
       <div class="video-info">
         <h3 class="editable" contenteditable="false">作品标题</h3>
         <p class="editable" contenteditable="false">点击编辑按钮后可修改描述</p>
         <div class="tags"><span class="tag">脚本</span><span class="tag">创作</span></div>
       </div>
-      <button class="remove-btn" onclick="removeCard(this)">×</button>
+      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
     </div>
-    <div class="video-card fade-in">
-      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"/></svg></div></div>
+    <div class="video-card fade-in visible">
+      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"></polygon></svg></div></div>
       <div class="video-info">
         <h3 class="editable" contenteditable="false">作品标题</h3>
         <p class="editable" contenteditable="false">点击编辑按钮后可修改描述</p>
         <div class="tags"><span class="tag">剪辑</span><span class="tag">包装</span></div>
       </div>
-      <button class="remove-btn" onclick="removeCard(this)">×</button>
+      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
     </div>
-    <div class="video-card fade-in">
-      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"/></svg></div></div>
+    <div class="video-card fade-in visible">
+      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"></polygon></svg></div></div>
       <div class="video-info">
         <h3 class="editable" contenteditable="false">作品标题</h3>
         <p class="editable" contenteditable="false">点击编辑按钮后可修改描述</p>
         <div class="tags"><span class="tag">营销</span><span class="tag">推广</span></div>
       </div>
-      <button class="remove-btn" onclick="removeCard(this)">×</button>
+      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
     </div>
-    <div class="video-card fade-in">
-      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"/></svg></div></div>
+    <div class="video-card fade-in visible">
+      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"></polygon></svg></div></div>
       <div class="video-info">
         <h3 class="editable" contenteditable="false">作品标题</h3>
         <p class="editable" contenteditable="false">点击编辑按钮后可修改描述</p>
         <div class="tags"><span class="tag">信息流</span><span class="tag">投放</span></div>
       </div>
-      <button class="remove-btn" onclick="removeCard(this)">×</button>
+      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
     </div>
-    <div class="video-card fade-in">
-      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"/></svg></div></div>
+    <div class="video-card fade-in visible">
+      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"></polygon></svg></div></div>
       <div class="video-info">
         <h3 class="editable" contenteditable="false">作品标题</h3>
         <p class="editable" contenteditable="false">点击编辑按钮后可修改描述</p>
         <div class="tags"><span class="tag">竖版</span><span class="tag">短视频</span></div>
       </div>
-      <button class="remove-btn" onclick="removeCard(this)">×</button>
+      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
     </div>
-    <div class="video-card fade-in">
-      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"/></svg></div></div>
+    <div class="video-card fade-in visible">
+      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"></polygon></svg></div></div>
       <div class="video-info">
         <h3 class="editable" contenteditable="false">作品标题</h3>
         <p class="editable" contenteditable="false">点击编辑按钮后可修改描述</p>
         <div class="tags"><span class="tag">UGC</span><span class="tag">风格</span></div>
       </div>
-      <button class="remove-btn" onclick="removeCard(this)">×</button>
+      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
     </div>
-    <div class="video-card fade-in">
-      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"/></svg></div></div>
+    <div class="video-card fade-in visible">
+      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"></polygon></svg></div></div>
       <div class="video-info">
         <h3 class="editable" contenteditable="false">作品标题</h3>
         <p class="editable" contenteditable="false">点击编辑按钮后可修改描述</p>
         <div class="tags"><span class="tag">口播</span><span class="tag">脚本</span></div>
       </div>
-      <button class="remove-btn" onclick="removeCard(this)">×</button>
+      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
     </div>
-    <div class="video-card fade-in">
-      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"/></svg></div></div>
+    <div class="video-card fade-in visible">
+      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"></polygon></svg></div></div>
       <div class="video-info">
         <h3 class="editable" contenteditable="false">作品标题</h3>
         <p class="editable" contenteditable="false">点击编辑按钮后可修改描述</p>
         <div class="tags"><span class="tag">开箱</span><span class="tag">测评</span></div>
       </div>
-      <button class="remove-btn" onclick="removeCard(this)">×</button>
+      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
     </div>
-    <div class="video-card fade-in">
-      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"/></svg></div></div>
+    <div class="video-card fade-in visible">
+      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"></polygon></svg></div></div>
       <div class="video-info">
         <h3 class="editable" contenteditable="false">作品标题</h3>
         <p class="editable" contenteditable="false">点击编辑按钮后可修改描述</p>
         <div class="tags"><span class="tag">对比</span><span class="tag">展示</span></div>
       </div>
-      <button class="remove-btn" onclick="removeCard(this)">×</button>
+      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
     </div>
-    <div class="video-card fade-in">
-      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"/></svg></div></div>
+    <div class="video-card fade-in visible">
+      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"></polygon></svg></div></div>
       <div class="video-info">
         <h3 class="editable" contenteditable="false">作品标题</h3>
         <p class="editable" contenteditable="false">点击编辑按钮后可修改描述</p>
         <div class="tags"><span class="tag">故事</span><span class="tag">叙事</span></div>
       </div>
-      <button class="remove-btn" onclick="removeCard(this)">×</button>
+      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
     </div>
-    <div class="video-card fade-in">
-      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"/></svg></div></div>
+    <div class="video-card fade-in visible">
+      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"></polygon></svg></div></div>
       <div class="video-info">
         <h3 class="editable" contenteditable="false">作品标题</h3>
         <p class="editable" contenteditable="false">点击编辑按钮后可修改描述</p>
         <div class="tags"><span class="tag">产品</span><span class="tag">特写</span></div>
       </div>
-      <button class="remove-btn" onclick="removeCard(this)">×</button>
+      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
     </div>
-    <div class="video-card fade-in">
-      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"/></svg></div></div>
+    <div class="video-card fade-in visible">
+      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"></polygon></svg></div></div>
       <div class="video-info">
         <h3 class="editable" contenteditable="false">作品标题</h3>
         <p class="editable" contenteditable="false">点击编辑按钮后可修改描述</p>
         <div class="tags"><span class="tag">生活</span><span class="tag">场景</span></div>
       </div>
-      <button class="remove-btn" onclick="removeCard(this)">×</button>
+      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
     </div>
-    <div class="video-card fade-in">
-      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"/></svg></div></div>
+    <div class="video-card fade-in visible">
+      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"></polygon></svg></div></div>
       <div class="video-info">
         <h3 class="editable" contenteditable="false">作品标题</h3>
         <p class="editable" contenteditable="false">点击编辑按钮后可修改描述</p>
         <div class="tags"><span class="tag">痛点</span><span class="tag">呈现</span></div>
       </div>
-      <button class="remove-btn" onclick="removeCard(this)">×</button>
+      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
     </div>
-    <div class="video-card fade-in">
-      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"/></svg></div></div>
+    <div class="video-card fade-in visible">
+      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"></polygon></svg></div></div>
       <div class="video-info">
         <h3 class="editable" contenteditable="false">作品标题</h3>
         <p class="editable" contenteditable="false">点击编辑按钮后可修改描述</p>
         <div class="tags"><span class="tag">解决方案</span><span class="tag">展示</span></div>
       </div>
-      <button class="remove-btn" onclick="removeCard(this)">×</button>
+      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
     </div>
-    <div class="video-card fade-in">
-      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"/></svg></div></div>
+    <div class="video-card fade-in visible">
+      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"></polygon></svg></div></div>
       <div class="video-info">
         <h3 class="editable" contenteditable="false">作品标题</h3>
         <p class="editable" contenteditable="false">点击编辑按钮后可修改描述</p>
         <div class="tags"><span class="tag">功效</span><span class="tag">演示</span></div>
       </div>
-      <button class="remove-btn" onclick="removeCard(this)">×</button>
+      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
     </div>
-    <div class="video-card fade-in">
-      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"/></svg></div></div>
+    <div class="video-card fade-in visible">
+      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"></polygon></svg></div></div>
       <div class="video-info">
         <h3 class="editable" contenteditable="false">作品标题</h3>
         <p class="editable" contenteditable="false">点击编辑按钮后可修改描述</p>
         <div class="tags"><span class="tag">before</span><span class="tag">after</span></div>
       </div>
-      <button class="remove-btn" onclick="removeCard(this)">×</button>
+      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
     </div>
-    <div class="video-card fade-in">
-      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"/></svg></div></div>
+    <div class="video-card fade-in visible">
+      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"></polygon></svg></div></div>
       <div class="video-info">
         <h3 class="editable" contenteditable="false">作品标题</h3>
         <p class="editable" contenteditable="false">点击编辑按钮后可修改描述</p>
         <div class="tags"><span class="tag">用户</span><span class="tag">证言</span></div>
       </div>
-      <button class="remove-btn" onclick="removeCard(this)">×</button>
+      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
     </div>
-    <div class="video-card fade-in">
-      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"/></svg></div></div>
+    <div class="video-card fade-in visible">
+      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"></polygon></svg></div></div>
       <div class="video-info">
         <h3 class="editable" contenteditable="false">作品标题</h3>
         <p class="editable" contenteditable="false">点击编辑按钮后可修改描述</p>
         <div class="tags"><span class="tag">限时</span><span class="tag">促销</span></div>
       </div>
-      <button class="remove-btn" onclick="removeCard(this)">×</button>
+      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
     </div>
-    <div class="video-card fade-in">
-      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"/></svg></div></div>
+    <div class="video-card fade-in visible">
+      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"></polygon></svg></div></div>
       <div class="video-info">
         <h3 class="editable" contenteditable="false">作品标题</h3>
         <p class="editable" contenteditable="false">点击编辑按钮后可修改描述</p>
         <div class="tags"><span class="tag">节日</span><span class="tag">主题</span></div>
       </div>
-      <button class="remove-btn" onclick="removeCard(this)">×</button>
+      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
     </div>
-    <div class="video-card fade-in">
-      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"/></svg></div></div>
+    <div class="video-card fade-in visible">
+      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"></polygon></svg></div></div>
       <div class="video-info">
         <h3 class="editable" contenteditable="false">作品标题</h3>
         <p class="editable" contenteditable="false">点击编辑按钮后可修改描述</p>
         <div class="tags"><span class="tag">系列</span><span class="tag">广告</span></div>
       </div>
-      <button class="remove-btn" onclick="removeCard(this)">×</button>
+      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
     </div>
-    <div class="video-card fade-in">
-      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"/></svg></div></div>
+    <div class="video-card fade-in visible">
+      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"></polygon></svg></div></div>
       <div class="video-info">
         <h3 class="editable" contenteditable="false">作品标题</h3>
         <p class="editable" contenteditable="false">点击编辑按钮后可修改描述</p>
         <div class="tags"><span class="tag">A/B</span><span class="tag">测试</span></div>
       </div>
-      <button class="remove-btn" onclick="removeCard(this)">×</button>
+      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
     </div>
-    <div class="video-card fade-in">
-      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"/></svg></div></div>
+    <div class="video-card fade-in visible">
+      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"></polygon></svg></div></div>
       <div class="video-info">
         <h3 class="editable" contenteditable="false">作品标题</h3>
         <p class="editable" contenteditable="false">点击编辑按钮后可修改描述</p>
         <div class="tags"><span class="tag">爆款</span><span class="tag">复刻</span></div>
       </div>
-      <button class="remove-btn" onclick="removeCard(this)">×</button>
+      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
     </div>
-    <div class="video-card fade-in">
-      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"/></svg></div></div>
+    <div class="video-card fade-in visible">
+      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"></polygon></svg></div></div>
       <div class="video-info">
         <h3 class="editable" contenteditable="false">作品标题</h3>
         <p class="editable" contenteditable="false">点击编辑按钮后可修改描述</p>
         <div class="tags"><span class="tag">数据</span><span class="tag">驱动</span></div>
       </div>
-      <button class="remove-btn" onclick="removeCard(this)">×</button>
+      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
     </div>
-    <div class="video-card fade-in">
-      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"/></svg></div></div>
+    <div class="video-card fade-in visible">
+      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"></polygon></svg></div></div>
       <div class="video-info">
         <h3 class="editable" contenteditable="false">作品标题</h3>
         <p class="editable" contenteditable="false">点击编辑按钮后可修改描述</p>
         <div class="tags"><span class="tag">迭代</span><span class="tag">优化</span></div>
       </div>
-      <button class="remove-btn" onclick="removeCard(this)">×</button>
+      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
     </div>
     </div>
   </div>
   <button class="show-more-btn" id="videoMoreBtn" onclick="toggleMore('video')">查看更多视频 ↓</button>
-  <div class="upload-zone" id="videoUpload">
-    <input type="file" accept="video/*" multiple onchange="handleVideoUpload(this.files)">
+  <div class="upload-zone" id="videoUpload" style="display: none;">
+    <input type="file" accept="video/*" multiple="" onchange="handleVideoUpload(this.files)">
     <div class="u-icon">🎬</div>
     <p>拖拽或点击上传视频</p>
     <p class="u-hint">支持 MP4、MOV、WebM 格式</p>
@@ -580,140 +581,140 @@ img,video{max-width:100%;display:block}
 
 <!-- IMAGE SECTION -->
 <section class="section" id="images">
-  <div class="section-header fade-in">
+  <div class="section-header fade-in visible">
     <span class="section-label">Design Works</span>
     <h2 class="section-title">图片作品</h2>
     <p class="section-desc">广告素材、视觉设计、创意海报等 AIGC 生成作品</p>
   </div>
   <div class="image-gallery" id="imageGallery">
-    <div class="image-card fade-in">
-      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div></div>
+    <div class="image-card fade-in visible">
+      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><path d="M21 15l-5-5L5 21"></path></svg></div></div>
       <div class="image-card-info"><h4 class="editable" contenteditable="false">设计作品</h4><p class="editable" contenteditable="false">点击编辑可修改</p></div>
-      <button class="remove-btn" onclick="removeCard(this)">×</button>
+      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
     </div>
-    <div class="image-card fade-in">
-      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div></div>
+    <div class="image-card fade-in visible">
+      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><path d="M21 15l-5-5L5 21"></path></svg></div></div>
       <div class="image-card-info"><h4 class="editable" contenteditable="false">设计作品</h4><p class="editable" contenteditable="false">点击编辑可修改</p></div>
-      <button class="remove-btn" onclick="removeCard(this)">×</button>
+      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
     </div>
-    <div class="image-card fade-in">
-      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div></div>
+    <div class="image-card fade-in visible">
+      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><path d="M21 15l-5-5L5 21"></path></svg></div></div>
       <div class="image-card-info"><h4 class="editable" contenteditable="false">设计作品</h4><p class="editable" contenteditable="false">点击编辑可修改</p></div>
-      <button class="remove-btn" onclick="removeCard(this)">×</button>
+      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
     </div>
-    <div class="image-card fade-in">
-      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div></div>
+    <div class="image-card fade-in visible">
+      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><path d="M21 15l-5-5L5 21"></path></svg></div></div>
       <div class="image-card-info"><h4 class="editable" contenteditable="false">设计作品</h4><p class="editable" contenteditable="false">点击编辑可修改</p></div>
-      <button class="remove-btn" onclick="removeCard(this)">×</button>
+      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
     </div>
-    <div class="image-card fade-in">
-      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div></div>
+    <div class="image-card fade-in visible">
+      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><path d="M21 15l-5-5L5 21"></path></svg></div></div>
       <div class="image-card-info"><h4 class="editable" contenteditable="false">设计作品</h4><p class="editable" contenteditable="false">点击编辑可修改</p></div>
-      <button class="remove-btn" onclick="removeCard(this)">×</button>
+      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
     </div>
-    <div class="image-card fade-in">
-      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div></div>
+    <div class="image-card fade-in visible">
+      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><path d="M21 15l-5-5L5 21"></path></svg></div></div>
       <div class="image-card-info"><h4 class="editable" contenteditable="false">设计作品</h4><p class="editable" contenteditable="false">点击编辑可修改</p></div>
-      <button class="remove-btn" onclick="removeCard(this)">×</button>
+      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
     </div>
-    <div class="image-card fade-in">
-      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div></div>
+    <div class="image-card fade-in visible">
+      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><path d="M21 15l-5-5L5 21"></path></svg></div></div>
       <div class="image-card-info"><h4 class="editable" contenteditable="false">设计作品</h4><p class="editable" contenteditable="false">点击编辑可修改</p></div>
-      <button class="remove-btn" onclick="removeCard(this)">×</button>
+      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
     </div>
-    <div class="image-card fade-in">
-      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div></div>
+    <div class="image-card fade-in visible">
+      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><path d="M21 15l-5-5L5 21"></path></svg></div></div>
       <div class="image-card-info"><h4 class="editable" contenteditable="false">设计作品</h4><p class="editable" contenteditable="false">点击编辑可修改</p></div>
-      <button class="remove-btn" onclick="removeCard(this)">×</button>
+      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
     </div>
   </div>
   <div class="more-section" id="imageMore" style="display:none">
     <div class="image-gallery">
-    <div class="image-card fade-in">
-      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div></div>
+    <div class="image-card fade-in visible">
+      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><path d="M21 15l-5-5L5 21"></path></svg></div></div>
       <div class="image-card-info"><h4 class="editable" contenteditable="false">设计作品</h4><p class="editable" contenteditable="false">点击编辑可修改</p></div>
-      <button class="remove-btn" onclick="removeCard(this)">×</button>
+      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
     </div>
-    <div class="image-card fade-in">
-      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div></div>
+    <div class="image-card fade-in visible">
+      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><path d="M21 15l-5-5L5 21"></path></svg></div></div>
       <div class="image-card-info"><h4 class="editable" contenteditable="false">设计作品</h4><p class="editable" contenteditable="false">点击编辑可修改</p></div>
-      <button class="remove-btn" onclick="removeCard(this)">×</button>
+      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
     </div>
-    <div class="image-card fade-in">
-      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div></div>
+    <div class="image-card fade-in visible">
+      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><path d="M21 15l-5-5L5 21"></path></svg></div></div>
       <div class="image-card-info"><h4 class="editable" contenteditable="false">设计作品</h4><p class="editable" contenteditable="false">点击编辑可修改</p></div>
-      <button class="remove-btn" onclick="removeCard(this)">×</button>
+      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
     </div>
-    <div class="image-card fade-in">
-      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div></div>
+    <div class="image-card fade-in visible">
+      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><path d="M21 15l-5-5L5 21"></path></svg></div></div>
       <div class="image-card-info"><h4 class="editable" contenteditable="false">设计作品</h4><p class="editable" contenteditable="false">点击编辑可修改</p></div>
-      <button class="remove-btn" onclick="removeCard(this)">×</button>
+      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
     </div>
-    <div class="image-card fade-in">
-      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div></div>
+    <div class="image-card fade-in visible">
+      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><path d="M21 15l-5-5L5 21"></path></svg></div></div>
       <div class="image-card-info"><h4 class="editable" contenteditable="false">设计作品</h4><p class="editable" contenteditable="false">点击编辑可修改</p></div>
-      <button class="remove-btn" onclick="removeCard(this)">×</button>
+      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
     </div>
-    <div class="image-card fade-in">
-      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div></div>
+    <div class="image-card fade-in visible">
+      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><path d="M21 15l-5-5L5 21"></path></svg></div></div>
       <div class="image-card-info"><h4 class="editable" contenteditable="false">设计作品</h4><p class="editable" contenteditable="false">点击编辑可修改</p></div>
-      <button class="remove-btn" onclick="removeCard(this)">×</button>
+      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
     </div>
-    <div class="image-card fade-in">
-      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div></div>
+    <div class="image-card fade-in visible">
+      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><path d="M21 15l-5-5L5 21"></path></svg></div></div>
       <div class="image-card-info"><h4 class="editable" contenteditable="false">设计作品</h4><p class="editable" contenteditable="false">点击编辑可修改</p></div>
-      <button class="remove-btn" onclick="removeCard(this)">×</button>
+      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
     </div>
-    <div class="image-card fade-in">
-      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div></div>
+    <div class="image-card fade-in visible">
+      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><path d="M21 15l-5-5L5 21"></path></svg></div></div>
       <div class="image-card-info"><h4 class="editable" contenteditable="false">设计作品</h4><p class="editable" contenteditable="false">点击编辑可修改</p></div>
-      <button class="remove-btn" onclick="removeCard(this)">×</button>
+      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
     </div>
-    <div class="image-card fade-in">
-      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div></div>
+    <div class="image-card fade-in visible">
+      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><path d="M21 15l-5-5L5 21"></path></svg></div></div>
       <div class="image-card-info"><h4 class="editable" contenteditable="false">设计作品</h4><p class="editable" contenteditable="false">点击编辑可修改</p></div>
-      <button class="remove-btn" onclick="removeCard(this)">×</button>
+      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
     </div>
-    <div class="image-card fade-in">
-      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div></div>
+    <div class="image-card fade-in visible">
+      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><path d="M21 15l-5-5L5 21"></path></svg></div></div>
       <div class="image-card-info"><h4 class="editable" contenteditable="false">设计作品</h4><p class="editable" contenteditable="false">点击编辑可修改</p></div>
-      <button class="remove-btn" onclick="removeCard(this)">×</button>
+      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
     </div>
-    <div class="image-card fade-in">
-      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div></div>
+    <div class="image-card fade-in visible">
+      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><path d="M21 15l-5-5L5 21"></path></svg></div></div>
       <div class="image-card-info"><h4 class="editable" contenteditable="false">设计作品</h4><p class="editable" contenteditable="false">点击编辑可修改</p></div>
-      <button class="remove-btn" onclick="removeCard(this)">×</button>
+      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
     </div>
-    <div class="image-card fade-in">
-      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div></div>
+    <div class="image-card fade-in visible">
+      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><path d="M21 15l-5-5L5 21"></path></svg></div></div>
       <div class="image-card-info"><h4 class="editable" contenteditable="false">设计作品</h4><p class="editable" contenteditable="false">点击编辑可修改</p></div>
-      <button class="remove-btn" onclick="removeCard(this)">×</button>
+      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
     </div>
-    <div class="image-card fade-in">
-      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div></div>
+    <div class="image-card fade-in visible">
+      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><path d="M21 15l-5-5L5 21"></path></svg></div></div>
       <div class="image-card-info"><h4 class="editable" contenteditable="false">设计作品</h4><p class="editable" contenteditable="false">点击编辑可修改</p></div>
-      <button class="remove-btn" onclick="removeCard(this)">×</button>
+      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
     </div>
-    <div class="image-card fade-in">
-      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div></div>
+    <div class="image-card fade-in visible">
+      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><path d="M21 15l-5-5L5 21"></path></svg></div></div>
       <div class="image-card-info"><h4 class="editable" contenteditable="false">设计作品</h4><p class="editable" contenteditable="false">点击编辑可修改</p></div>
-      <button class="remove-btn" onclick="removeCard(this)">×</button>
+      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
     </div>
-    <div class="image-card fade-in">
-      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div></div>
+    <div class="image-card fade-in visible">
+      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><path d="M21 15l-5-5L5 21"></path></svg></div></div>
       <div class="image-card-info"><h4 class="editable" contenteditable="false">设计作品</h4><p class="editable" contenteditable="false">点击编辑可修改</p></div>
-      <button class="remove-btn" onclick="removeCard(this)">×</button>
+      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
     </div>
-    <div class="image-card fade-in">
-      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div></div>
+    <div class="image-card fade-in visible">
+      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><path d="M21 15l-5-5L5 21"></path></svg></div></div>
       <div class="image-card-info"><h4 class="editable" contenteditable="false">设计作品</h4><p class="editable" contenteditable="false">点击编辑可修改</p></div>
-      <button class="remove-btn" onclick="removeCard(this)">×</button>
+      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
     </div>
     </div>
   </div>
   <button class="show-more-btn" id="imageMoreBtn" onclick="toggleMore('image')">查看更多图片 ↓</button>
-  <div class="upload-zone" id="imageUpload">
-    <input type="file" accept="image/*" multiple onchange="handleImageUpload(this.files)">
+  <div class="upload-zone" id="imageUpload" style="display: none;">
+    <input type="file" accept="image/*" multiple="" onchange="handleImageUpload(this.files)">
     <div class="u-icon">🖼️</div>
     <p>拖拽或点击上传图片</p>
     <p class="u-hint">支持 JPG、PNG、WebP 格式</p>
@@ -723,42 +724,42 @@ img,video{max-width:100%;display:block}
 <!-- AGENT SECTION -->
 <section class="section-dark" id="agents">
   <div class="section-dark-inner">
-    <div class="section-header fade-in">
+    <div class="section-header fade-in visible">
       <span class="section-label">AI Agents</span>
       <h2 class="section-title" style="color:var(--text-on-dark)">个人 Agent 展示</h2>
       <p class="section-desc">我构建的 AI Agent 工具，提升创意生产效率</p>
     </div>
     <div class="agent-grid" id="agentGrid">
-      <div class="agent-card fade-in">
-        <div class="ag-placeholder"><div class="ag-placeholder-bg"></div><div class="ag-placeholder-icon"><svg viewBox="0 0 24 24"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1.27A7 7 0 0 1 14 22h-4a7 7 0 0 1-6.73-3H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73A2 2 0 0 1 12 2M9 17a1 1 0 1 0 0-2 1 1 0 0 0 0 2m6 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2"/></svg></div></div>
+      <div class="agent-card fade-in visible">
+        <div class="ag-placeholder"><div class="ag-placeholder-bg"></div><div class="ag-placeholder-icon"><svg viewBox="0 0 24 24"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1.27A7 7 0 0 1 14 22h-4a7 7 0 0 1-6.73-3H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73A2 2 0 0 1 12 2M9 17a1 1 0 1 0 0-2 1 1 0 0 0 0 2m6 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2"></path></svg></div></div>
         <div class="agent-info">
           <h3 class="editable" contenteditable="false">Agent 名称</h3>
           <p class="editable" contenteditable="false">Agent 功能描述，点击编辑按钮后可修改</p>
           <div class="agent-meta"><div class="agent-meta-item">类型: <span>创意生成</span></div><div class="agent-meta-item">状态: <span>运行中</span></div></div>
         </div>
-        <button class="remove-btn" onclick="removeCard(this)">×</button>
+        <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
       </div>
-      <div class="agent-card fade-in">
-        <div class="ag-placeholder"><div class="ag-placeholder-bg"></div><div class="ag-placeholder-icon"><svg viewBox="0 0 24 24"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1.27A7 7 0 0 1 14 22h-4a7 7 0 0 1-6.73-3H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73A2 2 0 0 1 12 2M9 17a1 1 0 1 0 0-2 1 1 0 0 0 0 2m6 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2"/></svg></div></div>
+      <div class="agent-card fade-in visible">
+        <div class="ag-placeholder"><div class="ag-placeholder-bg"></div><div class="ag-placeholder-icon"><svg viewBox="0 0 24 24"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1.27A7 7 0 0 1 14 22h-4a7 7 0 0 1-6.73-3H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73A2 2 0 0 1 12 2M9 17a1 1 0 1 0 0-2 1 1 0 0 0 0 2m6 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2"></path></svg></div></div>
         <div class="agent-info">
           <h3 class="editable" contenteditable="false">Agent 名称</h3>
           <p class="editable" contenteditable="false">Agent 功能描述，点击编辑按钮后可修改</p>
           <div class="agent-meta"><div class="agent-meta-item">类型: <span>数据分析</span></div><div class="agent-meta-item">状态: <span>运行中</span></div></div>
         </div>
-        <button class="remove-btn" onclick="removeCard(this)">×</button>
+        <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
       </div>
-      <div class="agent-card fade-in">
-        <div class="ag-placeholder"><div class="ag-placeholder-bg"></div><div class="ag-placeholder-icon"><svg viewBox="0 0 24 24"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1.27A7 7 0 0 1 14 22h-4a7 7 0 0 1-6.73-3H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73A2 2 0 0 1 12 2M9 17a1 1 0 1 0 0-2 1 1 0 0 0 0 2m6 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2"/></svg></div></div>
+      <div class="agent-card fade-in visible">
+        <div class="ag-placeholder"><div class="ag-placeholder-bg"></div><div class="ag-placeholder-icon"><svg viewBox="0 0 24 24"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1.27A7 7 0 0 1 14 22h-4a7 7 0 0 1-6.73-3H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73A2 2 0 0 1 12 2M9 17a1 1 0 1 0 0-2 1 1 0 0 0 0 2m6 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2"></path></svg></div></div>
         <div class="agent-info">
           <h3 class="editable" contenteditable="false">Agent 名称</h3>
           <p class="editable" contenteditable="false">Agent 功能描述，点击编辑按钮后可修改</p>
           <div class="agent-meta"><div class="agent-meta-item">类型: <span>素材优化</span></div><div class="agent-meta-item">状态: <span>运行中</span></div></div>
         </div>
-        <button class="remove-btn" onclick="removeCard(this)">×</button>
+        <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
       </div>
     </div>
-    <div class="upload-zone" id="agentUpload" style="border-color:rgba(255,255,255,0.15)">
-      <input type="file" accept="image/*" multiple onchange="handleAgentUpload(this.files)">
+    <div class="upload-zone" id="agentUpload" style="border-color: rgba(255, 255, 255, 0.15); display: none;">
+      <input type="file" accept="image/*" multiple="" onchange="handleAgentUpload(this.files)">
       <div class="u-icon">🤖</div>
       <p style="color:var(--text-on-dark-sec)">拖拽或点击上传 Agent 截图</p>
       <p class="u-hint" style="color:rgba(255,255,255,0.3)">支持 JPG、PNG、WebP 格式</p>
@@ -768,34 +769,34 @@ img,video{max-width:100%;display:block}
 
 <!-- DATA SECTION -->
 <section class="section" id="data">
-  <div class="section-header fade-in">
+  <div class="section-header fade-in visible">
     <span class="section-label">Performance Data</span>
     <h2 class="section-title">数据展示</h2>
     <p class="section-desc">素材投放效果与创意产出的核心数据指标</p>
   </div>
-  <div class="data-stats fade-in">
+  <div class="data-stats fade-in visible">
     <div class="stat-card"><div class="stat-number editable" contenteditable="false">1,200+</div><div class="stat-label">素材总产出</div><div class="stat-sub">视频 + 图片</div></div>
     <div class="stat-card"><div class="stat-number editable" contenteditable="false">5.8M</div><div class="stat-label">总曝光量</div><div class="stat-sub">DSP 投放累计</div></div>
     <div class="stat-card"><div class="stat-number editable" contenteditable="false">3.2%</div><div class="stat-label">平均 CTR</div><div class="stat-sub">高于行业均值</div></div>
     <div class="stat-card"><div class="stat-number editable" contenteditable="false">$0.42</div><div class="stat-label">平均 CPC</div><div class="stat-sub">持续优化中</div></div>
   </div>
-  <div class="data-charts fade-in">
+  <div class="data-charts fade-in visible">
     <div class="chart-card">
       <h3>素材类型分布</h3>
       <div class="chart-bar-group">
-        <div class="chart-bar-item"><label><span>视频广告</span><span>45%</span></label><div class="chart-bar"><div class="chart-bar-fill" style="width:45%"></div></div></div>
-        <div class="chart-bar-item"><label><span>静态图片</span><span>30%</span></label><div class="chart-bar"><div class="chart-bar-fill" style="width:30%"></div></div></div>
-        <div class="chart-bar-item"><label><span>GIF 动图</span><span>15%</span></label><div class="chart-bar"><div class="chart-bar-fill" style="width:15%"></div></div></div>
-        <div class="chart-bar-item"><label><span>轮播素材</span><span>10%</span></label><div class="chart-bar"><div class="chart-bar-fill" style="width:10%"></div></div></div>
+        <div class="chart-bar-item"><label><span>视频广告</span><span>45%</span></label><div class="chart-bar"><div class="chart-bar-fill" style="width: 45%;"></div></div></div>
+        <div class="chart-bar-item"><label><span>静态图片</span><span>30%</span></label><div class="chart-bar"><div class="chart-bar-fill" style="width: 30%;"></div></div></div>
+        <div class="chart-bar-item"><label><span>GIF 动图</span><span>15%</span></label><div class="chart-bar"><div class="chart-bar-fill" style="width: 15%;"></div></div></div>
+        <div class="chart-bar-item"><label><span>轮播素材</span><span>10%</span></label><div class="chart-bar"><div class="chart-bar-fill" style="width: 10%;"></div></div></div>
       </div>
     </div>
     <div class="chart-card">
       <h3>月度产出趋势</h3>
       <div class="chart-bar-group">
-        <div class="chart-bar-item"><label><span>1月</span><span>86</span></label><div class="chart-bar"><div class="chart-bar-fill" style="width:43%"></div></div></div>
-        <div class="chart-bar-item"><label><span>2月</span><span>124</span></label><div class="chart-bar"><div class="chart-bar-fill" style="width:62%"></div></div></div>
-        <div class="chart-bar-item"><label><span>3月</span><span>168</span></label><div class="chart-bar"><div class="chart-bar-fill" style="width:84%"></div></div></div>
-        <div class="chart-bar-item"><label><span>4月</span><span>200</span></label><div class="chart-bar"><div class="chart-bar-fill" style="width:100%"></div></div></div>
+        <div class="chart-bar-item"><label><span>1月</span><span>86</span></label><div class="chart-bar"><div class="chart-bar-fill" style="width: 43%;"></div></div></div>
+        <div class="chart-bar-item"><label><span>2月</span><span>124</span></label><div class="chart-bar"><div class="chart-bar-fill" style="width: 62%;"></div></div></div>
+        <div class="chart-bar-item"><label><span>3月</span><span>168</span></label><div class="chart-bar"><div class="chart-bar-fill" style="width: 84%;"></div></div></div>
+        <div class="chart-bar-item"><label><span>4月</span><span>200</span></label><div class="chart-bar"><div class="chart-bar-fill" style="width: 100%;"></div></div></div>
       </div>
     </div>
   </div>
@@ -808,7 +809,7 @@ img,video{max-width:100%;display:block}
 </footer>
 
 <!-- EDIT BUTTON (hidden until owner logs in) -->
-<button class="edit-btn" id="editBtn" onclick="toggleEditMode()" title="编辑模式" style="display:none">✏️</button>
+<button class="edit-btn" id="editBtn" onclick="toggleEditMode()" title="编辑模式" style="display: flex;">✏️</button>
 
 <!-- AUTH MODAL -->
 <div class="auth-modal" id="authModal">
@@ -1403,5 +1404,8 @@ if (dc) chartObserver.observe(dc);
 /* ===== INIT ===== */
 initAnimations();
 </script>
+<script defer="" src="https://static.cloudflareinsights.com/beacon.min.js/v8c78df7c7c0f484497ecbca7046644da1771523124516" integrity="sha512-8DS7rgIrAmghBFwoOTujcf6D9rXvH8xm8JQ1Ja01h9QX8EzXldiszufYa4IFfKdLUKTTrnSFXLDkUEOTrZQ8Qg==" data-cf-beacon="{&quot;version&quot;:&quot;2024.11.0&quot;,&quot;token&quot;:&quot;2ab3505cadb04c88908c2fa984173e8b&quot;,&quot;r&quot;:1,&quot;server_timing&quot;:{&quot;name&quot;:{&quot;cfCacheStatus&quot;:true,&quot;cfEdge&quot;:true,&quot;cfExtPri&quot;:true,&quot;cfL4&quot;:true,&quot;cfOrigin&quot;:true,&quot;cfSpeedBrain&quot;:true},&quot;location_startswith&quot;:null}}" crossorigin="anonymous"></script>
+
+
 </body>
 </html>
