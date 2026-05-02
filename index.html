@@ -74,7 +74,8 @@ img,video{max-width:100%;display:block}
 /* ===== VIDEO GRID ===== */
 .video-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-bottom:40px}
 .video-card{background:var(--bg-card);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;transition:all .3s;position:relative}
-.video-card video{width:100%;display:block;border-radius:var(--radius) var(--radius) 0 0;background:#000}
+.video-card .video-wrap{position:relative;aspect-ratio:9/16;background:#000;border-radius:var(--radius) var(--radius) 0 0;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.video-card video{width:100%;height:100%;object-fit:contain;display:block}
 .video-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
 .v-placeholder{position:relative;aspect-ratio:16/9;overflow:hidden;background:#1a1a2e;display:flex;align-items:center;justify-content:center}
 .v-placeholder-bg{position:absolute;inset:0;background:linear-gradient(135deg,#1a1a2e,#16213e,#0f3460);animation:shimmer 3s infinite}
@@ -302,49 +303,49 @@ img,video{max-width:100%;display:block}
     
     
   <div class="video-card fade-in visible">
-        <video src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729669021-9c1c73.mp4" controls="" preload="metadata" style="width:100%;border-radius:var(--radius) var(--radius) 0 0;background:#000"></video>
+        <div class="video-wrap"><video src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729669021-9c1c73.mp4" controls preload="metadata"></video></div>
         <div class="video-info">
           <h3 class="editable" contenteditable="false">一位60岁左右的白人女性，身材略丰满，棕_Seedance2.0_reference2video_1</h3>
           <p class="editable" contenteditable="false">添加描述</p>
           <div class="tags"><span class="tag">视频</span></div>
         </div>
         <button class="remove-btn" style="display: none;" onclick="removeCard(this)">×</button></div><div class="video-card fade-in visible">
-        <video src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729675445-k1kt91.mp4" controls="" preload="metadata" style="width:100%;border-radius:var(--radius) var(--radius) 0 0;background:#000"></video>
+        <div class="video-wrap"><video src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729675445-k1kt91.mp4" controls preload="metadata"></video></div>
         <div class="video-info">
           <h3 class="editable" contenteditable="false">[第0-4秒] 清晨金色光线，镜头从郊区_Seedance2.0_reference2video_1 (1)</h3>
           <p class="editable" contenteditable="false">添加描述</p>
           <div class="tags"><span class="tag">视频</span></div>
         </div>
         <button class="remove-btn" style="display: none;" onclick="removeCard(this)">×</button></div><div class="video-card fade-in visible">
-        <video src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729690115-uflbdg.mp4" controls="" preload="metadata" style="width:100%;border-radius:var(--radius) var(--radius) 0 0;background:#000"></video>
+        <div class="video-wrap"><video src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729690115-uflbdg.mp4" controls preload="metadata"></video></div>
         <div class="video-info">
           <h3 class="editable" contenteditable="false">绿色拖鞋4</h3>
           <p class="editable" contenteditable="false">添加描述</p>
           <div class="tags"><span class="tag">视频</span></div>
         </div>
         <button class="remove-btn" style="display: none;" onclick="removeCard(this)">×</button></div><div class="video-card fade-in visible">
-        <video src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729700452-rfmaj4.mp4" controls="" preload="metadata" style="width:100%;border-radius:var(--radius) var(--radius) 0 0;background:#000"></video>
+        <div class="video-wrap"><video src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729700452-rfmaj4.mp4" controls preload="metadata"></video></div>
         <div class="video-info">
           <h3 class="editable" contenteditable="false">蓝色皮筋凉鞋</h3>
           <p class="editable" contenteditable="false">添加描述</p>
           <div class="tags"><span class="tag">视频</span></div>
         </div>
         <button class="remove-btn" style="display: none;" onclick="removeCard(this)">×</button></div><div class="video-card fade-in visible">
-        <video src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729715457-vtjmpi.mp4" controls="" preload="metadata" style="width:100%;border-radius:var(--radius) var(--radius) 0 0;background:#000"></video>
+        <div class="video-wrap"><video src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729715457-vtjmpi.mp4" controls preload="metadata"></video></div>
         <div class="video-info">
           <h3 class="editable" contenteditable="false">红色凉鞋3</h3>
           <p class="editable" contenteditable="false">添加描述</p>
           <div class="tags"><span class="tag">视频</span></div>
         </div>
         <button class="remove-btn" style="display: none;" onclick="removeCard(this)">×</button></div><div class="video-card fade-in visible">
-        <video src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729721804-n46r23.mp4" controls="" preload="metadata" style="width:100%;border-radius:var(--radius) var(--radius) 0 0;background:#000"></video>
+        <div class="video-wrap"><video src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729721804-n46r23.mp4" controls preload="metadata"></video></div>
         <div class="video-info">
           <h3 class="editable" contenteditable="false">4月13日(3)</h3>
           <p class="editable" contenteditable="false">添加描述</p>
           <div class="tags"><span class="tag">视频</span></div>
         </div>
         <button class="remove-btn" style="display: none;" onclick="removeCard(this)">×</button></div><div class="video-card fade-in visible">
-        <video src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729748581-54nqqv.mp4" controls="" preload="metadata" style="width:100%;border-radius:var(--radius) var(--radius) 0 0;background:#000"></video>
+        <div class="video-wrap"><video src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729748581-54nqqv.mp4" controls preload="metadata"></video></div>
         <div class="video-info">
           <h3 class="editable" contenteditable="false">一位56岁左右的白人女性，身材丰满自然，_Seedance2.0_reference2video_1 (1)</h3>
           <p class="editable" contenteditable="false">添加描述</p>
@@ -1100,7 +1101,7 @@ async function handleVideoUpload(files) {
       const card = document.createElement('div');
       card.className = 'video-card fade-in visible';
       card.innerHTML = `
-        <video src="${url}" controls preload="metadata" style="width:100%;border-radius:var(--radius) var(--radius) 0 0;background:#000"></video>
+        <div class="video-wrap"><video src="${url}" controls preload="metadata"></video></div>
         <div class="video-info">
           <h3 class="editable editing" contenteditable="true">${f.name.replace(/\.[^.]+$/,'')}</h3>
           <p class="editable editing" contenteditable="true">添加描述</p>
