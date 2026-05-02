@@ -998,67 +998,141 @@ function toggleMore(type) {
   }
 }
 
-/* ===== FILE TO BASE64 ===== */
-function fileToBase64(file) {
+/* ===== FILE UPLOADS (GitHub Asset Storage) ===== */
+
+/* Read file as raw base64 (no data URL prefix) for GitHub API */
+function fileToRawBase64(file) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
-    reader.onload = () => resolve(reader.result);
+    reader.onload = () => {
+      // Convert ArrayBuffer to base64
+      const bytes = new Uint8Array(reader.result);
+      let binary = '';
+      for (let i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i]);
+      resolve(btoa(binary));
+    };
     reader.onerror = () => reject(reader.error);
-    reader.readAsDataURL(file);
+    reader.readAsArrayBuffer(file);
   });
 }
 
-/* ===== FILE UPLOADS ===== */
+/* Upload file to GitHub repo assets/ folder via Worker proxy */
+async function uploadAssetToGitHub(file) {
+  let token = getGitHubToken();
+  if (!token) {
+    token = await promptGitHubToken();
+    if (!token) throw new Error('未设置 Token');
+  }
+
+  // Generate unique filename: timestamp + random + original extension
+  const ext = file.name.split('.').pop().toLowerCase();
+  const ts = Date.now();
+  const rand = Math.random().toString(36).substring(2, 8);
+  const filename = ts + '-' + rand + '.' + ext;
+
+  const base64Content = await fileToRawBase64(file);
+
+  const res = await fetch(WORKER_URL + '/upload-asset', {
+    method: 'PUT',
+    headers: {
+      'X-GitHub-Token': token,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      filename: filename,
+      content: base64Content,
+      message: 'Upload: ' + file.name
+    })
+  });
+
+  const data = await res.json();
+  if (!res.ok || !data.ok) {
+    if (res.status === 401 || res.status === 403) {
+      localStorage.removeItem('pf_gh_token');
+      throw new Error('Token 无效或已过期');
+    }
+    throw new Error(data.error || '上传失败');
+  }
+  return data.url; // raw.githubusercontent.com URL
+}
+
 async function handleVideoUpload(files) {
   const grid = document.getElementById('videoGrid');
   for (const f of Array.from(files)) {
-    const dataURL = await fileToBase64(f);
-    const card = document.createElement('div');
-    card.className = 'video-card fade-in visible';
-    card.innerHTML = `
-      <video src="${dataURL}" controls preload="metadata" style="width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:var(--radius) var(--radius) 0 0;background:#000"></video>
-      <div class="video-info">
-        <h3 class="editable editing" contenteditable="true">${f.name.replace(/\.[^.]+$/,'')}</h3>
-        <p class="editable editing" contenteditable="true">添加描述</p>
-        <div class="tags"><span class="tag">视频</span></div>
-      </div>
-      <button class="remove-btn" style="display:flex" onclick="removeCard(this)">×</button>`;
-    grid.appendChild(card);
+    // Check file size limit (GitHub max 100MB, but be practical — warn over 25MB)
+    if (f.size > 100 * 1024 * 1024) {
+      showToast('❌ 视频超过 100MB，无法上传');
+      continue;
+    }
+    if (f.size > 25 * 1024 * 1024) {
+      showToast('⚠️ 视频较大 (' + (f.size/1024/1024).toFixed(1) + 'MB)，上传中...');
+    }
+
+    showToast('⏫ 正在上传视频: ' + f.name);
+    try {
+      const url = await uploadAssetToGitHub(f);
+      const card = document.createElement('div');
+      card.className = 'video-card fade-in visible';
+      card.innerHTML = `
+        <video src="${url}" controls preload="metadata" style="width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:var(--radius) var(--radius) 0 0;background:#000"></video>
+        <div class="video-info">
+          <h3 class="editable editing" contenteditable="true">${f.name.replace(/\.[^.]+$/,'')}</h3>
+          <p class="editable editing" contenteditable="true">添加描述</p>
+          <div class="tags"><span class="tag">视频</span></div>
+        </div>
+        <button class="remove-btn" style="display:flex" onclick="removeCard(this)">×</button>`;
+      grid.appendChild(card);
+      showToast('✅ 视频上传成功: ' + f.name);
+    } catch (e) {
+      showToast('❌ 上传失败: ' + e.message);
+    }
   }
 }
 
 async function handleImageUpload(files) {
   const gallery = document.getElementById('imageGallery');
   for (const f of Array.from(files)) {
-    const dataURL = await fileToBase64(f);
-    const card = document.createElement('div');
-    card.className = 'image-card fade-in visible';
-    card.innerHTML = `
-      <img src="${dataURL}" alt="${f.name}" style="width:100%;height:100%;object-fit:cover;cursor:pointer" onclick="openLightbox(this.src)">
-      <div class="image-card-info">
-        <h4 class="editable editing" contenteditable="true">${f.name.replace(/\.[^.]+$/,'')}</h4>
-        <p class="editable editing" contenteditable="true">添加描述</p>
-      </div>
-      <button class="remove-btn" style="display:flex" onclick="removeCard(this)">×</button>`;
-    gallery.appendChild(card);
+    showToast('⏫ 正在上传图片: ' + f.name);
+    try {
+      const url = await uploadAssetToGitHub(f);
+      const card = document.createElement('div');
+      card.className = 'image-card fade-in visible';
+      card.innerHTML = `
+        <img src="${url}" alt="${f.name}" style="width:100%;height:100%;object-fit:cover;cursor:pointer" onclick="openLightbox(this.src)">
+        <div class="image-card-info">
+          <h4 class="editable editing" contenteditable="true">${f.name.replace(/\.[^.]+$/,'')}</h4>
+          <p class="editable editing" contenteditable="true">添加描述</p>
+        </div>
+        <button class="remove-btn" style="display:flex" onclick="removeCard(this)">×</button>`;
+      gallery.appendChild(card);
+      showToast('✅ 图片上传成功: ' + f.name);
+    } catch (e) {
+      showToast('❌ 上传失败: ' + e.message);
+    }
   }
 }
 
 async function handleAgentUpload(files) {
   const grid = document.getElementById('agentGrid');
   for (const f of Array.from(files)) {
-    const dataURL = await fileToBase64(f);
-    const card = document.createElement('div');
-    card.className = 'agent-card fade-in visible';
-    card.innerHTML = `
-      <img src="${dataURL}" alt="${f.name}" style="width:100%;border-radius:var(--radius) var(--radius) 0 0;aspect-ratio:16/10;object-fit:cover">
-      <div class="agent-info">
-        <h3 class="editable editing" contenteditable="true">${f.name.replace(/\.[^.]+$/,'')}</h3>
-        <p class="editable editing" contenteditable="true">添加 Agent 描述</p>
-        <div class="agent-meta"><div class="agent-meta-item">类型: <span>自定义</span></div><div class="agent-meta-item">状态: <span>运行中</span></div></div>
-      </div>
-      <button class="remove-btn" style="display:flex" onclick="removeCard(this)">×</button>`;
-    grid.appendChild(card);
+    showToast('⏫ 正在上传: ' + f.name);
+    try {
+      const url = await uploadAssetToGitHub(f);
+      const card = document.createElement('div');
+      card.className = 'agent-card fade-in visible';
+      card.innerHTML = `
+        <img src="${url}" alt="${f.name}" style="width:100%;border-radius:var(--radius) var(--radius) 0 0;aspect-ratio:16/10;object-fit:cover">
+        <div class="agent-info">
+          <h3 class="editable editing" contenteditable="true">${f.name.replace(/\.[^.]+$/,'')}</h3>
+          <p class="editable editing" contenteditable="true">添加 Agent 描述</p>
+          <div class="agent-meta"><div class="agent-meta-item">类型: <span>自定义</span></div><div class="agent-meta-item">状态: <span>运行中</span></div></div>
+        </div>
+        <button class="remove-btn" style="display:flex" onclick="removeCard(this)">×</button>`;
+      grid.appendChild(card);
+      showToast('✅ 上传成功: ' + f.name);
+    } catch (e) {
+      showToast('❌ 上传失败: ' + e.message);
+    }
   }
 }
 
