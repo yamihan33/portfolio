@@ -3,1411 +3,794 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>韩爽 — AIGC 创意设计运营</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Noto+Sans+SC:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<title>韩爽 | AIGC Creative Design</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
 <style>
-/* ===== RESET & VARS ===== */
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+*{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --bg:#fafafa; --bg-alt:#f0f0f5; --bg-card:#fff;
-  --bg-dark:#09090b; --bg-dark-card:rgba(255,255,255,0.05);
-  --text:#18181b; --text-sec:#71717a;
-  --text-on-dark:#f4f4f5; --text-on-dark-sec:rgba(255,255,255,0.5);
-  --accent:#6366f1; --accent-hover:#4f46e5;
-  --accent-grad:linear-gradient(135deg,#6366f1,#8b5cf6,#a78bfa);
-  --radius:16px; --radius-sm:10px; --radius-xs:6px;
-  --shadow:0 1px 3px rgba(0,0,0,0.06),0 4px 16px rgba(0,0,0,0.04);
-  --shadow-lg:0 8px 30px rgba(0,0,0,0.08);
-  --glow:0 0 40px rgba(99,102,241,0.15);
-  --max-w:1200px;
-  --font:'Inter','Noto Sans SC',system-ui,-apple-system,sans-serif;
+  --bg:#0a0a0a;
+  --pink:#ff6ec4;
+  --purple:#7873f5;
+  --blue:#4facfe;
+  --grad:linear-gradient(135deg,#ff6ec4,#7873f5,#4facfe);
 }
-html{scroll-behavior:smooth;font-size:16px}
-body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
-a{text-decoration:none;color:inherit}
-img,video{max-width:100%;display:block}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:#fff;font-family:'Inter',sans-serif;overflow-x:hidden;line-height:1.6}
 
-/* ===== NAV ===== */
-.nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 24px;transition:all .35s}
-.nav.scrolled{background:rgba(250,250,250,0.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);box-shadow:0 1px 0 rgba(0,0,0,0.05)}
-.nav.hidden{transform:translateY(-100%)}
-.nav-inner{max-width:var(--max-w);margin:0 auto;display:flex;align-items:center;justify-content:space-between}
-.nav-logo{font-weight:700;font-size:1.1rem;display:flex;align-items:center;gap:8px}
-.nav-logo span{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:8px;background:var(--accent-grad);color:#fff;font-size:0.85rem;font-weight:800}
-.nav-links{display:flex;gap:32px;list-style:none}
-.nav-links a{font-size:0.9rem;font-weight:500;color:var(--text-sec);transition:color .2s}
-.nav-links a:hover{color:var(--accent)}
-.nav-mobile{display:none;background:none;border:none;cursor:pointer;color:var(--text)}
-.nav-m-menu{display:none;position:fixed;top:64px;left:0;right:0;background:rgba(250,250,250,0.98);backdrop-filter:blur(20px);padding:16px 24px;flex-direction:column;gap:16px;border-bottom:1px solid rgba(0,0,0,0.05)}
-.nav-m-menu.active{display:flex}
-.nav-m-menu a{font-size:1rem;font-weight:500;color:var(--text-sec);padding:8px 0}
+/* Particle Canvas */
+#particles{position:fixed;inset:0;z-index:0;pointer-events:none}
+
+/* Nav */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  padding:20px 80px;
+  display:flex;justify-content:space-between;align-items:center;
+  background:rgba(10,10,10,0.85);backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(255,255,255,0.04);
+}
+.nav-logo{font-size:15px;font-weight:700;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.nav-links{display:flex;gap:32px}
+.nav-links a{
+  color:rgba(255,255,255,0.5);font-size:13px;text-decoration:none;
+  letter-spacing:0.03em;transition:color 0.2s;
+}
+.nav-links a:hover{color:#fff}
+
+/* Section base */
+section,.data-section{position:relative;z-index:1}
 
 /* ===== HERO ===== */
-.hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden;padding:120px 24px 80px}
-.hero-bg{position:absolute;inset:0;overflow:hidden}
-.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(99,102,241,0.05) 1px,transparent 1px),linear-gradient(90deg,rgba(99,102,241,0.05) 1px,transparent 1px);background-size:60px 60px;mask-image:radial-gradient(ellipse 60% 50% at 50% 50%,black 30%,transparent 70%)}
-.hero-orb{position:absolute;border-radius:50%;filter:blur(80px);opacity:0.4;animation:orbFloat 20s infinite}
-.hero-orb-1{width:500px;height:500px;background:radial-gradient(circle,rgba(99,102,241,0.4),transparent 70%);top:-100px;right:-100px;animation-delay:0s}
-.hero-orb-2{width:400px;height:400px;background:radial-gradient(circle,rgba(139,92,246,0.3),transparent 70%);bottom:-50px;left:-50px;animation-delay:-7s}
-.hero-orb-3{width:300px;height:300px;background:radial-gradient(circle,rgba(167,139,250,0.25),transparent 70%);top:40%;left:50%;animation-delay:-14s}
-@keyframes orbFloat{0%,100%{transform:translate(0,0)}25%{transform:translate(30px,-40px)}50%{transform:translate(-20px,30px)}75%{transform:translate(40px,20px)}}
-.hero-content{position:relative;text-align:center;max-width:800px}
-.hero-badge{display:inline-flex;align-items:center;gap:8px;padding:8px 20px;border-radius:99px;border:1px solid rgba(99,102,241,0.2);background:rgba(99,102,241,0.06);font-size:0.82rem;font-weight:600;letter-spacing:0.04em;color:var(--accent);margin-bottom:32px}
-.hero-badge .dot{width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 12px var(--accent);animation:dotPulse 2s infinite}
-@keyframes dotPulse{0%,100%{opacity:1}50%{opacity:0.4}}
-.hero h1{font-size:clamp(2.4rem,5.5vw,4.2rem);font-weight:800;line-height:1.15;letter-spacing:-0.03em;margin-bottom:24px}
-.gd{background:var(--accent-grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.hero p{font-size:1.15rem;color:var(--text-sec);max-width:600px;margin:0 auto 40px;line-height:1.7}
-.hero-cta{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
-.btn-p{padding:14px 36px;border-radius:12px;background:var(--accent-grad);color:#fff;font-weight:600;font-size:0.95rem;transition:all .25s;box-shadow:0 4px 20px rgba(99,102,241,0.3)}
-.btn-p:hover{transform:translateY(-2px);box-shadow:0 6px 30px rgba(99,102,241,0.45)}
-.btn-s{padding:14px 36px;border-radius:12px;border:1.5px solid rgba(0,0,0,0.12);font-weight:600;font-size:0.95rem;color:var(--text);transition:all .25s;background:rgba(255,255,255,0.6);backdrop-filter:blur(8px)}
-.btn-s:hover{border-color:var(--accent);color:var(--accent)}
+.hero{
+  min-height:100vh;
+  display:flex;flex-direction:column;justify-content:center;
+  padding:0 80px;padding-top:80px;
+  max-width:1200px;margin:0 auto;
+  position:relative;
+}
+.hero-glow{
+  position:absolute;width:600px;height:600px;border-radius:50%;
+  background:radial-gradient(circle,rgba(120,115,245,0.08),transparent 70%);
+  pointer-events:none;transition:transform 0.1s;
+  z-index:0;
+}
+.hero h1{
+  font-size:clamp(2.8rem,6vw,5.2rem);
+  font-weight:800;line-height:1.15;
+  letter-spacing:-0.02em;
+  position:relative;z-index:1;
+}
+.hero h1 .gradient{
+  background:var(--grad);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.hero h1 .dim{color:rgba(255,255,255,0.35)}
+.hero-bio{
+  margin-top:28px;color:rgba(255,255,255,0.45);
+  max-width:520px;font-size:15px;line-height:1.9;
+  position:relative;z-index:1;
+}
+.hero-cta{
+  margin-top:48px;display:inline-flex;align-items:center;gap:8px;
+  color:rgba(255,255,255,0.5);font-size:13px;
+  letter-spacing:0.05em;text-transform:uppercase;
+  position:relative;z-index:1;
+}
+.hero-cta::after{content:'↓';font-size:16px}
 
-/* ===== SECTIONS ===== */
-.section{padding:100px 24px;max-width:var(--max-w);margin:0 auto}
-.section-header{text-align:center;margin-bottom:60px}
-.section-label{display:inline-block;font-size:0.8rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent);margin-bottom:12px}
-.section-title{font-size:clamp(2rem,4vw,2.8rem);font-weight:800;letter-spacing:-0.02em;margin-bottom:16px}
-.section-desc{font-size:1.05rem;color:var(--text-sec);max-width:550px;margin:0 auto}
+/* ===== DATA ===== */
+.data-section{
+  padding:100px 80px;max-width:1200px;margin:auto;
+  border-top:1px solid rgba(255,255,255,0.06);
+}
+.data{display:grid;grid-template-columns:repeat(4,1fr);gap:40px}
+.data-num{
+  font-size:clamp(2rem,4vw,3.2rem);font-weight:800;
+  letter-spacing:-0.02em;
+  background:var(--grad);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.data-label{font-size:13px;color:rgba(255,255,255,0.3);margin-top:8px}
+.data-context{font-size:12px;color:rgba(255,255,255,0.2);margin-top:4px}
 
-/* ===== VIDEO GRID ===== */
-.video-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-bottom:40px}
-.video-card{background:var(--bg-card);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;transition:all .3s;position:relative}
-.video-card .video-wrap{position:relative;aspect-ratio:9/16;background:#000;border-radius:var(--radius) var(--radius) 0 0;overflow:hidden;display:flex;align-items:center;justify-content:center}
-.video-card video{width:100%;height:100%;object-fit:contain;display:block}
-.video-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
-.v-placeholder{position:relative;aspect-ratio:16/9;overflow:hidden;background:#1a1a2e;display:flex;align-items:center;justify-content:center}
-.v-placeholder-bg{position:absolute;inset:0;background:linear-gradient(135deg,#1a1a2e,#16213e,#0f3460);animation:shimmer 3s infinite}
-@keyframes shimmer{0%{opacity:0.6}50%{opacity:1}100%{opacity:0.6}}
-.v-placeholder-icon{position:relative;z-index:1;width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
-.v-placeholder-icon svg{width:20px;height:20px;fill:rgba(255,255,255,0.7);margin-left:3px}
-.video-info{padding:20px}
-.video-info h3{font-size:1.05rem;font-weight:700;margin-bottom:6px}
-.video-info p{font-size:0.88rem;color:var(--text-sec);margin-bottom:12px}
-.tags{display:flex;gap:6px;flex-wrap:wrap}
-.tag{padding:4px 12px;border-radius:99px;background:rgba(99,102,241,0.08);color:var(--accent);font-size:0.75rem;font-weight:600}
+/* ===== FEATURED CASES ===== */
+.featured-section{padding:120px 80px;max-width:1200px;margin:auto}
+.section-label{
+  font-size:13px;font-weight:600;letter-spacing:0.1em;
+  text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:60px;
+}
+.featured-item{
+  position:relative;margin-bottom:60px;
+  border-radius:16px;overflow:hidden;aspect-ratio:16/9;
+  cursor:pointer;
+}
+.featured-item video{width:100%;height:100%;object-fit:cover}
+.featured-play{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:64px;height:64px;border-radius:50%;
+  background:rgba(255,255,255,0.15);backdrop-filter:blur(8px);
+  display:flex;align-items:center;justify-content:center;
+  transition:background 0.3s,transform 0.3s;
+}
+.featured-play::after{
+  content:'';width:0;height:0;
+  border-left:20px solid #fff;border-top:12px solid transparent;border-bottom:12px solid transparent;
+  margin-left:4px;
+}
+.featured-item:hover .featured-play{background:rgba(255,255,255,0.25);transform:translate(-50%,-50%) scale(1.1)}
+.featured-item.playing .featured-play{display:none}
+.featured-overlay{
+  position:absolute;bottom:0;left:0;right:0;padding:40px;
+  background:linear-gradient(transparent,rgba(0,0,0,0.85));
+}
+.featured-overlay h3{font-size:clamp(1.4rem,3vw,2rem);font-weight:800}
+.featured-overlay p{color:rgba(255,255,255,0.5);font-size:14px;margin-top:8px}
+.featured-stat{
+  display:inline-block;margin-top:12px;padding:6px 14px;
+  border-radius:999px;background:rgba(255,255,255,0.1);
+  backdrop-filter:blur(8px);font-size:13px;font-weight:600;
+}
 
-/* ===== IMAGE GALLERY ===== */
-.image-gallery{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:40px}
-.image-card{position:relative;border-radius:var(--radius);overflow:hidden;background:var(--bg-card);box-shadow:var(--shadow);transition:all .3s;aspect-ratio:1/1}
-.image-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg)}
-.img-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
-.img-placeholder-bg{position:absolute;inset:0;background:linear-gradient(135deg,#e8e0f0,#d4c4e8,#c8b4e0);animation:shimmer 3s infinite}
-.img-placeholder-icon{position:relative;z-index:1;opacity:0.3}
-.img-placeholder-icon svg{width:40px;height:40px;fill:none;stroke:#666;stroke-width:1.5}
-.image-card-info{position:absolute;bottom:0;left:0;right:0;padding:16px;background:linear-gradient(transparent,rgba(0,0,0,0.65));color:#fff;opacity:0;transition:opacity .3s}
-.image-card:hover .image-card-info{opacity:1}
-.image-card-info h4{font-size:0.95rem;font-weight:600}
-.image-card-info p{font-size:0.8rem;opacity:0.8}
+/* ===== ALL WORKS ===== */
+.works-section{padding:120px 80px;max-width:1200px;margin:auto}
+.scroll-wrapper{overflow:hidden;position:relative;margin-bottom:28px}
+.scroll-wrapper::before,.scroll-wrapper::after{
+  content:'';position:absolute;top:0;bottom:0;width:80px;z-index:2;pointer-events:none;
+}
+.scroll-wrapper::before{left:0;background:linear-gradient(90deg,var(--bg),transparent)}
+.scroll-wrapper::after{right:0;background:linear-gradient(-90deg,var(--bg),transparent)}
+.scroll-track{
+  display:flex;gap:16px;width:max-content;
+  animation:scrollL 55s linear infinite;
+}
+.scroll-track.reverse{animation:scrollR 55s linear infinite}
+.scroll-track:hover{animation-play-state:paused}
+@keyframes scrollL{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+@keyframes scrollR{0%{transform:translateX(-50%)}100%{transform:translateX(0)}}
 
-/* ===== DARK SECTION (AGENTS) ===== */
-.section-dark{background:var(--bg-dark);padding:100px 24px}
-.section-dark-inner{max-width:var(--max-w);margin:0 auto}
-.section-dark .section-desc{color:var(--text-on-dark-sec)}
-.agent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:24px;margin-bottom:40px}
-.agent-card{background:var(--bg-dark-card);border:1px solid rgba(255,255,255,0.08);border-radius:var(--radius);overflow:hidden;transition:all .3s;position:relative}
-.agent-card:hover{border-color:rgba(99,102,241,0.3);box-shadow:var(--glow);transform:translateY(-4px)}
-.ag-placeholder{position:relative;aspect-ratio:16/10;overflow:hidden;display:flex;align-items:center;justify-content:center}
-.ag-placeholder-bg{position:absolute;inset:0;background:linear-gradient(135deg,#1e1b4b,#312e81,#3730a3);animation:shimmer 3s infinite}
-.ag-placeholder-icon{position:relative;z-index:1;opacity:0.3}
-.ag-placeholder-icon svg{width:48px;height:48px;fill:rgba(255,255,255,0.5)}
-.agent-info{padding:20px}
-.agent-info h3{font-size:1.05rem;font-weight:700;color:var(--text-on-dark);margin-bottom:6px}
-.agent-info p{font-size:0.88rem;color:var(--text-on-dark-sec);margin-bottom:12px}
-.agent-meta{display:flex;gap:16px}
-.agent-meta-item{font-size:0.78rem;color:var(--text-on-dark-sec)}
-.agent-meta-item span{color:var(--accent);font-weight:600}
+.video-card{
+  width:200px;height:356px;border-radius:12px;overflow:hidden;flex-shrink:0;
+  position:relative;cursor:pointer;
+  border:1px solid rgba(255,255,255,0.04);
+  transition:transform 0.4s cubic-bezier(0.16,1,0.3,1),border-color 0.3s;
+}
+.video-card:hover{transform:scale(1.03);border-color:rgba(120,115,245,0.2)}
+.video-card video{width:100%;height:100%;object-fit:cover}
+/* Modal for expanded video */
+.video-modal{
+  position:fixed;top:0;left:0;width:100%;height:100%;z-index:9999;
+  background:rgba(0,0,0,0.9);display:none;align-items:center;justify-content:center;
+  cursor:pointer;
+}
+.video-modal.active{display:flex}
+.video-modal video{
+  max-width:90vw;max-height:85vh;border-radius:12px;
+}
 
-/* ===== DATA SECTION ===== */
-.data-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-bottom:48px}
-.stat-card{background:var(--bg-card);border-radius:var(--radius);padding:32px 24px;text-align:center;box-shadow:var(--shadow);transition:all .3s;border:1px solid transparent}
-.stat-card:hover{border-color:rgba(99,102,241,0.15);box-shadow:var(--glow)}
-.stat-number{font-size:2.2rem;font-weight:800;background:var(--accent-grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:4px}
-.stat-label{font-weight:600;font-size:0.95rem;margin-bottom:2px}
-.stat-sub{font-size:0.8rem;color:var(--text-sec)}
-.data-charts{display:grid;grid-template-columns:repeat(2,1fr);gap:24px}
-.chart-card{background:var(--bg-card);border-radius:var(--radius);padding:32px;box-shadow:var(--shadow)}
-.chart-card h3{font-size:1.1rem;font-weight:700;margin-bottom:24px}
-.chart-bar-group{display:flex;flex-direction:column;gap:16px}
-.chart-bar-item label{display:flex;justify-content:space-between;font-size:0.85rem;font-weight:500;margin-bottom:6px}
-.chart-bar{height:10px;background:var(--bg-alt);border-radius:99px;overflow:hidden}
-.chart-bar-fill{height:100%;background:var(--accent-grad);border-radius:99px;transition:width 1.2s cubic-bezier(0.16,1,0.3,1)}
+/* ===== SELECTED VISUALS ===== */
+.visuals-section{padding:120px 80px;max-width:1200px;margin:auto}
+.visuals-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.visual-item{
+  border-radius:12px;overflow:hidden;aspect-ratio:4/5;
+  background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.04);
+  transition:transform 0.4s cubic-bezier(0.16,1,0.3,1);
+}
+.visual-item:hover{transform:scale(1.02)}
+.visual-item img{width:100%;height:100%;object-fit:cover}
 
-/* ===== UPLOAD ZONE ===== */
-.upload-zone{display:none;flex-direction:column;align-items:center;justify-content:center;padding:40px;border:2px dashed rgba(0,0,0,0.12);border-radius:var(--radius);cursor:pointer;transition:all .3s;text-align:center;position:relative;margin-top:24px}
-.upload-zone:hover{border-color:var(--accent);background:rgba(99,102,241,0.03)}
-.upload-zone input{position:absolute;inset:0;opacity:0;cursor:pointer}
-.u-icon{font-size:2rem;margin-bottom:8px}
-.upload-zone p{font-size:0.95rem;color:var(--text-sec)}
-.u-hint{font-size:0.8rem!important;color:var(--text-sec);opacity:0.5;margin-top:4px}
+/* ===== SKILLS ===== */
+.skills-section{padding:80px 80px;max-width:1200px;margin:auto}
+.skills-tags{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
+.skill-tag{
+  padding:10px 20px;border-radius:999px;
+  background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);
+  font-size:13px;color:rgba(255,255,255,0.6);
+  transition:border-color 0.3s,color 0.3s;
+}
+.skill-tag:hover{border-color:rgba(120,115,245,0.4);color:#fff}
 
-/* ===== REMOVE BTN ===== */
-.remove-btn{display:none;position:absolute;top:12px;right:12px;width:28px;height:28px;border-radius:50%;border:none;background:rgba(239,68,68,0.9);color:#fff;font-size:1rem;cursor:pointer;align-items:center;justify-content:center;z-index:10;transition:all .2s}
-.remove-btn:hover{background:#dc2626;transform:scale(1.1)}
-
-/* ===== EDIT BTN ===== */
-.edit-btn{position:fixed;bottom:32px;right:32px;width:56px;height:56px;border-radius:50%;border:none;background:var(--accent-grad);color:#fff;font-size:1.4rem;cursor:pointer;box-shadow:0 4px 20px rgba(99,102,241,0.35);z-index:200;transition:all .3s;display:flex;align-items:center;justify-content:center}
-.edit-btn:hover{transform:scale(1.1);box-shadow:0 6px 30px rgba(99,102,241,0.5)}
-.edit-btn.active{background:linear-gradient(135deg,#22c55e,#16a34a);box-shadow:0 4px 20px rgba(34,197,94,0.35)}
-.editing{outline:2px dashed var(--accent)!important;outline-offset:2px;min-height:1.5em}
+/* ===== SYSTEM ===== */
+.system-section{
+  padding:120px 80px;max-width:1200px;margin:auto;
+  border-top:1px solid rgba(255,255,255,0.06);
+}
+.system-section h2{
+  font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:800;
+  line-height:1.3;letter-spacing:-0.02em;max-width:600px;
+}
+.system-section .desc{
+  color:rgba(255,255,255,0.4);font-size:15px;
+  margin-top:20px;max-width:520px;line-height:1.8;
+}
+.system-screenshots{
+  margin-top:48px;display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;
+}
+.system-shot{
+  border-radius:12px;overflow:hidden;
+  background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);
+  aspect-ratio:16/10;
+  display:flex;align-items:center;justify-content:center;
+  color:rgba(255,255,255,0.15);font-size:13px;
+  position:relative;
+}
+.system-shot img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
 
 /* ===== FOOTER ===== */
-.footer{text-align:center;padding:60px 24px;border-top:1px solid rgba(0,0,0,0.06)}
-.footer-links{display:flex;justify-content:center;gap:32px;margin-bottom:20px}
-.footer-links a{font-size:0.9rem;font-weight:500;color:var(--text-sec);transition:color .2s}
-.footer-links a:hover{color:var(--accent)}
-.footer p{font-size:0.85rem;color:var(--text-sec);opacity:0.6}
+footer{
+  padding:80px 80px;max-width:1200px;margin:auto;
+  border-top:1px solid rgba(255,255,255,0.06);
+  display:flex;justify-content:space-between;align-items:center;
+}
+footer span{color:rgba(255,255,255,0.25);font-size:13px}
+footer a{color:rgba(255,255,255,0.4);font-size:13px;text-decoration:none;transition:color 0.2s}
+footer a:hover{color:#fff}
 
-/* ===== LIGHTBOX ===== */
-.lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.9);z-index:300;background-size:contain;background-repeat:no-repeat;background-position:center;cursor:zoom-out}
-.lightbox.active{display:block}
-.lightbox-close{position:absolute;top:20px;right:24px;background:none;border:none;color:#fff;font-size:2rem;cursor:pointer;opacity:0.7;transition:opacity .2s}
-.lightbox-close:hover{opacity:1}
-
-/* ===== AUTH OVERLAY ===== */
-.auth-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);backdrop-filter:blur(8px);z-index:400;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .3s}
-.auth-overlay.active{opacity:1}
-.auth-box{background:#fff;border-radius:20px;padding:40px;width:360px;max-width:90vw;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,0.15);transform:scale(0.95);transition:transform .3s}
-.auth-overlay.active .auth-box{transform:scale(1)}
-.auth-icon{font-size:2.5rem;margin-bottom:16px}
-.auth-box h3{font-size:1.2rem;font-weight:700;margin-bottom:6px}
-.auth-box>p{font-size:0.9rem;color:var(--text-sec);margin-bottom:24px}
-.auth-input{width:100%;padding:14px 18px;border:1.5px solid rgba(0,0,0,0.1);border-radius:12px;font-size:1rem;font-family:var(--font);outline:none;transition:border-color .2s}
-.auth-input:focus{border-color:var(--accent)}
-.auth-actions{display:flex;gap:12px;margin-top:20px}
-.auth-cancel{flex:1;padding:12px;border-radius:12px;border:1.5px solid rgba(0,0,0,0.1);background:#fff;font-weight:600;font-size:0.9rem;cursor:pointer;font-family:var(--font);transition:all .2s}
-.auth-cancel:hover{background:var(--bg-alt)}
-.auth-confirm{flex:1;padding:12px;border-radius:12px;border:none;background:var(--accent-grad);color:#fff;font-weight:600;font-size:0.9rem;cursor:pointer;font-family:var(--font);transition:all .2s}
-.auth-confirm:hover{opacity:0.9;transform:translateY(-1px)}
-.auth-error{color:#ef4444;font-size:0.85rem;margin-top:12px;font-weight:500}
-
-/* ===== FADE-IN ANIMATION ===== */
-.fade-in{opacity:0;transform:translateY(24px);transition:opacity .6s,transform .6s}
-.fade-in.visible{opacity:1;transform:translateY(0)}
+/* ===== SCROLL REVEAL ===== */
+.reveal{opacity:0;transform:translateY(20px);transition:opacity 0.8s ease,transform 0.8s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
 
 /* ===== RESPONSIVE ===== */
+@media(max-width:1024px){
+  .nav{padding:16px 40px}
+  .hero,.data-section,.featured-section,.works-section,.visuals-section,.skills-section,.system-section,footer{padding-left:40px;padding-right:40px}
+  .data{grid-template-columns:repeat(2,1fr);gap:32px}
+  .visuals-grid{grid-template-columns:repeat(2,1fr)}
+}
 @media(max-width:768px){
-  .nav-links{display:none}
-  .nav-mobile{display:block}
-  .video-grid{grid-template-columns:1fr}
-  .image-gallery{grid-template-columns:repeat(2,1fr)}
-  .agent-grid{grid-template-columns:1fr}
-  .data-stats{grid-template-columns:repeat(2,1fr)}
-  .data-charts{grid-template-columns:1fr}
+  .nav{padding:14px 20px}
+  .nav-links{gap:20px}
+  .nav-links a{font-size:12px}
+  .hero,.data-section,.featured-section,.works-section,.visuals-section,.skills-section,.system-section,footer{padding-left:20px;padding-right:20px}
+  .hero{min-height:100dvh;padding-top:100px;padding-bottom:60px}
+  .hero h1{font-size:clamp(1.8rem,8vw,2.8rem)}
+  .data{grid-template-columns:repeat(2,1fr);gap:20px}
+  .data-num{font-size:clamp(1.6rem,6vw,2.2rem)}
+  .featured-item{aspect-ratio:9/16;max-height:70vh}
+  .featured-overlay{padding:24px}
+  .video-card{width:160px;height:284px}
+  .visuals-grid{grid-template-columns:repeat(2,1fr);gap:12px}
+  .system-screenshots{grid-template-columns:1fr}
+  footer{flex-direction:column;gap:12px;text-align:center}
 }
-@media(max-width:480px){
-  .image-gallery{grid-template-columns:1fr}
-  .data-stats{grid-template-columns:1fr}
+@media(max-width:400px){
+  .hero h1{font-size:1.6rem}
+  .data{grid-template-columns:1fr 1fr;gap:16px}
+  .video-card{width:140px;height:249px}
+  .visuals-grid{grid-template-columns:1fr 1fr}
 }
-/* ===== SHOW MORE BUTTON ===== */
-.show-more-btn{display:block;margin:40px auto 0;padding:14px 40px;background:transparent;border:2px solid var(--accent);color:var(--accent);font-size:.95rem;font-weight:600;border-radius:999px;cursor:pointer;transition:all .3s;letter-spacing:.5px}
-.show-more-btn:hover{background:var(--accent);color:#fff;transform:translateY(-2px);box-shadow:0 8px 25px rgba(99,102,241,0.3)}
-.show-more-btn.expanded{border-color:var(--text-sec);color:var(--text-sec)}
-.show-more-btn.expanded:hover{background:var(--text-sec);color:#fff}
-.more-section{overflow:hidden;transition:max-height .5s ease,opacity .4s ease;max-height:0;opacity:0}
-.more-section.active{max-height:none;opacity:1;margin-top:24px}
-.more-section .video-grid,.more-section .image-gallery{padding:0}
-@keyframes fadeUp{from{opacity:0;transform:translate(-50%,20px)}to{opacity:1;transform:translate(-50%,0)}}
-/* Publish progress overlay */
-.publish-progress{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);display:flex;align-items:center;justify-content:center;gap:16px;z-index:99999;color:#fff;font-size:1.1rem;backdrop-filter:blur(4px)}
-.publish-spinner{width:28px;height:28px;border:3px solid rgba(255,255,255,0.2);border-top-color:#6366f1;border-radius:50%;animation:spin .8s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
 
-/* ===== FIREBASE AUTH UI ===== */
-.nav-user{margin-left:auto;position:relative}
-.nav-user-btn{padding:6px 16px;border-radius:99px;border:1.5px solid rgba(99,102,241,0.25);background:rgba(99,102,241,0.06);cursor:pointer;font-family:var(--font);font-size:0.82rem;font-weight:600;color:var(--accent);transition:all .2s}
-.nav-user-btn:hover{background:rgba(99,102,241,0.14)}
-.auth-modal{position:fixed;inset:0;background:rgba(0,0,0,0.45);backdrop-filter:blur(6px);z-index:500;display:none;align-items:center;justify-content:center}
+/* === BACKEND UI === */
+.nav-user-btn{background:none;border:1px solid rgba(255,255,255,0.3);color:#fff;padding:6px 14px;border-radius:20px;cursor:pointer;font-size:13px;transition:all .3s}
+.nav-user-btn:hover{border-color:#7873f5;color:#7873f5}
+.auth-modal{display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.8);justify-content:center;align-items:center}
 .auth-modal.active{display:flex}
-.auth-box{background:#fff;border-radius:18px;padding:32px;width:340px;max-width:90vw;box-shadow:0 16px 50px rgba(0,0,0,0.18);position:relative}
-.auth-box h3{text-align:center;margin-bottom:20px;font-size:1.1rem}
-.auth-box input{width:100%;padding:12px 14px;border:1.5px solid rgba(0,0,0,0.1);border-radius:10px;font-size:0.9rem;font-family:var(--font);outline:none;margin-bottom:10px;box-sizing:border-box}
-.auth-box input:focus{border-color:var(--accent)}
-.auth-box .abtn{width:100%;padding:12px;border:none;border-radius:10px;background:var(--accent-grad);color:#fff;font-weight:600;font-size:0.9rem;cursor:pointer;font-family:var(--font);margin-top:4px}
-.auth-box .abtn:hover{opacity:0.9}
-.auth-box .aswitch{text-align:center;margin-top:14px;font-size:0.82rem;color:var(--text-sec)}
-.auth-box .aswitch a{color:var(--accent);cursor:pointer;font-weight:600;text-decoration:none}
-.auth-box .amsg{text-align:center;font-size:0.82rem;margin-top:10px;min-height:18px}
-.auth-box .amsg.err{color:#ef4444}
-.auth-box .amsg.ok{color:#22c55e}
-.auth-box .aclose{position:absolute;top:12px;right:14px;background:none;border:none;font-size:1.3rem;cursor:pointer;color:#999}
-.admin-list{max-height:300px;overflow-y:auto;margin-top:16px}
-.admin-item{display:flex;justify-content:space-between;align-items:center;padding:8px 12px;background:var(--bg-alt);border-radius:8px;margin-bottom:6px;font-size:0.82rem}
-.admin-item .arole{padding:2px 8px;border-radius:99px;font-size:0.72rem;font-weight:600}
-.admin-item .arole.owner{background:rgba(245,158,11,0.15);color:#d97706}
-.admin-item .arole.guest{background:rgba(99,102,241,0.12);color:var(--accent)}
+.auth-box{background:#1a1a2e;padding:40px;border-radius:16px;width:320px;text-align:center}
+.auth-box h3{margin-bottom:20px;color:#fff}
+.auth-box input{width:100%;padding:12px;margin-bottom:12px;border:1px solid #333;border-radius:8px;background:#0d0d1a;color:#fff;box-sizing:border-box}
+.auth-box button{width:100%;padding:12px;background:linear-gradient(135deg,#7873f5,#ec5fcd);border:none;border-radius:8px;color:#fff;font-weight:600;cursor:pointer}
+.auth-switch{margin-top:12px;color:#888;cursor:pointer;font-size:13px}
+.auth-close{position:absolute;top:16px;right:20px;color:#888;cursor:pointer;font-size:20px}
+.toast{position:fixed;bottom:40px;left:50%;transform:translateX(-50%);background:#1a1a2e;color:#fff;padding:12px 24px;border-radius:8px;font-size:14px;opacity:0;pointer-events:none;transition:opacity .3s;z-index:9999;border:1px solid #333}
+.toast.show{opacity:1}
+.edit-toggle{position:fixed;bottom:30px;right:30px;background:linear-gradient(135deg,#7873f5,#ec5fcd);border:none;padding:12px 20px;border-radius:30px;color:#fff;font-size:14px;cursor:pointer;z-index:999;box-shadow:0 4px 20px rgba(120,115,245,0.3)}
+.upload-overlay{position:fixed;bottom:0;left:0;right:0;z-index:998;padding:12px;display:flex;justify-content:center}
+.upload-bar{display:flex;gap:10px;background:#1a1a2e;padding:12px 20px;border-radius:12px;border:1px solid #333}
+.upload-btn{background:rgba(120,115,245,0.2);border:1px solid rgba(120,115,245,0.4);color:#fff;padding:8px 14px;border-radius:8px;cursor:pointer;font-size:13px}
+.publish-btn{background:linear-gradient(135deg,#7873f5,#ec5fcd)!important;border:none!important}
+body.edit-mode .editable{outline:2px dashed rgba(120,115,245,0.5);outline-offset:2px}
+body.edit-mode .remove-btn{display:block!important}
+.remove-btn{display:none;position:absolute;top:4px;right:4px;background:rgba(255,50,50,0.8);border:none;color:#fff;width:20px;height:20px;border-radius:50%;cursor:pointer;font-size:12px;line-height:20px;text-align:center;z-index:10}
+.system-shot img{width:100%;height:100%;object-fit:cover;border-radius:12px}
 </style>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 </head>
 <body>
 
 <!-- NAV -->
-<nav class="nav scrolled hidden">
-  <div class="nav-inner">
-    <a href="#" class="nav-logo"><span>HS</span> Portfolio</a>
-    <ul class="nav-links">
-      <li><a href="#videos">视频作品</a></li>
-      <li><a href="#images">图片作品</a></li>
-      <li><a href="#agents">Agent 展示</a></li>
-      <li><a href="#data">数据展示</a></li>
-    </ul>
-    <button class="nav-mobile" onclick="document.querySelector('.nav-m-menu').classList.toggle('active')">
-      <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"></path></svg>
-    </button>
-    <div class="nav-user">
-      <button class="nav-user-btn" id="navUserBtn" onclick="handleUserBtn()">👑 主人</button>
-    </div>
-    <div class="nav-m-menu">
-      <a href="#videos" onclick="this.parentElement.classList.remove('active')">视频作品</a>
-      <a href="#images" onclick="this.parentElement.classList.remove('active')">图片作品</a>
-      <a href="#agents" onclick="this.parentElement.classList.remove('active')">Agent 展示</a>
-      <a href="#data" onclick="this.parentElement.classList.remove('active')">数据展示</a>
-    </div>
+<nav class="nav">
+  <div class="nav-logo">韩爽</div>
+  <div class="nav-links">
+    <a href="#works">作品</a>
+    <a href="#system">AI系统</a>
+    <a href="#data">关于我</a>
+    <a href="mailto:contact@example.com">联系</a>
+    <button class="nav-user-btn" id="userBtn" onclick="toggleAuthModal()">登录</button>
   </div>
 </nav>
 
+<canvas id="particles"></canvas>
+
 <!-- HERO -->
-<section class="hero">
-  <div class="hero-bg">
-    <div class="hero-orb hero-orb-1"></div>
-    <div class="hero-orb hero-orb-2"></div>
-    <div class="hero-orb hero-orb-3"></div>
-    <div class="hero-grid"></div>
+<section class="hero reveal">
+  <div class="hero-glow" id="heroGlow"></div>
+  <h1><span class="gradient editable">韩爽</span><br><span class="dim">AIGC 创意设计 &</span><br><span class="dim">效果广告运营</span></h1>
+  <p class="hero-bio editable">3年跨境电商广告经验，服务北美/欧洲市场。<br>专注 45+ 人群的效果广告投放与 AI 内容系统搭建。<br>核心方法论：数据驱动创意迭代 × AI 规模化生产。</p>
+  <div class="hero-cta">向下探索</div>
+</section>
+
+<!-- DATA -->
+<div class="data-section reveal" id="data">
+  <div class="data">
+    <div class="data-item">
+      <div class="data-num editable">1,200+</div>
+      <div class="data-label editable">素材产出</div>
+      <div class="data-context editable">3个月内完成</div>
+    </div>
+    <div class="data-item">
+      <div class="data-num editable">5.8M</div>
+      <div class="data-label editable">总曝光</div>
+      <div class="data-context editable">DSP多渠道投放</div>
+    </div>
+    <div class="data-item">
+      <div class="data-num editable">3.2%</div>
+      <div class="data-label editable">平均点击率</div>
+      <div class="data-context editable">行业基准1.8%</div>
+    </div>
+    <div class="data-item">
+      <div class="data-num editable">$0.42</div>
+      <div class="data-label editable">平均获客成本</div>
+      <div class="data-context editable">低于竞品均值35%</div>
+    </div>
   </div>
-  <div class="hero-content fade-in visible">
-    <div class="hero-badge"><div class="dot"></div>AIGC Creative Designer</div>
-    <h1>你好，我是<span class="gd">韩爽</span><br><span class="gd">AIGC</span> 创意设计运营</h1>
-    <p>专注于 AI 驱动的创意内容生产、广告素材设计与运营策略，用技术赋能创意，让每一个像素都有商业价值。</p>
-    <div class="hero-cta">
-      <a href="#videos" class="btn-p">查看作品</a>
-      <a href="#data" class="btn-s">数据表现</a>
+</div>
+
+<!-- FEATURED CASES -->
+<section class="featured-section" id="works">
+  <h2 class="section-label reveal editable">精选案例</h2>
+
+  <div class="featured-item reveal" data-video="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729669021-9c1c73.mp4">
+    <img class="thumb" src="portfolio-assets/1777729669021-9c1c73.jpg" alt="取暖器广告">
+    <video src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729669021-9c1c73.mp4" muted loop playsinline preload="none"></video>
+    <div class="featured-play"></div>
+    <div class="featured-overlay">
+      <h3 class="editable">取暖器系列广告</h3>
+      <p>达人口播 · AI脚本生成 · 全链路制作</p>
+      <span class="featured-stat">CTR 超基准 +38%</span>
+    </div>
+  </div>
+
+  <div class="featured-item reveal" data-video="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729700452-rfmaj4.mp4">
+    <img class="thumb" src="portfolio-assets/1777729700452-rfmaj4.jpg" alt="产品演示">
+    <video src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729700452-rfmaj4.mp4" muted loop playsinline preload="none"></video>
+    <div class="featured-play"></div>
+    <div class="featured-overlay">
+      <h3 class="editable">产品功能演示</h3>
+      <p>多版本AB测试 · 数据驱动优化</p>
+      <span class="featured-stat">CPA $0.31</span>
+    </div>
+  </div>
+
+  <div class="featured-item reveal" data-video="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729748581-54nqqv.mp4">
+    <img class="thumb" src="portfolio-assets/1777729748581-54nqqv.jpg" alt="社媒种草">
+    <video src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729748581-54nqqv.mp4" muted loop playsinline preload="none"></video>
+    <div class="featured-play"></div>
+    <div class="featured-overlay">
+      <h3 class="editable">社媒种草内容</h3>
+      <p>UGC风格 · 原生感内容 · 多平台分发</p>
+      <span class="featured-stat">曝光 520万+</span>
     </div>
   </div>
 </section>
 
-<!-- VIDEO SECTION -->
-<section class="section" id="videos">
-  <div class="section-header fade-in visible">
-    <span class="section-label">Video Works</span>
-    <h2 class="section-title">视频作品</h2>
-    <p class="section-desc">AIGC 驱动的创意视频内容，覆盖广告投放、品牌宣传等多个场景</p>
+<!-- ALL WORKS -->
+<section class="works-section">
+  <h2 class="section-label reveal editable">全部作品</h2>
+
+  <div class="scroll-wrapper reveal">
+    <div class="scroll-track" id="track1"></div>
   </div>
-  <div class="video-grid" id="videoGrid">
-    
-    
-    
-    
-    
-    
-  <div class="video-card fade-in visible">
-        <div class="video-wrap"><video src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729669021-9c1c73.mp4" controls preload="metadata"></video></div>
-        <div class="video-info">
-          <h3 class="editable" contenteditable="false">一位60岁左右的白人女性，身材略丰满，棕_Seedance2.0_reference2video_1</h3>
-          <p class="editable" contenteditable="false">添加描述</p>
-          <div class="tags"><span class="tag">视频</span></div>
-        </div>
-        <button class="remove-btn" style="display: none;" onclick="removeCard(this)">×</button></div><div class="video-card fade-in visible">
-        <div class="video-wrap"><video src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729675445-k1kt91.mp4" controls preload="metadata"></video></div>
-        <div class="video-info">
-          <h3 class="editable" contenteditable="false">[第0-4秒] 清晨金色光线，镜头从郊区_Seedance2.0_reference2video_1 (1)</h3>
-          <p class="editable" contenteditable="false">添加描述</p>
-          <div class="tags"><span class="tag">视频</span></div>
-        </div>
-        <button class="remove-btn" style="display: none;" onclick="removeCard(this)">×</button></div><div class="video-card fade-in visible">
-        <div class="video-wrap"><video src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729690115-uflbdg.mp4" controls preload="metadata"></video></div>
-        <div class="video-info">
-          <h3 class="editable" contenteditable="false">绿色拖鞋4</h3>
-          <p class="editable" contenteditable="false">添加描述</p>
-          <div class="tags"><span class="tag">视频</span></div>
-        </div>
-        <button class="remove-btn" style="display: none;" onclick="removeCard(this)">×</button></div><div class="video-card fade-in visible">
-        <div class="video-wrap"><video src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729700452-rfmaj4.mp4" controls preload="metadata"></video></div>
-        <div class="video-info">
-          <h3 class="editable" contenteditable="false">蓝色皮筋凉鞋</h3>
-          <p class="editable" contenteditable="false">添加描述</p>
-          <div class="tags"><span class="tag">视频</span></div>
-        </div>
-        <button class="remove-btn" style="display: none;" onclick="removeCard(this)">×</button></div><div class="video-card fade-in visible">
-        <div class="video-wrap"><video src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729715457-vtjmpi.mp4" controls preload="metadata"></video></div>
-        <div class="video-info">
-          <h3 class="editable" contenteditable="false">红色凉鞋3</h3>
-          <p class="editable" contenteditable="false">添加描述</p>
-          <div class="tags"><span class="tag">视频</span></div>
-        </div>
-        <button class="remove-btn" style="display: none;" onclick="removeCard(this)">×</button></div><div class="video-card fade-in visible">
-        <div class="video-wrap"><video src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729721804-n46r23.mp4" controls preload="metadata"></video></div>
-        <div class="video-info">
-          <h3 class="editable" contenteditable="false">4月13日(3)</h3>
-          <p class="editable" contenteditable="false">添加描述</p>
-          <div class="tags"><span class="tag">视频</span></div>
-        </div>
-        <button class="remove-btn" style="display: none;" onclick="removeCard(this)">×</button></div><div class="video-card fade-in visible">
-        <div class="video-wrap"><video src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729748581-54nqqv.mp4" controls preload="metadata"></video></div>
-        <div class="video-info">
-          <h3 class="editable" contenteditable="false">一位56岁左右的白人女性，身材丰满自然，_Seedance2.0_reference2video_1 (1)</h3>
-          <p class="editable" contenteditable="false">添加描述</p>
-          <div class="tags"><span class="tag">视频</span></div>
-        </div>
-        <button class="remove-btn" style="display: none;" onclick="removeCard(this)">×</button></div></div>
-  <div class="more-section" id="videoMore" style="display:none">
-    <div class="video-grid">
-    <div class="video-card fade-in visible">
-      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"></polygon></svg></div></div>
-      <div class="video-info">
-        <h3 class="editable" contenteditable="false">作品标题</h3>
-        <p class="editable" contenteditable="false">点击编辑按钮后可修改描述</p>
-        <div class="tags"><span class="tag">脚本</span><span class="tag">创作</span></div>
-      </div>
-      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
-    </div>
-    <div class="video-card fade-in visible">
-      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"></polygon></svg></div></div>
-      <div class="video-info">
-        <h3 class="editable" contenteditable="false">作品标题</h3>
-        <p class="editable" contenteditable="false">点击编辑按钮后可修改描述</p>
-        <div class="tags"><span class="tag">剪辑</span><span class="tag">包装</span></div>
-      </div>
-      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
-    </div>
-    <div class="video-card fade-in visible">
-      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"></polygon></svg></div></div>
-      <div class="video-info">
-        <h3 class="editable" contenteditable="false">作品标题</h3>
-        <p class="editable" contenteditable="false">点击编辑按钮后可修改描述</p>
-        <div class="tags"><span class="tag">营销</span><span class="tag">推广</span></div>
-      </div>
-      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
-    </div>
-    <div class="video-card fade-in visible">
-      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"></polygon></svg></div></div>
-      <div class="video-info">
-        <h3 class="editable" contenteditable="false">作品标题</h3>
-        <p class="editable" contenteditable="false">点击编辑按钮后可修改描述</p>
-        <div class="tags"><span class="tag">信息流</span><span class="tag">投放</span></div>
-      </div>
-      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
-    </div>
-    <div class="video-card fade-in visible">
-      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"></polygon></svg></div></div>
-      <div class="video-info">
-        <h3 class="editable" contenteditable="false">作品标题</h3>
-        <p class="editable" contenteditable="false">点击编辑按钮后可修改描述</p>
-        <div class="tags"><span class="tag">竖版</span><span class="tag">短视频</span></div>
-      </div>
-      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
-    </div>
-    <div class="video-card fade-in visible">
-      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"></polygon></svg></div></div>
-      <div class="video-info">
-        <h3 class="editable" contenteditable="false">作品标题</h3>
-        <p class="editable" contenteditable="false">点击编辑按钮后可修改描述</p>
-        <div class="tags"><span class="tag">UGC</span><span class="tag">风格</span></div>
-      </div>
-      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
-    </div>
-    <div class="video-card fade-in visible">
-      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"></polygon></svg></div></div>
-      <div class="video-info">
-        <h3 class="editable" contenteditable="false">作品标题</h3>
-        <p class="editable" contenteditable="false">点击编辑按钮后可修改描述</p>
-        <div class="tags"><span class="tag">口播</span><span class="tag">脚本</span></div>
-      </div>
-      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
-    </div>
-    <div class="video-card fade-in visible">
-      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"></polygon></svg></div></div>
-      <div class="video-info">
-        <h3 class="editable" contenteditable="false">作品标题</h3>
-        <p class="editable" contenteditable="false">点击编辑按钮后可修改描述</p>
-        <div class="tags"><span class="tag">开箱</span><span class="tag">测评</span></div>
-      </div>
-      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
-    </div>
-    <div class="video-card fade-in visible">
-      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"></polygon></svg></div></div>
-      <div class="video-info">
-        <h3 class="editable" contenteditable="false">作品标题</h3>
-        <p class="editable" contenteditable="false">点击编辑按钮后可修改描述</p>
-        <div class="tags"><span class="tag">对比</span><span class="tag">展示</span></div>
-      </div>
-      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
-    </div>
-    <div class="video-card fade-in visible">
-      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"></polygon></svg></div></div>
-      <div class="video-info">
-        <h3 class="editable" contenteditable="false">作品标题</h3>
-        <p class="editable" contenteditable="false">点击编辑按钮后可修改描述</p>
-        <div class="tags"><span class="tag">故事</span><span class="tag">叙事</span></div>
-      </div>
-      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
-    </div>
-    <div class="video-card fade-in visible">
-      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"></polygon></svg></div></div>
-      <div class="video-info">
-        <h3 class="editable" contenteditable="false">作品标题</h3>
-        <p class="editable" contenteditable="false">点击编辑按钮后可修改描述</p>
-        <div class="tags"><span class="tag">产品</span><span class="tag">特写</span></div>
-      </div>
-      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
-    </div>
-    <div class="video-card fade-in visible">
-      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"></polygon></svg></div></div>
-      <div class="video-info">
-        <h3 class="editable" contenteditable="false">作品标题</h3>
-        <p class="editable" contenteditable="false">点击编辑按钮后可修改描述</p>
-        <div class="tags"><span class="tag">生活</span><span class="tag">场景</span></div>
-      </div>
-      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
-    </div>
-    <div class="video-card fade-in visible">
-      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"></polygon></svg></div></div>
-      <div class="video-info">
-        <h3 class="editable" contenteditable="false">作品标题</h3>
-        <p class="editable" contenteditable="false">点击编辑按钮后可修改描述</p>
-        <div class="tags"><span class="tag">痛点</span><span class="tag">呈现</span></div>
-      </div>
-      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
-    </div>
-    <div class="video-card fade-in visible">
-      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"></polygon></svg></div></div>
-      <div class="video-info">
-        <h3 class="editable" contenteditable="false">作品标题</h3>
-        <p class="editable" contenteditable="false">点击编辑按钮后可修改描述</p>
-        <div class="tags"><span class="tag">解决方案</span><span class="tag">展示</span></div>
-      </div>
-      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
-    </div>
-    <div class="video-card fade-in visible">
-      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"></polygon></svg></div></div>
-      <div class="video-info">
-        <h3 class="editable" contenteditable="false">作品标题</h3>
-        <p class="editable" contenteditable="false">点击编辑按钮后可修改描述</p>
-        <div class="tags"><span class="tag">功效</span><span class="tag">演示</span></div>
-      </div>
-      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
-    </div>
-    <div class="video-card fade-in visible">
-      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"></polygon></svg></div></div>
-      <div class="video-info">
-        <h3 class="editable" contenteditable="false">作品标题</h3>
-        <p class="editable" contenteditable="false">点击编辑按钮后可修改描述</p>
-        <div class="tags"><span class="tag">before</span><span class="tag">after</span></div>
-      </div>
-      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
-    </div>
-    <div class="video-card fade-in visible">
-      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"></polygon></svg></div></div>
-      <div class="video-info">
-        <h3 class="editable" contenteditable="false">作品标题</h3>
-        <p class="editable" contenteditable="false">点击编辑按钮后可修改描述</p>
-        <div class="tags"><span class="tag">用户</span><span class="tag">证言</span></div>
-      </div>
-      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
-    </div>
-    <div class="video-card fade-in visible">
-      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"></polygon></svg></div></div>
-      <div class="video-info">
-        <h3 class="editable" contenteditable="false">作品标题</h3>
-        <p class="editable" contenteditable="false">点击编辑按钮后可修改描述</p>
-        <div class="tags"><span class="tag">限时</span><span class="tag">促销</span></div>
-      </div>
-      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
-    </div>
-    <div class="video-card fade-in visible">
-      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"></polygon></svg></div></div>
-      <div class="video-info">
-        <h3 class="editable" contenteditable="false">作品标题</h3>
-        <p class="editable" contenteditable="false">点击编辑按钮后可修改描述</p>
-        <div class="tags"><span class="tag">节日</span><span class="tag">主题</span></div>
-      </div>
-      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
-    </div>
-    <div class="video-card fade-in visible">
-      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"></polygon></svg></div></div>
-      <div class="video-info">
-        <h3 class="editable" contenteditable="false">作品标题</h3>
-        <p class="editable" contenteditable="false">点击编辑按钮后可修改描述</p>
-        <div class="tags"><span class="tag">系列</span><span class="tag">广告</span></div>
-      </div>
-      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
-    </div>
-    <div class="video-card fade-in visible">
-      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"></polygon></svg></div></div>
-      <div class="video-info">
-        <h3 class="editable" contenteditable="false">作品标题</h3>
-        <p class="editable" contenteditable="false">点击编辑按钮后可修改描述</p>
-        <div class="tags"><span class="tag">A/B</span><span class="tag">测试</span></div>
-      </div>
-      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
-    </div>
-    <div class="video-card fade-in visible">
-      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"></polygon></svg></div></div>
-      <div class="video-info">
-        <h3 class="editable" contenteditable="false">作品标题</h3>
-        <p class="editable" contenteditable="false">点击编辑按钮后可修改描述</p>
-        <div class="tags"><span class="tag">爆款</span><span class="tag">复刻</span></div>
-      </div>
-      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
-    </div>
-    <div class="video-card fade-in visible">
-      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"></polygon></svg></div></div>
-      <div class="video-info">
-        <h3 class="editable" contenteditable="false">作品标题</h3>
-        <p class="editable" contenteditable="false">点击编辑按钮后可修改描述</p>
-        <div class="tags"><span class="tag">数据</span><span class="tag">驱动</span></div>
-      </div>
-      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
-    </div>
-    <div class="video-card fade-in visible">
-      <div class="v-placeholder"><div class="v-placeholder-bg"></div><div class="v-placeholder-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"></polygon></svg></div></div>
-      <div class="video-info">
-        <h3 class="editable" contenteditable="false">作品标题</h3>
-        <p class="editable" contenteditable="false">点击编辑按钮后可修改描述</p>
-        <div class="tags"><span class="tag">迭代</span><span class="tag">优化</span></div>
-      </div>
-      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
-    </div>
-    </div>
-  </div>
-  <button class="show-more-btn" id="videoMoreBtn" onclick="toggleMore('video')">查看更多视频 ↓</button>
-  <div class="upload-zone" id="videoUpload" style="display: none;">
-    <input type="file" accept="video/*" multiple="" onchange="handleVideoUpload(this.files)">
-    <div class="u-icon">🎬</div>
-    <p>拖拽或点击上传视频</p>
-    <p class="u-hint">支持 MP4、MOV、WebM 格式</p>
+  <div class="scroll-wrapper reveal">
+    <div class="scroll-track reverse" id="track2"></div>
   </div>
 </section>
 
-<!-- IMAGE SECTION -->
-<section class="section" id="images">
-  <div class="section-header fade-in visible">
-    <span class="section-label">Design Works</span>
-    <h2 class="section-title">图片作品</h2>
-    <p class="section-desc">广告素材、视觉设计、创意海报等 AIGC 生成作品</p>
-  </div>
-  <div class="image-gallery" id="imageGallery">
-    <div class="image-card fade-in visible">
-      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><path d="M21 15l-5-5L5 21"></path></svg></div></div>
-      <div class="image-card-info"><h4 class="editable" contenteditable="false">设计作品</h4><p class="editable" contenteditable="false">点击编辑可修改</p></div>
-      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
-    </div>
-    <div class="image-card fade-in visible">
-      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><path d="M21 15l-5-5L5 21"></path></svg></div></div>
-      <div class="image-card-info"><h4 class="editable" contenteditable="false">设计作品</h4><p class="editable" contenteditable="false">点击编辑可修改</p></div>
-      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
-    </div>
-    <div class="image-card fade-in visible">
-      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><path d="M21 15l-5-5L5 21"></path></svg></div></div>
-      <div class="image-card-info"><h4 class="editable" contenteditable="false">设计作品</h4><p class="editable" contenteditable="false">点击编辑可修改</p></div>
-      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
-    </div>
-    <div class="image-card fade-in visible">
-      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><path d="M21 15l-5-5L5 21"></path></svg></div></div>
-      <div class="image-card-info"><h4 class="editable" contenteditable="false">设计作品</h4><p class="editable" contenteditable="false">点击编辑可修改</p></div>
-      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
-    </div>
-    <div class="image-card fade-in visible">
-      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><path d="M21 15l-5-5L5 21"></path></svg></div></div>
-      <div class="image-card-info"><h4 class="editable" contenteditable="false">设计作品</h4><p class="editable" contenteditable="false">点击编辑可修改</p></div>
-      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
-    </div>
-    <div class="image-card fade-in visible">
-      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><path d="M21 15l-5-5L5 21"></path></svg></div></div>
-      <div class="image-card-info"><h4 class="editable" contenteditable="false">设计作品</h4><p class="editable" contenteditable="false">点击编辑可修改</p></div>
-      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
-    </div>
-    <div class="image-card fade-in visible">
-      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><path d="M21 15l-5-5L5 21"></path></svg></div></div>
-      <div class="image-card-info"><h4 class="editable" contenteditable="false">设计作品</h4><p class="editable" contenteditable="false">点击编辑可修改</p></div>
-      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
-    </div>
-    <div class="image-card fade-in visible">
-      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><path d="M21 15l-5-5L5 21"></path></svg></div></div>
-      <div class="image-card-info"><h4 class="editable" contenteditable="false">设计作品</h4><p class="editable" contenteditable="false">点击编辑可修改</p></div>
-      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
-    </div>
-  </div>
-  <div class="more-section" id="imageMore" style="display:none">
-    <div class="image-gallery">
-    <div class="image-card fade-in visible">
-      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><path d="M21 15l-5-5L5 21"></path></svg></div></div>
-      <div class="image-card-info"><h4 class="editable" contenteditable="false">设计作品</h4><p class="editable" contenteditable="false">点击编辑可修改</p></div>
-      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
-    </div>
-    <div class="image-card fade-in visible">
-      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><path d="M21 15l-5-5L5 21"></path></svg></div></div>
-      <div class="image-card-info"><h4 class="editable" contenteditable="false">设计作品</h4><p class="editable" contenteditable="false">点击编辑可修改</p></div>
-      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
-    </div>
-    <div class="image-card fade-in visible">
-      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><path d="M21 15l-5-5L5 21"></path></svg></div></div>
-      <div class="image-card-info"><h4 class="editable" contenteditable="false">设计作品</h4><p class="editable" contenteditable="false">点击编辑可修改</p></div>
-      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
-    </div>
-    <div class="image-card fade-in visible">
-      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><path d="M21 15l-5-5L5 21"></path></svg></div></div>
-      <div class="image-card-info"><h4 class="editable" contenteditable="false">设计作品</h4><p class="editable" contenteditable="false">点击编辑可修改</p></div>
-      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
-    </div>
-    <div class="image-card fade-in visible">
-      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><path d="M21 15l-5-5L5 21"></path></svg></div></div>
-      <div class="image-card-info"><h4 class="editable" contenteditable="false">设计作品</h4><p class="editable" contenteditable="false">点击编辑可修改</p></div>
-      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
-    </div>
-    <div class="image-card fade-in visible">
-      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><path d="M21 15l-5-5L5 21"></path></svg></div></div>
-      <div class="image-card-info"><h4 class="editable" contenteditable="false">设计作品</h4><p class="editable" contenteditable="false">点击编辑可修改</p></div>
-      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
-    </div>
-    <div class="image-card fade-in visible">
-      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><path d="M21 15l-5-5L5 21"></path></svg></div></div>
-      <div class="image-card-info"><h4 class="editable" contenteditable="false">设计作品</h4><p class="editable" contenteditable="false">点击编辑可修改</p></div>
-      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
-    </div>
-    <div class="image-card fade-in visible">
-      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><path d="M21 15l-5-5L5 21"></path></svg></div></div>
-      <div class="image-card-info"><h4 class="editable" contenteditable="false">设计作品</h4><p class="editable" contenteditable="false">点击编辑可修改</p></div>
-      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
-    </div>
-    <div class="image-card fade-in visible">
-      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><path d="M21 15l-5-5L5 21"></path></svg></div></div>
-      <div class="image-card-info"><h4 class="editable" contenteditable="false">设计作品</h4><p class="editable" contenteditable="false">点击编辑可修改</p></div>
-      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
-    </div>
-    <div class="image-card fade-in visible">
-      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><path d="M21 15l-5-5L5 21"></path></svg></div></div>
-      <div class="image-card-info"><h4 class="editable" contenteditable="false">设计作品</h4><p class="editable" contenteditable="false">点击编辑可修改</p></div>
-      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
-    </div>
-    <div class="image-card fade-in visible">
-      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><path d="M21 15l-5-5L5 21"></path></svg></div></div>
-      <div class="image-card-info"><h4 class="editable" contenteditable="false">设计作品</h4><p class="editable" contenteditable="false">点击编辑可修改</p></div>
-      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
-    </div>
-    <div class="image-card fade-in visible">
-      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><path d="M21 15l-5-5L5 21"></path></svg></div></div>
-      <div class="image-card-info"><h4 class="editable" contenteditable="false">设计作品</h4><p class="editable" contenteditable="false">点击编辑可修改</p></div>
-      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
-    </div>
-    <div class="image-card fade-in visible">
-      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><path d="M21 15l-5-5L5 21"></path></svg></div></div>
-      <div class="image-card-info"><h4 class="editable" contenteditable="false">设计作品</h4><p class="editable" contenteditable="false">点击编辑可修改</p></div>
-      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
-    </div>
-    <div class="image-card fade-in visible">
-      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><path d="M21 15l-5-5L5 21"></path></svg></div></div>
-      <div class="image-card-info"><h4 class="editable" contenteditable="false">设计作品</h4><p class="editable" contenteditable="false">点击编辑可修改</p></div>
-      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
-    </div>
-    <div class="image-card fade-in visible">
-      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><path d="M21 15l-5-5L5 21"></path></svg></div></div>
-      <div class="image-card-info"><h4 class="editable" contenteditable="false">设计作品</h4><p class="editable" contenteditable="false">点击编辑可修改</p></div>
-      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
-    </div>
-    <div class="image-card fade-in visible">
-      <div class="img-placeholder"><div class="img-placeholder-bg"></div><div class="img-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><path d="M21 15l-5-5L5 21"></path></svg></div></div>
-      <div class="image-card-info"><h4 class="editable" contenteditable="false">设计作品</h4><p class="editable" contenteditable="false">点击编辑可修改</p></div>
-      <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
-    </div>
-    </div>
-  </div>
-  <button class="show-more-btn" id="imageMoreBtn" onclick="toggleMore('image')">查看更多图片 ↓</button>
-  <div class="upload-zone" id="imageUpload" style="display: none;">
-    <input type="file" accept="image/*" multiple="" onchange="handleImageUpload(this.files)">
-    <div class="u-icon">🖼️</div>
-    <p>拖拽或点击上传图片</p>
-    <p class="u-hint">支持 JPG、PNG、WebP 格式</p>
+<!-- SELECTED VISUALS -->
+<section class="visuals-section">
+  <h2 class="section-label reveal editable">静态素材精选</h2>
+  <div class="visuals-grid reveal">
+    <div class="visual-item"></div>
+    <div class="visual-item"></div>
+    <div class="visual-item"></div>
+    <div class="visual-item"></div>
+    <div class="visual-item"></div>
+    <div class="visual-item"></div>
   </div>
 </section>
 
-<!-- AGENT SECTION -->
-<section class="section-dark" id="agents">
-  <div class="section-dark-inner">
-    <div class="section-header fade-in visible">
-      <span class="section-label">AI Agents</span>
-      <h2 class="section-title" style="color:var(--text-on-dark)">个人 Agent 展示</h2>
-      <p class="section-desc">我构建的 AI Agent 工具，提升创意生产效率</p>
-    </div>
-    <div class="agent-grid" id="agentGrid">
-      <div class="agent-card fade-in visible">
-        <div class="ag-placeholder"><div class="ag-placeholder-bg"></div><div class="ag-placeholder-icon"><svg viewBox="0 0 24 24"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1.27A7 7 0 0 1 14 22h-4a7 7 0 0 1-6.73-3H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73A2 2 0 0 1 12 2M9 17a1 1 0 1 0 0-2 1 1 0 0 0 0 2m6 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2"></path></svg></div></div>
-        <div class="agent-info">
-          <h3 class="editable" contenteditable="false">Agent 名称</h3>
-          <p class="editable" contenteditable="false">Agent 功能描述，点击编辑按钮后可修改</p>
-          <div class="agent-meta"><div class="agent-meta-item">类型: <span>创意生成</span></div><div class="agent-meta-item">状态: <span>运行中</span></div></div>
-        </div>
-        <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
-      </div>
-      <div class="agent-card fade-in visible">
-        <div class="ag-placeholder"><div class="ag-placeholder-bg"></div><div class="ag-placeholder-icon"><svg viewBox="0 0 24 24"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1.27A7 7 0 0 1 14 22h-4a7 7 0 0 1-6.73-3H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73A2 2 0 0 1 12 2M9 17a1 1 0 1 0 0-2 1 1 0 0 0 0 2m6 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2"></path></svg></div></div>
-        <div class="agent-info">
-          <h3 class="editable" contenteditable="false">Agent 名称</h3>
-          <p class="editable" contenteditable="false">Agent 功能描述，点击编辑按钮后可修改</p>
-          <div class="agent-meta"><div class="agent-meta-item">类型: <span>数据分析</span></div><div class="agent-meta-item">状态: <span>运行中</span></div></div>
-        </div>
-        <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
-      </div>
-      <div class="agent-card fade-in visible">
-        <div class="ag-placeholder"><div class="ag-placeholder-bg"></div><div class="ag-placeholder-icon"><svg viewBox="0 0 24 24"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1.27A7 7 0 0 1 14 22h-4a7 7 0 0 1-6.73-3H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73A2 2 0 0 1 12 2M9 17a1 1 0 1 0 0-2 1 1 0 0 0 0 2m6 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2"></path></svg></div></div>
-        <div class="agent-info">
-          <h3 class="editable" contenteditable="false">Agent 名称</h3>
-          <p class="editable" contenteditable="false">Agent 功能描述，点击编辑按钮后可修改</p>
-          <div class="agent-meta"><div class="agent-meta-item">类型: <span>素材优化</span></div><div class="agent-meta-item">状态: <span>运行中</span></div></div>
-        </div>
-        <button class="remove-btn" onclick="removeCard(this)" style="display: none;">×</button>
-      </div>
-    </div>
-    <div class="upload-zone" id="agentUpload" style="border-color: rgba(255, 255, 255, 0.15); display: none;">
-      <input type="file" accept="image/*" multiple="" onchange="handleAgentUpload(this.files)">
-      <div class="u-icon">🤖</div>
-      <p style="color:var(--text-on-dark-sec)">拖拽或点击上传 Agent 截图</p>
-      <p class="u-hint" style="color:rgba(255,255,255,0.3)">支持 JPG、PNG、WebP 格式</p>
-    </div>
+<!-- SKILLS -->
+<section class="skills-section">
+  <h2 class="section-label reveal editable">工具栈</h2>
+  <div class="skills-tags reveal">
+    <span class="skill-tag">Midjourney</span>
+    <span class="skill-tag">ComfyUI</span>
+    <span class="skill-tag">Stable Diffusion</span>
+    <span class="skill-tag">Runway</span>
+    <span class="skill-tag">Seedance</span>
+    <span class="skill-tag">Claude</span>
+    <span class="skill-tag">Cursor</span>
+    <span class="skill-tag">Premiere Pro</span>
+    <span class="skill-tag">After Effects</span>
+    <span class="skill-tag">Figma</span>
   </div>
 </section>
 
-<!-- DATA SECTION -->
-<section class="section" id="data">
-  <div class="section-header fade-in visible">
-    <span class="section-label">Performance Data</span>
-    <h2 class="section-title">数据展示</h2>
-    <p class="section-desc">素材投放效果与创意产出的核心数据指标</p>
-  </div>
-  <div class="data-stats fade-in visible">
-    <div class="stat-card"><div class="stat-number editable" contenteditable="false">1,200+</div><div class="stat-label">素材总产出</div><div class="stat-sub">视频 + 图片</div></div>
-    <div class="stat-card"><div class="stat-number editable" contenteditable="false">5.8M</div><div class="stat-label">总曝光量</div><div class="stat-sub">DSP 投放累计</div></div>
-    <div class="stat-card"><div class="stat-number editable" contenteditable="false">3.2%</div><div class="stat-label">平均 CTR</div><div class="stat-sub">高于行业均值</div></div>
-    <div class="stat-card"><div class="stat-number editable" contenteditable="false">$0.42</div><div class="stat-label">平均 CPC</div><div class="stat-sub">持续优化中</div></div>
-  </div>
-  <div class="data-charts fade-in visible">
-    <div class="chart-card">
-      <h3>素材类型分布</h3>
-      <div class="chart-bar-group">
-        <div class="chart-bar-item"><label><span>视频广告</span><span>45%</span></label><div class="chart-bar"><div class="chart-bar-fill" style="width: 45%;"></div></div></div>
-        <div class="chart-bar-item"><label><span>静态图片</span><span>30%</span></label><div class="chart-bar"><div class="chart-bar-fill" style="width: 30%;"></div></div></div>
-        <div class="chart-bar-item"><label><span>GIF 动图</span><span>15%</span></label><div class="chart-bar"><div class="chart-bar-fill" style="width: 15%;"></div></div></div>
-        <div class="chart-bar-item"><label><span>轮播素材</span><span>10%</span></label><div class="chart-bar"><div class="chart-bar-fill" style="width: 10%;"></div></div></div>
-      </div>
-    </div>
-    <div class="chart-card">
-      <h3>月度产出趋势</h3>
-      <div class="chart-bar-group">
-        <div class="chart-bar-item"><label><span>1月</span><span>86</span></label><div class="chart-bar"><div class="chart-bar-fill" style="width: 43%;"></div></div></div>
-        <div class="chart-bar-item"><label><span>2月</span><span>124</span></label><div class="chart-bar"><div class="chart-bar-fill" style="width: 62%;"></div></div></div>
-        <div class="chart-bar-item"><label><span>3月</span><span>168</span></label><div class="chart-bar"><div class="chart-bar-fill" style="width: 84%;"></div></div></div>
-        <div class="chart-bar-item"><label><span>4月</span><span>200</span></label><div class="chart-bar"><div class="chart-bar-fill" style="width: 100%;"></div></div></div>
-      </div>
-    </div>
+<!-- SYSTEM (AI Agent) -->
+<section class="system-section" id="system">
+  <h2 class="reveal editable">我构建创意系统，<br>而不只是做素材。</h2>
+  <p class="desc reveal editable">一个人 + AI 系统完成从策略到投放的全链路。不是做更多素材，而是构建让素材自己进化的系统。</p>
+  <div class="system-screenshots reveal">
+    <div class="system-shot">上传截图</div>
+    <div class="system-shot">上传截图</div>
+    <div class="system-shot">上传截图</div>
   </div>
 </section>
 
-<!-- FOOTER -->
-<footer class="footer">
-  <div class="footer-links"><a href="#">Email</a><a href="#">WeChat</a><a href="#">LinkedIn</a></div>
-  <p>© 2026 韩爽 — AIGC 创意设计运营</p>
-</footer>
+<!-- VIDEO MODAL -->
+<div class="video-modal" id="videoModal">
+  <video id="modalVideo" controls></video>
+</div>
 
-<!-- EDIT BUTTON (hidden until owner logs in) -->
-<button class="edit-btn" id="editBtn" onclick="toggleEditMode()" title="编辑模式" style="display: flex;">✏️</button>
 
 <!-- AUTH MODAL -->
 <div class="auth-modal" id="authModal">
   <div class="auth-box">
-    <button class="aclose" onclick="closeAuth()">×</button>
     <h3 id="authTitle">登录</h3>
     <input type="email" id="authEmail" placeholder="邮箱">
     <input type="password" id="authPass" placeholder="密码">
-    <button class="abtn" id="authSubmit" onclick="doAuth()">登录</button>
-    <div class="aswitch" id="authSwitch">没有账号？<a onclick="switchAuthMode()">注册</a></div>
-    <div class="amsg" id="authMsg"></div>
+    <button onclick="handleAuth()">确认</button>
+    <p class="auth-switch" onclick="switchAuthMode()">没有账号？注册</p>
+    <p class="auth-close" onclick="closeAuthModal()">✕</p>
   </div>
 </div>
 
-<!-- LIGHTBOX -->
-<div class="lightbox" id="lightbox" onclick="closeLightbox()"><button class="lightbox-close">×</button></div>
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- EDIT BUTTON -->
+<button class="edit-toggle" id="editToggle" style="display:none" onclick="toggleEditMode()">✏️ 编辑</button>
+
+<!-- UPLOAD OVERLAY (edit mode) -->
+<div class="upload-overlay" id="uploadOverlay" style="display:none">
+  <div class="upload-bar">
+    <label class="upload-btn">➕ 添加视频 <input type="file" accept="video/*" onchange="handleVideoUpload(this.files[0])" hidden></label>
+    <label class="upload-btn">🖼 添加图片 <input type="file" accept="image/*" onchange="handleImageUpload(this.files[0])" hidden></label>
+    <label class="upload-btn">📸 添加AI截图 <input type="file" accept="image/*" onchange="handleAgentUpload(this.files[0])" hidden></label>
+    <button class="upload-btn publish-btn" onclick="publishToGitHub()">🚀 发布</button>
+    <button class="upload-btn" onclick="saveAndDownload()">💾 备份</button>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <span>© 2026 韩爽</span>
+  <a href="mailto:contact@example.com">联系我 →</a>
+</footer>
+
 <script>
-/* ===== FIREBASE INIT ===== */
-firebase.initializeApp({
-  apiKey: "AIzaSyAPmgllefOwgcm9k52Keg789OdUkgn26Jc",
-  authDomain: "shejiwangzhan.firebaseapp.com",
-  projectId: "shejiwangzhan",
-  storageBucket: "shejiwangzhan.firebasestorage.app",
-  messagingSenderId: "689695126769",
-  appId: "1:689695126769:web:01b9df2916dadeb56ce550"
-});
-const auth = firebase.auth();
-const db = firebase.firestore();
-const OWNER_EMAIL = 'nicolehans33@gmail.com';
+// ===== PARTICLES =====
+const canvas=document.getElementById('particles'),ctx=canvas.getContext('2d');
+let w,h,particles=[];
+function resize(){w=canvas.width=innerWidth;h=canvas.height=innerHeight}
+resize();window.addEventListener('resize',resize);
 
-/* ===== STATE ===== */
-let editMode = false;
-let isOwner = false;
-let currentUser = null;
+class Particle{
+  constructor(){this.reset()}
+  reset(){
+    this.x=Math.random()*w;this.y=Math.random()*h;
+    this.vx=(Math.random()-0.5)*0.3;this.vy=(Math.random()-0.5)*0.3;
+    this.r=Math.random()*1.5+0.5;
+    this.alpha=Math.random()*0.4+0.05;
+  }
+  update(){
+    this.x+=this.vx;this.y+=this.vy;
+    if(this.x<0||this.x>w||this.y<0||this.y>h)this.reset();
+  }
+  draw(){
+    ctx.beginPath();ctx.arc(this.x,this.y,this.r,0,Math.PI*2);
+    ctx.fillStyle=`rgba(120,115,245,${this.alpha})`;ctx.fill();
+  }
+}
+for(let i=0;i<60;i++)particles.push(new Particle());
 
-/* ===== AUTH UI ===== */
-let authIsLogin = true;
+let mx=-1000,my=-1000;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY});
 
-function handleUserBtn() {
-  if (currentUser) {
-    // Already logged in - show logout option
-    if (confirm('当前账号: ' + currentUser.email + '\n\n要退出登录吗？')) {
-      auth.signOut();
+function animateParticles(){
+  ctx.clearRect(0,0,w,h);
+  particles.forEach(p=>{p.update();p.draw()});
+  for(let i=0;i<particles.length;i++){
+    const a=particles[i];
+    const dm=Math.hypot(a.x-mx,a.y-my);
+    if(dm<120){
+      ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(mx,my);
+      ctx.strokeStyle=`rgba(120,115,245,${(1-dm/120)*0.25})`;ctx.lineWidth=0.5;ctx.stroke();
     }
-  } else {
-    openAuth();
-  }
-}
-
-function openAuth() {
-  authIsLogin = true;
-  document.getElementById('authTitle').textContent = '登录';
-  document.getElementById('authSubmit').textContent = '登录';
-  document.getElementById('authSwitch').innerHTML = '没有账号？<a onclick="switchAuthMode()">注册</a>';
-  document.getElementById('authMsg').textContent = '';
-  document.getElementById('authEmail').value = '';
-  document.getElementById('authPass').value = '';
-  document.getElementById('authModal').classList.add('active');
-}
-
-function closeAuth() {
-  document.getElementById('authModal').classList.remove('active');
-}
-
-function switchAuthMode() {
-  authIsLogin = !authIsLogin;
-  document.getElementById('authTitle').textContent = authIsLogin ? '登录' : '注册';
-  document.getElementById('authSubmit').textContent = authIsLogin ? '登录' : '注册';
-  document.getElementById('authSwitch').innerHTML = authIsLogin
-    ? '没有账号？<a onclick="switchAuthMode()">注册</a>'
-    : '已有账号？<a onclick="switchAuthMode()">登录</a>';
-  document.getElementById('authMsg').textContent = '';
-}
-
-async function doAuth() {
-  const email = document.getElementById('authEmail').value.trim();
-  const pass = document.getElementById('authPass').value;
-  const msgEl = document.getElementById('authMsg');
-  msgEl.className = 'amsg';
-  msgEl.textContent = '';
-  if (!email || !pass) { msgEl.className = 'amsg err'; msgEl.textContent = '请填写邮箱和密码'; return; }
-  try {
-    if (authIsLogin) {
-      await auth.signInWithEmailAndPassword(email, pass);
-    } else {
-      const cred = await auth.createUserWithEmailAndPassword(email, pass);
-      // Save to Firestore
-      await db.collection('users').doc(cred.user.uid).set({
-        email: email,
-        role: email === OWNER_EMAIL ? 'owner' : 'guest',
-        createdAt: firebase.firestore.FieldValue.serverTimestamp()
-      });
-    }
-    closeAuth();
-  } catch (e) {
-    msgEl.className = 'amsg err';
-    const msgs = {
-      'auth/email-already-in-use': '该邮箱已注册',
-      'auth/invalid-email': '邮箱格式不对',
-      'auth/weak-password': '密码至少6位',
-      'auth/user-not-found': '账号不存在',
-      'auth/wrong-password': '密码错误',
-      'auth/invalid-credential': '邮箱或密码错误'
-    };
-    msgEl.textContent = msgs[e.code] || e.message;
-  }
-}
-
-/* ===== AUTH STATE LISTENER ===== */
-auth.onAuthStateChanged(async (user) => {
-  currentUser = user;
-  const btn = document.getElementById('navUserBtn');
-  const editBtn = document.getElementById('editBtn');
-  if (user) {
-    isOwner = user.email === OWNER_EMAIL;
-    btn.textContent = isOwner ? '👑 主人' : user.email.split('@')[0];
-    editBtn.style.display = isOwner ? 'flex' : 'none';
-    // Ensure user doc exists in Firestore
-    const doc = await db.collection('users').doc(user.uid).get();
-    if (!doc.exists) {
-      await db.collection('users').doc(user.uid).set({
-        email: user.email,
-        role: user.email === OWNER_EMAIL ? 'owner' : 'guest',
-        createdAt: firebase.firestore.FieldValue.serverTimestamp()
-      });
-    }
-  } else {
-    isOwner = false;
-    btn.textContent = '登录';
-    editBtn.style.display = 'none';
-    if (editMode) { editMode = false; exitEditMode(); }
-  }
-});
-
-function exitEditMode() {
-  const btn = document.getElementById('editBtn');
-  btn.classList.remove('active');
-  btn.textContent = '✏️';
-  document.querySelectorAll('.editable').forEach(el => { el.contentEditable = false; el.classList.remove('editing'); });
-  document.querySelectorAll('.upload-zone').forEach(el => el.style.display = 'none');
-  document.querySelectorAll('.remove-btn').forEach(el => el.style.display = 'none');
-}
-
-/* ===== EDIT MODE ===== */
-async function toggleEditMode() {
-  if (!isOwner) return;
-  editMode = !editMode;
-  const btn = document.getElementById('editBtn');
-  btn.classList.toggle('active', editMode);
-  btn.textContent = editMode ? '💾' : '✏️';
-  btn.title = editMode ? '保存并退出编辑' : '编辑模式';
-  document.querySelectorAll('.editable').forEach(el => {
-    el.contentEditable = editMode;
-    el.classList.toggle('editing', editMode);
-  });
-  document.querySelectorAll('.upload-zone').forEach(el => el.style.display = editMode ? 'flex' : 'none');
-  document.querySelectorAll('.remove-btn').forEach(el => el.style.display = editMode ? 'flex' : 'none');
-  if (!editMode) {
-    await publishToGitHub();
-  }
-}
-
-/* ===== REMOVE CARD ===== */
-async function removeCard(btn) {
-  const card = btn.parentElement;
-  // Collect all asset URLs from this card (videos + images)
-  const assetUrls = [];
-  card.querySelectorAll('video source, video[src], img[src]').forEach(el => {
-    const url = el.src || el.getAttribute('src');
-    if (url) assetUrls.push(url);
-  });
-
-  // Delete from GitHub assets/ if applicable
-  const token = getGitHubToken();
-  for (const url of assetUrls) {
-    // Match raw.githubusercontent.com/.../assets/filename
-    const m = url.match(/raw\.githubusercontent\.com\/[^/]+\/[^/]+\/[^/]+\/assets\/(.+)/);
-    if (m && token) {
-      try {
-        await fetch(WORKER_URL + '/delete-asset', {
-          method: 'DELETE',
-          headers: { 'Content-Type': 'application/json', 'X-GitHub-Token': token },
-          body: JSON.stringify({ filename: decodeURIComponent(m[1]) })
-        });
-      } catch (e) { console.warn('Failed to delete asset:', m[1], e); }
-    }
-  }
-
-  card.remove();
-}
-
-/* ===== SHOW MORE TOGGLE ===== */
-function toggleMore(type) {
-  const moreEl = document.getElementById(type + 'More');
-  const btn = document.getElementById(type + 'MoreBtn');
-  const isOpen = moreEl.classList.contains('active');
-  if (isOpen) {
-    moreEl.classList.remove('active');
-    moreEl.style.maxHeight = '0';
-    btn.classList.remove('expanded');
-    btn.textContent = type === 'video' ? '查看更多视频 ↓' : '查看更多图片 ↓';
-  } else {
-    moreEl.style.display = '';
-    moreEl.classList.add('active');
-    moreEl.style.maxHeight = moreEl.scrollHeight + 'px';
-    btn.classList.add('expanded');
-    btn.textContent = type === 'video' ? '收起视频 ↑' : '收起图片 ↑';
-    moreEl.querySelectorAll('.fade-in:not(.visible)').forEach(el => {
-      el.classList.add('visible');
-    });
-  }
-}
-
-/* ===== FILE UPLOADS (GitHub Asset Storage) ===== */
-
-/* Read file as raw base64 (no data URL prefix) for GitHub API */
-function fileToRawBase64(file) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => {
-      // Convert ArrayBuffer to base64
-      const bytes = new Uint8Array(reader.result);
-      let binary = '';
-      for (let i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i]);
-      resolve(btoa(binary));
-    };
-    reader.onerror = () => reject(reader.error);
-    reader.readAsArrayBuffer(file);
-  });
-}
-
-/* Upload file to GitHub repo assets/ folder via Worker proxy */
-async function uploadAssetToGitHub(file) {
-  let token = getGitHubToken();
-  if (!token) {
-    token = await promptGitHubToken();
-    if (!token) throw new Error('未设置 Token');
-  }
-
-  // Generate unique filename: timestamp + random + original extension
-  const ext = file.name.split('.').pop().toLowerCase();
-  const ts = Date.now();
-  const rand = Math.random().toString(36).substring(2, 8);
-  const filename = ts + '-' + rand + '.' + ext;
-
-  const base64Content = await fileToRawBase64(file);
-
-  const res = await fetch(WORKER_URL + '/upload-asset', {
-    method: 'PUT',
-    headers: {
-      'X-GitHub-Token': token,
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      filename: filename,
-      content: base64Content,
-      message: 'Upload: ' + file.name
-    })
-  });
-
-  const data = await res.json();
-  if (!res.ok || !data.ok) {
-    if (res.status === 401 || res.status === 403) {
-      localStorage.removeItem('pf_gh_token');
-      throw new Error('Token 无效或已过期');
-    }
-    throw new Error(data.error || '上传失败');
-  }
-  return data.url; // raw.githubusercontent.com URL
-}
-
-async function handleVideoUpload(files) {
-  const grid = document.getElementById('videoGrid');
-  for (const f of Array.from(files)) {
-    // Check file size limit (GitHub max 100MB, but be practical — warn over 25MB)
-    if (f.size > 100 * 1024 * 1024) {
-      showToast('❌ 视频超过 100MB，无法上传');
-      continue;
-    }
-    if (f.size > 25 * 1024 * 1024) {
-      showToast('⚠️ 视频较大 (' + (f.size/1024/1024).toFixed(1) + 'MB)，上传中...');
-    }
-
-    showToast('⏫ 正在上传视频: ' + f.name);
-    try {
-      const url = await uploadAssetToGitHub(f);
-      const card = document.createElement('div');
-      card.className = 'video-card fade-in visible';
-      card.innerHTML = `
-        <div class="video-wrap"><video src="${url}" controls preload="metadata"></video></div>
-        <div class="video-info">
-          <h3 class="editable editing" contenteditable="true">${f.name.replace(/\.[^.]+$/,'')}</h3>
-          <p class="editable editing" contenteditable="true">添加描述</p>
-          <div class="tags"><span class="tag">视频</span></div>
-        </div>
-        <button class="remove-btn" style="display:flex" onclick="removeCard(this)">×</button>`;
-      grid.appendChild(card);
-      showToast('✅ 视频上传成功: ' + f.name);
-    } catch (e) {
-      showToast('❌ 上传失败: ' + e.message);
-    }
-  }
-}
-
-async function handleImageUpload(files) {
-  const gallery = document.getElementById('imageGallery');
-  for (const f of Array.from(files)) {
-    showToast('⏫ 正在上传图片: ' + f.name);
-    try {
-      const url = await uploadAssetToGitHub(f);
-      const card = document.createElement('div');
-      card.className = 'image-card fade-in visible';
-      card.innerHTML = `
-        <img src="${url}" alt="${f.name}" style="width:100%;height:100%;object-fit:cover;cursor:pointer" onclick="openLightbox(this.src)">
-        <div class="image-card-info">
-          <h4 class="editable editing" contenteditable="true">${f.name.replace(/\.[^.]+$/,'')}</h4>
-          <p class="editable editing" contenteditable="true">添加描述</p>
-        </div>
-        <button class="remove-btn" style="display:flex" onclick="removeCard(this)">×</button>`;
-      gallery.appendChild(card);
-      showToast('✅ 图片上传成功: ' + f.name);
-    } catch (e) {
-      showToast('❌ 上传失败: ' + e.message);
-    }
-  }
-}
-
-async function handleAgentUpload(files) {
-  const grid = document.getElementById('agentGrid');
-  for (const f of Array.from(files)) {
-    showToast('⏫ 正在上传: ' + f.name);
-    try {
-      const url = await uploadAssetToGitHub(f);
-      const card = document.createElement('div');
-      card.className = 'agent-card fade-in visible';
-      card.innerHTML = `
-        <img src="${url}" alt="${f.name}" style="width:100%;border-radius:var(--radius) var(--radius) 0 0;aspect-ratio:16/10;object-fit:cover">
-        <div class="agent-info">
-          <h3 class="editable editing" contenteditable="true">${f.name.replace(/\.[^.]+$/,'')}</h3>
-          <p class="editable editing" contenteditable="true">添加 Agent 描述</p>
-          <div class="agent-meta"><div class="agent-meta-item">类型: <span>自定义</span></div><div class="agent-meta-item">状态: <span>运行中</span></div></div>
-        </div>
-        <button class="remove-btn" style="display:flex" onclick="removeCard(this)">×</button>`;
-      grid.appendChild(card);
-      showToast('✅ 上传成功: ' + f.name);
-    } catch (e) {
-      showToast('❌ 上传失败: ' + e.message);
-    }
-  }
-}
-
-/* ===== WORKER PROXY CONFIG ===== */
-const WORKER_URL = 'https://github-proxy.nicolehans33.workers.dev';
-
-/* ===== GITHUB TOKEN MANAGEMENT ===== */
-function getGitHubToken() {
-  return localStorage.getItem('pf_gh_token');
-}
-
-function promptGitHubToken() {
-  return new Promise(resolve => {
-    const overlay = document.createElement('div');
-    overlay.className = 'auth-overlay';
-    overlay.innerHTML = `
-      <div class="auth-box">
-        <div class="auth-icon">🔑</div>
-        <h3>设置 GitHub Token</h3>
-        <p style="font-size:.85rem;color:#999;margin-bottom:12px">首次发布需要输入 GitHub Personal Access Token<br>（只需设置一次，之后会自动记住）</p>
-        <input type="password" class="auth-input" placeholder="ghp_..." autofocus>
-        <div class="auth-actions">
-          <button class="auth-cancel">取消</button>
-          <button class="auth-confirm">保存</button>
-        </div>
-        <div class="auth-error" style="display:none">Token 不能为空</div>
-      </div>`;
-    document.body.appendChild(overlay);
-    requestAnimationFrame(() => overlay.classList.add('active'));
-    const input = overlay.querySelector('.auth-input');
-    const errEl = overlay.querySelector('.auth-error');
-    const close = (val) => {
-      overlay.classList.remove('active');
-      setTimeout(() => overlay.remove(), 300);
-      resolve(val);
-    };
-    overlay.querySelector('.auth-cancel').onclick = () => close(null);
-    overlay.querySelector('.auth-confirm').onclick = () => {
-      const v = input.value.trim();
-      if (!v) { errEl.style.display = 'block'; input.focus(); return; }
-      localStorage.setItem('pf_gh_token', v);
-      close(v);
-    };
-    input.addEventListener('keydown', e => {
-      if (e.key === 'Enter') overlay.querySelector('.auth-confirm').click();
-      if (e.key === 'Escape') close(null);
-    });
-    input.focus();
-  });
-}
-
-/* ===== GENERATE CLEAN HTML ===== */
-function generateCleanHTML() {
-  // Remove any overlays/progress/toast elements
-  document.querySelectorAll('.auth-overlay, .publish-progress, .toast-msg').forEach(el => el.remove());
-  // Clean up edit state in DOM
-  document.querySelectorAll('.editable').forEach(el => {
-    el.contentEditable = 'false';
-    el.classList.remove('editing');
-  });
-  document.querySelectorAll('.upload-zone').forEach(el => el.style.display = 'none');
-  document.querySelectorAll('.remove-btn').forEach(el => el.style.display = 'none');
-  // Reset "show more" sections to collapsed state
-  ['video', 'image'].forEach(type => {
-    const moreEl = document.getElementById(type + 'More');
-    const btn = document.getElementById(type + 'MoreBtn');
-    if (moreEl && moreEl.classList.contains('active')) {
-      moreEl.classList.remove('active');
-      moreEl.style.maxHeight = '0';
-      moreEl.style.display = 'none';
-      if (btn) {
-        btn.classList.remove('expanded');
-        btn.textContent = type === 'video' ? '查看更多视频 ↓' : '查看更多图片 ↓';
+    for(let j=i+1;j<particles.length;j++){
+      const b=particles[j];
+      const d=Math.hypot(a.x-b.x,a.y-b.y);
+      if(d<100){
+        ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);
+        ctx.strokeStyle=`rgba(120,115,245,${(1-d/100)*0.08})`;ctx.lineWidth=0.5;ctx.stroke();
       }
     }
-  });
-  // Reset edit button
-  const editBtn = document.querySelector('.edit-btn');
-  editBtn.classList.remove('active');
-  editBtn.textContent = '✏️';
-  // Reset all fade-in to visible
-  document.querySelectorAll('.fade-in').forEach(el => el.classList.add('visible'));
-  // Generate full HTML
-  return '<!DOCTYPE html>\n<html lang="zh-CN">\n' + document.documentElement.innerHTML + '\n</html>';
-}
-
-/* ===== PUBLISH TO GITHUB (via Cloudflare Worker) ===== */
-async function publishToGitHub() {
-  let token = getGitHubToken();
-  if (!token) {
-    token = await promptGitHubToken();
-    if (!token) {
-      showToast('❌ 未设置 Token，取消发布');
-      return;
-    }
   }
-
-  // Generate clean HTML FIRST (before showing progress, so progress isn't captured)
-  const html = generateCleanHTML();
-  const content = btoa(unescape(encodeURIComponent(html)));
-
-  // Show progress AFTER generating HTML
-  const progress = document.createElement('div');
-  progress.className = 'publish-progress';
-  progress.innerHTML = '<div class="publish-spinner"></div><span>正在发布到 GitHub...</span>';
-  document.body.appendChild(progress);
-
-  try {
-    // Get current file SHA via Worker
-    const getRes = await fetch(`${WORKER_URL}/contents`, {
-      headers: { 'X-GitHub-Token': token }
-    });
-    const getData = await getRes.json();
-    const sha = getData.sha || null;
-
-    // Push update via Worker
-    const putRes = await fetch(`${WORKER_URL}/publish`, {
-      method: 'PUT',
-      headers: {
-        'X-GitHub-Token': token,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        message: '更新作品集 ' + new Date().toLocaleString('zh-CN'),
-        content: content,
-        sha: sha
-      })
-    });
-
-    const result = await putRes.json();
-    progress.remove();
-
-    if (putRes.ok && result.ok) {
-      showToast('✅ 发布成功！网站将在1分钟内更新');
-    } else if (putRes.status === 401 || putRes.status === 403) {
-      localStorage.removeItem('pf_gh_token');
-      showToast('❌ Token 无效或已过期，请重新设置');
-    } else {
-      showToast('❌ 发布失败: ' + (result.message || result.error || putRes.status));
-    }
-  } catch (e) {
-    progress.remove();
-    showToast('❌ 网络错误: ' + e.message);
-  }
+  requestAnimationFrame(animateParticles);
 }
+animateParticles();
 
-/* ===== SAVE & DOWNLOAD (backup) ===== */
-function saveAndDownload() {
-  const html = generateCleanHTML();
-  const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = 'portfolio.html';
-  a.click();
-  URL.revokeObjectURL(url);
-  showToast('✅ 备份文件已下载');
-}
-
-function showToast(msg) {
-  const t = document.createElement('div');
-  t.style.cssText = 'position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:#1e1e2e;color:#fff;padding:16px 28px;border-radius:12px;font-size:.95rem;z-index:99999;box-shadow:0 8px 32px rgba(0,0,0,0.3);border:1px solid rgba(99,102,241,0.3);animation:fadeUp .3s ease';
-  t.textContent = msg;
-  document.body.appendChild(t);
-  setTimeout(() => { t.style.opacity = '0'; t.style.transition = 'opacity .3s'; setTimeout(() => t.remove(), 300); }, 4000);
-}
-
-/* ===== LIGHTBOX ===== */
-function openLightbox(src) {
-  if (editMode) return;
-  const lb = document.getElementById('lightbox');
-  lb.style.backgroundImage = `url(${src})`;
-  lb.classList.add('active');
-  document.body.style.overflow = 'hidden';
-}
-function closeLightbox() {
-  const lb = document.getElementById('lightbox');
-  lb.classList.remove('active');
-  document.body.style.overflow = '';
-}
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
-
-/* ===== SCROLL ANIMATIONS ===== */
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
-      observer.unobserve(entry.target);
-    }
-  });
-}, { threshold: 0.01, rootMargin: '0px 0px 100px 0px' });
-
-function initAnimations() {
-  document.querySelectorAll('.fade-in').forEach(el => {
-    const rect = el.getBoundingClientRect();
-    if (rect.top < window.innerHeight + 100) {
-      el.classList.add('visible');
-    } else {
-      observer.observe(el);
-    }
-  });
-}
-
-/* ===== NAV SCROLL ===== */
-let lastScroll = 0;
-window.addEventListener('scroll', () => {
-  const nav = document.querySelector('.nav');
-  const y = window.scrollY;
-  if (y > 80) {
-    nav.classList.add('scrolled');
-    if (y > lastScroll && y > 200) nav.classList.add('hidden');
-    else nav.classList.remove('hidden');
-  } else {
-    nav.classList.remove('scrolled', 'hidden');
-  }
-  lastScroll = y;
+// ===== HERO GLOW =====
+const glow=document.getElementById('heroGlow');
+document.addEventListener('mousemove',e=>{
+  glow.style.transform=`translate(${e.clientX-300}px,${e.clientY-300}px)`;
 });
 
-/* ===== SMOOTH SCROLL ===== */
-document.querySelectorAll('a[href^="#"]').forEach(a => {
-  a.addEventListener('click', e => {
-    e.preventDefault();
-    const tgt = document.querySelector(a.getAttribute('href'));
-    if (tgt) tgt.scrollIntoView({ behavior: 'smooth', block: 'start' });
+// ===== FEATURED - CLICK TO PLAY =====
+document.querySelectorAll('.featured-item').forEach(item=>{
+  item.addEventListener('click',()=>{
+    const vid=item.querySelector('video');
+    if(item.classList.contains('playing')){
+      vid.pause();vid.currentTime=0;
+      item.classList.remove('playing');
+    }else{
+      vid.play();
+      item.classList.add('playing');
+    }
   });
 });
 
-/* ===== CHART ANIMATION ===== */
-function animateCharts() {
-  document.querySelectorAll('.chart-bar-fill').forEach(bar => {
-    const w = bar.style.width;
-    bar.style.width = '0%';
-    setTimeout(() => { bar.style.width = w; }, 100);
+// ===== VIDEO TRACKS - POSTER THUMBNAILS =====
+const videoBase='https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/';
+const videos=[
+  '1777729669021-9c1c73.mp4','1777729675445-k1kt91.mp4','1777729690115-uflbdg.mp4',
+  '1777729700452-rfmaj4.mp4','1777729715457-vtjmpi.mp4','1777729721804-n46r23.mp4',
+  '1777729748581-54nqqv.mp4'
+];
+
+function createCard(src){
+  const card=document.createElement('div');
+  card.className='video-card';
+  const vid=document.createElement('video');
+  vid.muted=true;vid.loop=true;vid.playsInline=true;vid.preload='none';
+  vid.poster='portfolio-assets/'+src.split('/').pop().replace('.mp4','.jpg');
+  vid.dataset.src=src;
+  card.appendChild(vid);
+  card.addEventListener('click',()=>{
+    const modal=document.getElementById('videoModal');
+    const modalVid=document.getElementById('modalVideo');
+    modalVid.src=src;
+    modalVid.muted=false;
+    modal.classList.add('active');
+    modalVid.play();
+  });
+  return card;
+}
+
+// Modal close
+const modal=document.getElementById('videoModal');
+modal.addEventListener('click',e=>{
+  if(e.target===modal){
+    const mv=document.getElementById('modalVideo');
+    mv.pause();mv.src='';
+    modal.classList.remove('active');
+  }
+});
+
+// Lazy load & play videos when works section enters viewport
+const worksSection=document.querySelector('.works-section');
+let videosLoaded=false;
+const worksObserver=new IntersectionObserver((entries)=>{
+  if(entries[0].isIntersecting && !videosLoaded){
+    videosLoaded=true;
+    document.querySelectorAll('.video-card video').forEach(vid=>{
+      vid.src=vid.dataset.src;
+      vid.play().catch(()=>{});
+    });
+  }
+},{threshold:0.1});
+worksObserver.observe(worksSection);
+
+function populate(id,list){
+  const track=document.getElementById(id);
+  [...list,...list].forEach(v=>{
+    const card=createCard(videoBase+v);
+    track.appendChild(card);
   });
 }
-const chartObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) { animateCharts(); chartObserver.unobserve(entry.target); }
-  });
-}, { threshold: 0.2 });
-const dc = document.querySelector('.data-charts');
-if (dc) chartObserver.observe(dc);
 
-/* ===== INIT ===== */
-initAnimations();
+populate('track1',videos);
+populate('track2',[...videos].reverse());
+
+// ===== SCROLL REVEAL =====
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}});
+},{threshold:0.1});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+// ===== FIREBASE INIT =====
+const firebaseConfig={apiKey:"AIzaSyAPmgllefOwgcm9k52Keg789OdUkgn26Jc",authDomain:"shejiwangzhan.firebaseapp.com",projectId:"shejiwangzhan",storageBucket:"shejiwangzhan.firebasestorage.app",messagingSenderId:"689695126769",appId:"1:689695126769:web:01b9df2916dadeb56ce550"};
+firebase.initializeApp(firebaseConfig);
+const auth=firebase.auth();
+const OWNER_EMAIL='nicolehans33@gmail.com';
+const WORKER_URL='https://github-proxy.nicolehans33.workers.dev';
+
+// ===== AUTH =====
+let authMode='login';
+function toggleAuthModal(){
+  const m=document.getElementById('authModal');
+  if(m.classList.contains('active')){closeAuthModal()}
+  else{m.classList.add('active')}
+}
+function closeAuthModal(){document.getElementById('authModal').classList.remove('active')}
+function switchAuthMode(){
+  authMode=authMode==='login'?'register':'login';
+  document.getElementById('authTitle').textContent=authMode==='login'?'登录':'注册';
+  document.querySelector('.auth-switch').textContent=authMode==='login'?'没有账号？注册':'已有账号？登录';
+}
+function handleAuth(){
+  const email=document.getElementById('authEmail').value;
+  const pass=document.getElementById('authPass').value;
+  const fn=authMode==='login'?auth.signInWithEmailAndPassword.bind(auth):auth.createUserWithEmailAndPassword.bind(auth);
+  fn(email,pass).then(()=>{closeAuthModal();showToast('登录成功')}).catch(e=>showToast('错误: '+e.message));
+}
+auth.onAuthStateChanged(user=>{
+  const btn=document.getElementById('userBtn');
+  const editBtn=document.getElementById('editToggle');
+  if(user&&user.email===OWNER_EMAIL){
+    btn.textContent='退出';
+    btn.onclick=()=>{auth.signOut();showToast('已退出')};
+    editBtn.style.display='block';
+  }else{
+    btn.textContent='登录';
+    btn.onclick=toggleAuthModal;
+    editBtn.style.display='none';
+    if(document.body.classList.contains('edit-mode'))toggleEditMode();
+  }
+});
+
+// ===== EDIT MODE =====
+let editMode=false;
+function toggleEditMode(){
+  editMode=!editMode;
+  document.body.classList.toggle('edit-mode',editMode);
+  document.getElementById('editToggle').textContent=editMode?'✅ 完成':'✏️ 编辑';
+  document.getElementById('uploadOverlay').style.display=editMode?'flex':'none';
+  document.querySelectorAll('.editable').forEach(el=>{el.contentEditable=editMode});
+  // Show/hide remove buttons
+  if(editMode){
+    document.querySelectorAll('.featured-item, .video-card, .visual-item, .system-shot').forEach(el=>{
+      if(!el.querySelector('.remove-btn')){
+        const btn=document.createElement('button');btn.className='remove-btn';btn.textContent='×';
+        btn.onclick=(e)=>{e.stopPropagation();el.remove()};
+        el.style.position='relative';el.appendChild(btn);
+      }
+    });
+  }else{
+    document.querySelectorAll('.remove-btn').forEach(b=>b.remove());
+  }
+}
+
+// ===== TOAST =====
+function showToast(msg){
+  const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),3000);
+}
+
+// ===== GITHUB TOKEN =====
+function getGHToken(){
+  let t=localStorage.getItem('pf_gh_token');
+  if(!t){t=prompt('请输入 GitHub Personal Access Token:');if(t)localStorage.setItem('pf_gh_token',t)}
+  return t;
+}
+
+// ===== UPLOAD TO GITHUB =====
+function fileToRawBase64(file){
+  return new Promise((resolve)=>{
+    const reader=new FileReader();
+    reader.onload=()=>resolve(reader.result.split(',')[1]);
+    reader.readAsDataURL(file);
+  });
+}
+async function uploadAssetToGitHub(file){
+  const token=getGHToken();if(!token)return null;
+  const b64=await fileToRawBase64(file);
+  const path='assets/'+Date.now()+'-'+Math.random().toString(36).slice(2,8)+'.'+file.name.split('.').pop();
+  showToast('上传中...');
+  const res=await fetch('https://api.github.com/repos/yamihan33/portfolio/contents/'+path,{
+    method:'PUT',headers:{'Authorization':'token '+token,'Content-Type':'application/json'},
+    body:JSON.stringify({message:'upload '+path,content:b64})
+  });
+  if(!res.ok){showToast('上传失败');return null}
+  const data=await res.json();
+  showToast('上传成功');
+  return data.content.download_url;
+}
+
+// ===== HANDLE UPLOADS =====
+async function handleVideoUpload(file){
+  const url=await uploadAssetToGitHub(file);if(!url)return;
+  const track=document.getElementById('track1');
+  const card=createCard(url);
+  track.prepend(card);
+  const vid=card.querySelector('video');
+  vid.src=url;vid.play().catch(()=>{});
+  showToast('视频已添加');
+}
+async function handleImageUpload(file){
+  const url=await uploadAssetToGitHub(file);if(!url)return;
+  const grid=document.querySelector('.visuals-grid');
+  const item=document.createElement('div');item.className='visual-item';
+  const img=document.createElement('img');img.src=url;img.style.cssText='width:100%;height:100%;object-fit:cover;border-radius:12px';
+  item.appendChild(img);grid.prepend(item);
+  if(editMode){
+    const btn=document.createElement('button');btn.className='remove-btn';btn.textContent='×';
+    btn.onclick=(e)=>{e.stopPropagation();item.remove()};
+    item.style.position='relative';item.appendChild(btn);
+  }
+  showToast('图片已添加');
+}
+async function handleAgentUpload(file){
+  const url=await uploadAssetToGitHub(file);if(!url)return;
+  // Find first empty system-shot or add new one
+  const shots=document.querySelectorAll('.system-shot');
+  let target=null;
+  shots.forEach(s=>{if(!s.querySelector('img'))target=s});
+  if(!target){
+    target=document.createElement('div');target.className='system-shot';
+    document.querySelector('.system-screenshots').appendChild(target);
+  }
+  target.innerHTML='';
+  const img=document.createElement('img');img.src=url;
+  target.appendChild(img);
+  if(editMode){
+    const btn=document.createElement('button');btn.className='remove-btn';btn.textContent='×';
+    btn.onclick=(e)=>{e.stopPropagation();target.innerHTML='上传截图'};
+    target.style.position='relative';target.appendChild(btn);
+  }
+  showToast('截图已添加');
+}
+
+// ===== GENERATE CLEAN HTML =====
+function generateCleanHTML(){
+  const clone=document.documentElement.cloneNode(true);
+  // Remove edit-mode artifacts
+  clone.querySelector('body').classList.remove('edit-mode');
+  clone.querySelectorAll('.remove-btn').forEach(b=>b.remove());
+  clone.querySelectorAll('.editable').forEach(el=>el.removeAttribute('contenteditable'));
+  // Remove auth modal, toast, edit btn, upload overlay
+  ['authModal','toast','editToggle','uploadOverlay'].forEach(id=>{
+    const el=clone.querySelector('#'+id);if(el)el.remove();
+  });
+  // Remove nav user button
+  const ub=clone.querySelector('#userBtn');if(ub)ub.remove();
+  return '<!DOCTYPE html>\n'+clone.outerHTML;
+}
+
+// ===== PUBLISH =====
+async function publishToGitHub(){
+  if(!confirm('确认发布到 GitHub Pages？'))return;
+  const token=getGHToken();if(!token)return;
+  showToast('发布中...');
+  const html=generateCleanHTML();
+  try{
+    const res=await fetch(WORKER_URL,{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({token,repo:'yamihan33/portfolio',path:'index.html',content:btoa(unescape(encodeURIComponent(html))),message:'publish portfolio '+new Date().toISOString()})
+    });
+    if(res.ok){showToast('发布成功！')}else{const e=await res.text();showToast('发布失败: '+e)}
+  }catch(e){showToast('网络错误: '+e.message)}
+}
+
+// ===== BACKUP =====
+function saveAndDownload(){
+  const html=generateCleanHTML();
+  const blob=new Blob([html],{type:'text/html'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);
+  a.download='portfolio-backup-'+Date.now()+'.html';a.click();
+  showToast('备份已下载');
+}
+
 </script>
-<script defer="" src="https://static.cloudflareinsights.com/beacon.min.js/v8c78df7c7c0f484497ecbca7046644da1771523124516" integrity="sha512-8DS7rgIrAmghBFwoOTujcf6D9rXvH8xm8JQ1Ja01h9QX8EzXldiszufYa4IFfKdLUKTTrnSFXLDkUEOTrZQ8Qg==" data-cf-beacon="{&quot;version&quot;:&quot;2024.11.0&quot;,&quot;token&quot;:&quot;2ab3505cadb04c88908c2fa984173e8b&quot;,&quot;r&quot;:1,&quot;server_timing&quot;:{&quot;name&quot;:{&quot;cfCacheStatus&quot;:true,&quot;cfEdge&quot;:true,&quot;cfExtPri&quot;:true,&quot;cfL4&quot;:true,&quot;cfOrigin&quot;:true,&quot;cfSpeedBrain&quot;:true},&quot;location_startswith&quot;:null}}" crossorigin="anonymous"></script>
-
-
 </body>
 </html>
