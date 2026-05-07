@@ -1164,6 +1164,24 @@ function toggleEditMode(){
         el.style.position='relative';el.appendChild(btn);
       }
     });
+    // Add replace button for hero phone-mock videos
+    document.querySelectorAll('.phone-mock').forEach(el=>{
+      if(!el.querySelector('.replace-btn')){
+        const rbtn=document.createElement('button');rbtn.className='replace-btn';rbtn.textContent='🔄 替换';
+        rbtn.onclick=(e)=>{
+          e.stopPropagation();
+          const input=document.createElement('input');input.type='file';input.accept='video/*';
+          input.onchange=async()=>{
+            const file=input.files[0];if(!file)return;
+            const url=await uploadAssetToGitHub(file);if(!url)return;
+            const vid=el.querySelector('video');if(vid){vid.src=url;vid.poster=''}
+            showToast('视频已替换');
+          };
+          input.click();
+        };
+        el.style.position='relative';el.appendChild(rbtn);
+      }
+    });
     // Add replace button for featured items
     document.querySelectorAll('.featured-item').forEach(el=>{
       if(!el.querySelector('.replace-btn')){
