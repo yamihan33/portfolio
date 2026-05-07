@@ -1230,8 +1230,8 @@ function showToast(msg){
 // ===== GITHUB TOKEN =====
 function getGHToken(){
   let t=localStorage.getItem('pf_gh_token');
-  if(!t||t==='null'||t===''){t=prompt('请输入 GitHub Personal Access Token:');if(t)localStorage.setItem('pf_gh_token',t)}
-  return t;
+  if(!t||t==='null'||t==='undefined'||t===''){t=prompt('请输入 GitHub Personal Access Token:');if(t&&t.trim())localStorage.setItem('pf_gh_token',t.trim())}
+  return t?t.trim():null;
 }
 
 // ===== UPLOAD TO GITHUB =====
