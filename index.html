@@ -1226,14 +1226,16 @@ function fileToRawBase64(file){
 }
 async function uploadAssetToGitHub(file){
   const token=getGHToken();if(!token)return null;
+  // Check file size (GitHub Contents API limit ~25MB after base64)
+  if(file.size>25*1024*1024){showToast('文件太大（最大25MB）');return null}
   const b64=await fileToRawBase64(file);
   const path='assets/'+Date.now()+'-'+Math.random().toString(36).slice(2,8)+'.'+file.name.split('.').pop();
-  showToast('上传中...');
+  showToast('上传中... ('+Math.round(file.size/1024/1024*10)/10+'MB)');
   const res=await fetch('https://api.github.com/repos/yamihan33/portfolio/contents/'+path,{
-    method:'PUT',headers:{'Authorization':'token '+token,'Content-Type':'application/json'},
+    method:'PUT',headers:{'Authorization':'token '+token,'Content-Type':'application/json','Accept':'application/vnd.github.v3+json'},
     body:JSON.stringify({message:'upload '+path,content:b64})
   });
-  if(!res.ok){showToast('上传失败');return null}
+  if(!res.ok){const e=await res.json().catch(()=>({}));showToast('上传失败: '+(e.message||res.status));return null}
   const data=await res.json();
   showToast('上传成功');
   return data.content.download_url;
