@@ -716,23 +716,23 @@ body.edit-mode .featured-item{overflow:visible!important}
       </div>
     </div>
     <div class="lp-right">
-      <!-- Left card - Vitamin C Serum (same structure as center) -->
+      <!-- Left card - Vitamin C Serum -->
       <div class="lp-card">
         <div class="lp-card-header">
           <span class="lp-card-dot"></span><span class="lp-card-dot"></span><span class="lp-card-dot"></span>
         </div>
-        <div class="lp-card-body">
+        <div class="lp-card-body lp-body-uploadable">
           <div class="lp-card-content lp-card-light">
-            <h4 class="lp-product-title editable">VITAMIN C BRIGHTENING SERUM</h4>
-            <p class="lp-product-sub editable" style="color:#555">Glow From Within, Naturally</p>
+            <h4 class="lp-product-title">VITAMIN C BRIGHTENING SERUM</h4>
+            <p class="lp-product-sub" style="color:#555">Glow From Within, Naturally</p>
             <button class="lp-cta-btn">Shop Now</button>
-            <div class="lp-product-visual lp-vacuum-visual lp-uploadable" style="background:#e0e0e0"></div>
+            <div class="lp-product-visual lp-vacuum-visual" style="background:#e0e0e0"></div>
           </div>
           <div class="lp-card-features">
-            <div class="lp-feat-item editable">Vitamin C</div>
-            <div class="lp-feat-item editable">Brightening</div>
-            <div class="lp-feat-item editable">Anti-Aging</div>
-            <div class="lp-feat-item editable">All Skin Types</div>
+            <div class="lp-feat-item">Vitamin C</div>
+            <div class="lp-feat-item">Brightening</div>
+            <div class="lp-feat-item">Anti-Aging</div>
+            <div class="lp-feat-item">All Skin Types</div>
           </div>
         </div>
       </div>
@@ -741,38 +741,38 @@ body.edit-mode .featured-item{overflow:visible!important}
         <div class="lp-card-header">
           <span class="lp-card-dot"></span><span class="lp-card-dot"></span><span class="lp-card-dot"></span>
         </div>
-        <div class="lp-card-body">
+        <div class="lp-card-body lp-body-uploadable">
           <div class="lp-card-content lp-card-dark">
-            <h4 class="lp-product-title editable" style="color:#fff">Wireless Car Vacuum Cleaner</h4>
-            <p class="lp-product-sub editable">Powerful Suction For A Cleaner Ride</p>
+            <h4 class="lp-product-title" style="color:#fff">Wireless Car Vacuum Cleaner</h4>
+            <p class="lp-product-sub">Powerful Suction For A Cleaner Ride</p>
             <button class="lp-cta-btn">Shop Now</button>
-            <div class="lp-product-visual lp-vacuum-visual lp-uploadable"></div>
+            <div class="lp-product-visual lp-vacuum-visual"></div>
           </div>
           <div class="lp-card-features">
-            <div class="lp-feat-item editable">Powerful Suction</div>
-            <div class="lp-feat-item editable">Long Battery</div>
-            <div class="lp-feat-item editable">Lightweight</div>
-            <div class="lp-feat-item editable">Washable Filter</div>
+            <div class="lp-feat-item">Powerful Suction</div>
+            <div class="lp-feat-item">Long Battery</div>
+            <div class="lp-feat-item">Lightweight</div>
+            <div class="lp-feat-item">Washable Filter</div>
           </div>
         </div>
       </div>
-      <!-- Right card - Pet Feeder (same structure as center) -->
+      <!-- Right card - Pet Feeder -->
       <div class="lp-card">
         <div class="lp-card-header">
           <span class="lp-card-dot"></span><span class="lp-card-dot"></span><span class="lp-card-dot"></span>
         </div>
-        <div class="lp-card-body">
+        <div class="lp-card-body lp-body-uploadable">
           <div class="lp-card-content lp-card-teal">
-            <h4 class="lp-product-title editable" style="color:#fff">Smart Pet Feeder</h4>
-            <p class="lp-product-sub editable" style="color:rgba(255,255,255,0.8)">Feed Your Pet, Anywhere</p>
+            <h4 class="lp-product-title" style="color:#fff">Smart Pet Feeder</h4>
+            <p class="lp-product-sub" style="color:rgba(255,255,255,0.8)">Feed Your Pet, Anywhere</p>
             <button class="lp-cta-btn">Shop Now</button>
-            <div class="lp-product-visual lp-pet-visual lp-uploadable"></div>
+            <div class="lp-product-visual lp-pet-visual"></div>
           </div>
           <div class="lp-card-features">
-            <div class="lp-feat-item editable">Remote Control</div>
-            <div class="lp-feat-item editable">Customizable</div>
-            <div class="lp-feat-item editable">Pet Friendly</div>
-            <div class="lp-feat-item editable">Compatible</div>
+            <div class="lp-feat-item">Remote Control</div>
+            <div class="lp-feat-item">Customizable</div>
+            <div class="lp-feat-item">Pet Friendly</div>
+            <div class="lp-feat-item">Compatible</div>
           </div>
         </div>
       </div>
@@ -1213,23 +1213,21 @@ function toggleEditMode(){
         el.appendChild(rbtn);
       }
     });
-    // Add upload button for LP product visuals
-    document.querySelectorAll('.lp-uploadable').forEach(el=>{
+    // Add upload button for LP card body (replace entire content with screenshot)
+    document.querySelectorAll('.lp-body-uploadable').forEach(el=>{
       if(!el.querySelector('.replace-btn')){
-        const rbtn=document.createElement('button');rbtn.className='replace-btn';rbtn.textContent='🖼 上传图片';
+        const rbtn=document.createElement('button');rbtn.className='replace-btn';rbtn.textContent='🖼 上传截图';
         rbtn.onclick=(e)=>{
           e.stopPropagation();
           const input=document.createElement('input');input.type='file';input.accept='image/*';
           input.onchange=async()=>{
             const file=input.files[0];if(!file)return;
             const url=await uploadAssetToGitHub(file);if(!url)return;
-            el.style.background='none';
             el.innerHTML='';
-            const img=document.createElement('img');img.src=url;img.style.cssText='width:100%;height:100%;object-fit:cover;border-radius:8px';
+            const img=document.createElement('img');img.src=url;img.style.cssText='width:100%;height:100%;object-fit:cover;display:block';
             el.appendChild(img);
-            // Re-add replace button
             el.appendChild(rbtn);
-            showToast('图片已上传');
+            showToast('截图已上传');
           };
           input.click();
         };
