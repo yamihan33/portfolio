@@ -582,6 +582,11 @@ footer{
 body.edit-mode .editable{outline:2px dashed rgba(232,62,140,0.5);outline-offset:2px}
 body.edit-mode .remove-btn{display:block!important}
 .remove-btn{display:none;position:absolute;top:4px;right:4px;background:rgba(255,50,50,0.8);border:none;color:#fff;width:20px;height:20px;border-radius:50%;cursor:pointer;font-size:12px;line-height:20px;text-align:center;z-index:10}
+.replace-btn{position:absolute;bottom:8px;left:8px;background:var(--magenta);border:none;color:#fff;padding:6px 12px;border-radius:6px;cursor:pointer;font-size:12px;z-index:10;opacity:0.9}
+.replace-btn:hover{opacity:1}
+.add-featured-btn{display:flex;align-items:center;justify-content:center;border:2px dashed rgba(255,255,255,0.2);border-radius:12px;cursor:pointer;min-height:120px;transition:border-color 0.2s}
+.add-featured-btn:hover{border-color:var(--magenta)}
+.add-featured-btn span{color:var(--text-secondary);font-size:14px}
 </style>
 <!-- Firebase SDK -->
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
@@ -679,7 +684,7 @@ body.edit-mode .remove-btn{display:block!important}
       <div class="featured-item large" data-video="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729669021-9c1c73.mp4">
         <img class="thumb" src="portfolio-assets/1777729669021-9c1c73.jpg" alt="取暖器广告">
         <video src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729669021-9c1c73.mp4" muted loop playsinline preload="none"></video>
-        <span class="featured-stat">+38% CTR提升</span>
+        <span class="featured-stat editable">+38% CTR提升</span>
         <div class="featured-play"></div>
         <div class="featured-overlay">
           <h3 class="editable">冬季取暖器 爆款素材案例</h3>
@@ -689,7 +694,7 @@ body.edit-mode .remove-btn{display:block!important}
         <div class="featured-item" data-video="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729700452-rfmaj4.mp4">
           <img class="thumb" src="portfolio-assets/1777729700452-rfmaj4.jpg" alt="运动品牌">
           <video src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729700452-rfmaj4.mp4" muted loop playsinline preload="none"></video>
-          <span class="featured-stat">+29% CVR提升</span>
+          <span class="featured-stat editable">+29% CVR提升</span>
           <div class="featured-play"></div>
           <div class="featured-overlay">
             <h3 class="editable">运动品牌 视频广告案例</h3>
@@ -698,7 +703,7 @@ body.edit-mode .remove-btn{display:block!important}
         <div class="featured-item" data-video="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729748581-54nqqv.mp4">
           <img class="thumb" src="portfolio-assets/1777729748581-54nqqv.jpg" alt="护肤品">
           <video src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729748581-54nqqv.mp4" muted loop playsinline preload="none"></video>
-          <span class="featured-stat">+24% ROI提升</span>
+          <span class="featured-stat editable">+24% ROI提升</span>
           <div class="featured-play"></div>
           <div class="featured-overlay">
             <h3 class="editable">护肤品系列 视觉设计案例</h3>
@@ -1150,7 +1155,7 @@ function toggleEditMode(){
   document.getElementById('editToggle').textContent=editMode?'✅ 完成':'✏️ 编辑';
   document.getElementById('uploadOverlay').style.display=editMode?'flex':'none';
   document.querySelectorAll('.editable').forEach(el=>{el.contentEditable=editMode});
-  // Show/hide remove buttons
+  // Show/hide remove buttons + replace buttons for featured items
   if(editMode){
     document.querySelectorAll('.featured-item, .video-card, .visual-item, .system-shot').forEach(el=>{
       if(!el.querySelector('.remove-btn')){
@@ -1159,8 +1164,58 @@ function toggleEditMode(){
         el.style.position='relative';el.appendChild(btn);
       }
     });
+    // Add replace button for featured items
+    document.querySelectorAll('.featured-item').forEach(el=>{
+      if(!el.querySelector('.replace-btn')){
+        const rbtn=document.createElement('button');rbtn.className='replace-btn';rbtn.textContent='🔄 替换视频';
+        rbtn.onclick=(e)=>{
+          e.stopPropagation();
+          const input=document.createElement('input');input.type='file';input.accept='video/*';
+          input.onchange=async()=>{
+            const file=input.files[0];if(!file)return;
+            const url=await uploadAssetToGitHub(file);if(!url)return;
+            el.setAttribute('data-video',url);
+            const vid=el.querySelector('video');if(vid)vid.src=url;
+            // Generate thumbnail from video
+            const tmpVid=document.createElement('video');tmpVid.src=url;tmpVid.muted=true;
+            tmpVid.onloadeddata=()=>{
+              tmpVid.currentTime=1;
+              tmpVid.onseeked=()=>{
+                const canvas=document.createElement('canvas');canvas.width=tmpVid.videoWidth;canvas.height=tmpVid.videoHeight;
+                canvas.getContext('2d').drawImage(tmpVid,0,0);
+                const thumb=el.querySelector('img.thumb');if(thumb)thumb.src=canvas.toDataURL('image/jpeg');
+                showToast('视频已替换');
+              };
+            };
+          };
+          input.click();
+        };
+        el.appendChild(rbtn);
+      }
+    });
+    // Add "add new" button to featured grid
+    const fGrid=document.querySelector('.featured-right-grid');
+    if(fGrid&&!fGrid.querySelector('.add-featured-btn')){
+      const addBtn=document.createElement('div');addBtn.className='add-featured-btn';
+      addBtn.innerHTML='<span>+ 添加案例视频</span>';
+      addBtn.onclick=()=>{
+        const input=document.createElement('input');input.type='file';input.accept='video/*';
+        input.onchange=async()=>{
+          const file=input.files[0];if(!file)return;
+          const url=await uploadAssetToGitHub(file);if(!url)return;
+          const item=document.createElement('div');item.className='featured-item';item.setAttribute('data-video',url);
+          item.innerHTML=`<video src="${url}" muted loop playsinline preload="none"></video><span class="featured-stat editable">+0% 数据</span><div class="featured-play"></div><div class="featured-overlay"><h3 class="editable">新案例标题</h3></div>`;
+          fGrid.insertBefore(item,addBtn);
+          showToast('案例已添加');
+          // Re-bindplay
+          item.querySelector('.featured-play').onclick=()=>{const v=item.querySelector('video');v.paused?v.play():v.pause();item.classList.toggle('playing',!v.paused)};
+        };
+        input.click();
+      };
+      fGrid.appendChild(addBtn);
+    }
   }else{
-    document.querySelectorAll('.remove-btn').forEach(b=>b.remove());
+    document.querySelectorAll('.remove-btn,.replace-btn,.add-featured-btn').forEach(b=>b.remove());
   }
 }
 
