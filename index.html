@@ -269,6 +269,7 @@ section,.data-section{position:relative;z-index:1}
 .lp-card-dot:nth-child(3){background:#28c840}
 .lp-card-body{
   display:flex;flex-direction:column;overflow:hidden;background:#fff;
+  max-height:420px;overflow-y:auto;
 }
 .lp-card-content{
   flex:1;padding:24px;display:flex;flex-direction:column;align-items:center;justify-content:center;
@@ -1195,18 +1196,22 @@ function toggleEditMode(){
             const file=input.files[0];if(!file)return;
             const url=await uploadAssetToGitHub(file);if(!url)return;
             el.setAttribute('data-video',url);
-            const vid=el.querySelector('video');if(vid)vid.src=url;
-            // Generate thumbnail from video
-            const tmpVid=document.createElement('video');tmpVid.src=url;tmpVid.muted=true;
-            tmpVid.onloadeddata=()=>{
-              tmpVid.currentTime=1;
-              tmpVid.onseeked=()=>{
-                const canvas=document.createElement('canvas');canvas.width=tmpVid.videoWidth;canvas.height=tmpVid.videoHeight;
-                canvas.getContext('2d').drawImage(tmpVid,0,0);
-                const thumb=el.querySelector('img.thumb');if(thumb)thumb.src=canvas.toDataURL('image/jpeg');
-                showToast('视频已替换');
-              };
-            };
+            // Remove old media
+            const oldVid=el.querySelector('video');if(oldVid)oldVid.remove();
+            const oldImg=el.querySelector('img.thumb');if(oldImg)oldImg.remove();
+            const oldImg2=el.querySelector('img.media');if(oldImg2)oldImg2.remove();
+            // Create new video
+            if(file.type==='image/gif'){
+              const img=document.createElement('img');img.className='thumb';img.src=url;img.style.cssText='width:100%;height:100%;object-fit:cover;display:block';
+              el.prepend(img);
+              showToast('GIF已替换');
+            }else{
+              const vid=document.createElement('video');vid.src=url;vid.muted=true;vid.loop=true;vid.playsInline=true;vid.autoplay=true;
+              vid.style.cssText='width:100%;height:100%;object-fit:cover;display:block';
+              el.prepend(vid);
+              vid.load();vid.play().catch(()=>{});
+              showToast('视频已替换');
+            }
           };
           input.click();
         };
@@ -1224,7 +1229,7 @@ function toggleEditMode(){
             const file=input.files[0];if(!file)return;
             const url=await uploadAssetToGitHub(file);if(!url)return;
             el.innerHTML='';
-            const img=document.createElement('img');img.src=url;img.style.cssText='width:100%;height:100%;object-fit:cover;display:block';
+            const img=document.createElement('img');img.src=url;img.style.cssText='width:100%;height:auto;display:block';
             el.appendChild(img);
             el.appendChild(rbtn);
             showToast('截图已上传');
