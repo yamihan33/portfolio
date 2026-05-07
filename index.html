@@ -1319,10 +1319,13 @@ async function handleAgentUpload(file){
 
 // ===== GENERATE CLEAN HTML =====
 function generateCleanHTML(){
+  // Sync video src attributes before cloning (JS property → HTML attribute)
+  document.querySelectorAll('video').forEach(v=>{if(v.src)v.setAttribute('src',v.src)});
+  document.querySelectorAll('img').forEach(i=>{if(i.src)i.setAttribute('src',i.src)});
   const clone=document.documentElement.cloneNode(true);
   // Remove edit-mode artifacts
   clone.querySelector('body').classList.remove('edit-mode');
-  clone.querySelectorAll('.remove-btn').forEach(b=>b.remove());
+  clone.querySelectorAll('.remove-btn,.replace-btn,.add-featured-btn').forEach(b=>b.remove());
   clone.querySelectorAll('.editable').forEach(el=>el.removeAttribute('contenteditable'));
   // Remove auth modal, toast, edit btn, upload overlay
   ['authModal','toast','editToggle','uploadOverlay'].forEach(id=>{
