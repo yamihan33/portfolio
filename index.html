@@ -1133,10 +1133,23 @@ function toggleEditMode(){
   document.querySelectorAll('.editable').forEach(el=>{el.contentEditable=editMode});
   // Show/hide remove buttons + replace buttons for featured items
   if(editMode){
-    document.querySelectorAll('.featured-item, .video-card, .visual-item, .system-shot').forEach(el=>{
+    document.querySelectorAll('.video-card, .visual-item, .system-shot').forEach(el=>{
       if(!el.querySelector('.remove-btn')){
         const btn=document.createElement('button');btn.className='remove-btn';btn.textContent='×';
         btn.onclick=(e)=>{e.stopPropagation();el.remove()};
+        el.style.position='relative';el.appendChild(btn);
+      }
+    });
+    // Featured items: remove button only clears media, keeps card structure
+    document.querySelectorAll('.featured-item').forEach(el=>{
+      if(!el.querySelector('.remove-btn')){
+        const btn=document.createElement('button');btn.className='remove-btn';btn.textContent='×';
+        btn.onclick=(e)=>{
+          e.stopPropagation();
+          const vid=el.querySelector('video');if(vid)vid.remove();
+          const img=el.querySelector('img');if(img)img.remove();
+          showToast('素材已清除，可重新上传');
+        };
         el.style.position='relative';el.appendChild(btn);
       }
     });
@@ -1200,27 +1213,6 @@ function toggleEditMode(){
         el.appendChild(rbtn);
       }
     });
-    // Add "add new" button to featured grid
-    const fGrid=document.querySelector('.featured-right-grid');
-    if(fGrid&&!fGrid.querySelector('.add-featured-btn')){
-      const addBtn=document.createElement('div');addBtn.className='add-featured-btn';
-      addBtn.innerHTML='<span>+ 添加案例视频</span>';
-      addBtn.onclick=()=>{
-        const input=document.createElement('input');input.type='file';input.accept='video/*,image/gif';
-        input.onchange=async()=>{
-          const file=input.files[0];if(!file)return;
-          const url=await uploadAssetToGitHub(file);if(!url)return;
-          const item=document.createElement('div');item.className='featured-item';item.setAttribute('data-video',url);
-          item.innerHTML=`<video src="${url}" muted loop playsinline preload="none"></video><span class="featured-stat editable">+0% 数据</span><div class="featured-play"></div><div class="featured-overlay"><h3 class="editable">新案例标题</h3></div>`;
-          fGrid.insertBefore(item,addBtn);
-          showToast('案例已添加');
-          // Re-bindplay
-          item.querySelector('.featured-play').onclick=()=>{const v=item.querySelector('video');v.paused?v.play():v.pause();item.classList.toggle('playing',!v.paused)};
-        };
-        input.click();
-      };
-      fGrid.appendChild(addBtn);
-    }
   }else{
     document.querySelectorAll('.remove-btn,.replace-btn,.add-featured-btn').forEach(b=>b.remove());
   }
