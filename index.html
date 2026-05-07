@@ -1326,12 +1326,25 @@ async function publishToGitHub(){
   const token=getGHToken();if(!token)return;
   showToast('发布中...');
   const html=generateCleanHTML();
+  const content=btoa(unescape(encodeURIComponent(html)));
+  const repo='yamihan33/portfolio';
+  const path='index.html';
   try{
-    const res=await fetch(WORKER_URL,{
-      method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({token,repo:'yamihan33/portfolio',path:'index.html',content:btoa(unescape(encodeURIComponent(html))),message:'publish portfolio '+new Date().toISOString()})
+    // Get current file SHA first
+    const getRes=await fetch(`https://api.github.com/repos/${repo}/contents/${path}`,{
+      headers:{'Authorization':'token '+token,'Accept':'application/vnd.github.v3+json'}
     });
-    if(res.ok){showToast('发布成功！')}else{const e=await res.text();showToast('发布失败: '+e)}
+    let sha='';
+    if(getRes.ok){const data=await getRes.json();sha=data.sha}
+    // Update file
+    const body={message:'publish portfolio '+new Date().toISOString(),content};
+    if(sha)body.sha=sha;
+    const res=await fetch(`https://api.github.com/repos/${repo}/contents/${path}`,{
+      method:'PUT',
+      headers:{'Authorization':'token '+token,'Content-Type':'application/json','Accept':'application/vnd.github.v3+json'},
+      body:JSON.stringify(body)
+    });
+    if(res.ok){showToast('发布成功！')}else{const e=await res.json();showToast('发布失败: '+(e.message||JSON.stringify(e)))}
   }catch(e){showToast('网络错误: '+e.message)}
 }
 
