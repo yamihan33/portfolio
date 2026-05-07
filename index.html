@@ -3,38 +3,47 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>韩爽 | AIGC Creative Design</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+<title>韩爽 | AI Creative System Designer</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --bg:#0a0a0a;
-  --pink:#ff6ec4;
-  --purple:#7873f5;
-  --blue:#4facfe;
-  --grad:linear-gradient(135deg,#ff6ec4,#7873f5,#4facfe);
+  --bg:#000000;
+  --magenta:#e83e8c;
+  --orange:#ff6b35;
+  --purple:#7c3aed;
+  --text-primary:#ffffff;
+  --text-secondary:rgba(255,255,255,0.6);
+  --text-muted:rgba(255,255,255,0.35);
+  --border:rgba(255,255,255,0.08);
 }
 html{scroll-behavior:smooth}
-body{background:var(--bg);color:#fff;font-family:'Inter',sans-serif;overflow-x:hidden;line-height:1.6}
-
-/* Particle Canvas */
-#particles{position:fixed;inset:0;z-index:0;pointer-events:none}
+body{background:var(--bg);color:var(--text-primary);font-family:'Inter',sans-serif;overflow-x:hidden;line-height:1.6}
 
 /* Nav */
 .nav{
   position:fixed;top:0;left:0;right:0;z-index:100;
   padding:20px 80px;
   display:flex;justify-content:space-between;align-items:center;
-  background:rgba(10,10,10,0.85);backdrop-filter:blur(12px);
-  border-bottom:1px solid rgba(255,255,255,0.04);
+  background:rgba(0,0,0,0.9);backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
 }
-.nav-logo{font-size:15px;font-weight:700;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-.nav-links{display:flex;gap:32px}
+.nav-brand{display:flex;align-items:center;gap:12px}
+.nav-logo{font-size:18px;font-weight:700;color:#fff;letter-spacing:-0.02em}
+.nav-logo-mark{color:var(--magenta);font-style:italic;font-family:'Playfair Display',serif;font-size:20px;margin-right:4px}
+.nav-tag{font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-muted);border:1px solid var(--border);padding:3px 8px;border-radius:4px}
+.nav-links{display:flex;gap:32px;align-items:center}
 .nav-links a{
-  color:rgba(255,255,255,0.5);font-size:13px;text-decoration:none;
-  letter-spacing:0.03em;transition:color 0.2s;
+  color:var(--text-secondary);font-size:13px;text-decoration:none;
+  letter-spacing:0.03em;transition:color 0.2s;font-weight:500;
 }
 .nav-links a:hover{color:#fff}
+.nav-contact{
+  color:var(--magenta)!important;border:1px solid var(--magenta);
+  padding:8px 18px;border-radius:24px;font-size:14px!important;
+  transition:all 0.3s!important;
+}
+.nav-contact:hover{background:var(--magenta);color:#fff!important}
 
 /* Section base */
 section,.data-section{position:relative;z-index:1}
@@ -42,96 +51,274 @@ section,.data-section{position:relative;z-index:1}
 /* ===== HERO ===== */
 .hero{
   min-height:100vh;
-  display:flex;flex-direction:column;justify-content:center;
-  padding:0 80px;padding-top:80px;
-  max-width:1200px;margin:0 auto;
-  position:relative;
+  display:flex;align-items:center;
+  padding:0 40px;padding-top:80px;
+  max-width:1600px;margin:0 auto;
+  position:relative;gap:30px;
 }
-.hero-glow{
-  position:absolute;width:600px;height:600px;border-radius:50%;
-  background:radial-gradient(circle,rgba(120,115,245,0.08),transparent 70%);
-  pointer-events:none;transition:transform 0.1s;
-  z-index:0;
+.hero-left{flex:0 0 32%;position:relative;z-index:1}
+.hero-right{flex:1;position:relative;display:flex;justify-content:center;align-items:center;min-height:560px}
+.hero-subtitle{
+  font-size:16px;color:var(--text-secondary);margin-bottom:12px;
+  letter-spacing:0.02em;
 }
 .hero h1{
-  font-size:clamp(2.8rem,6vw,5.2rem);
-  font-weight:800;line-height:1.15;
-  letter-spacing:-0.02em;
-  position:relative;z-index:1;
+  font-size:clamp(3.5rem,6.5vw,6.5rem);
+  font-weight:900;line-height:1.05;
+  letter-spacing:-0.03em;
+  font-family:'Playfair Display','Inter',serif;
 }
-.hero h1 .gradient{
-  background:var(--grad);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-}
-.hero h1 .dim{color:rgba(255,255,255,0.35)}
+.hero h1 .highlight{color:var(--magenta)}
 .hero-bio{
-  margin-top:28px;color:rgba(255,255,255,0.45);
-  max-width:520px;font-size:15px;line-height:1.9;
-  position:relative;z-index:1;
+  margin-top:24px;color:var(--text-secondary);
+  max-width:420px;font-size:16px;line-height:1.9;
 }
 .hero-cta{
-  margin-top:48px;display:inline-flex;align-items:center;gap:8px;
-  color:rgba(255,255,255,0.5);font-size:13px;
+  margin-top:36px;display:inline-flex;align-items:center;gap:8px;
+  color:#fff;font-size:14px;font-weight:600;
   letter-spacing:0.05em;text-transform:uppercase;
-  position:relative;z-index:1;
+  padding:14px 28px;border:1px solid var(--magenta);border-radius:30px;
+  text-decoration:none;transition:all 0.3s;
 }
-.hero-cta::after{content:'↓';font-size:16px}
+.hero-cta:hover{background:var(--magenta);color:#fff}
+
+/* Phone Mockups - reference layout: left col(2 vertical) + center big phone(spans full height) + right col(2 videos) */
+.phone-mockups{
+  position:relative;width:100%;height:638px;
+  display:grid;
+  grid-template-columns:1fr 1.5fr 1fr;
+  grid-template-rows:1fr 1fr;
+  gap:10px;
+  padding:0;
+}
+.phone-mock{
+  position:relative;
+  border-radius:14px;overflow:hidden;
+  border:2px solid rgba(255,255,255,0.08);
+  box-shadow:0 8px 30px rgba(0,0,0,0.4);
+  transition:transform 0.4s ease;
+}
+.phone-mock:hover{transform:scale(1.02)}
+.phone-mock video,.phone-mock img{width:100%;height:100%;object-fit:cover;display:block}
+/* Position 1: left top */
+.phone-mock:nth-child(1){grid-column:1;grid-row:1}
+/* Position 2: left bottom */
+.phone-mock:nth-child(2){grid-column:1;grid-row:2}
+/* Position 3: center - large phone spanning both rows */
+.phone-mock.phone-center{
+  grid-column:2;grid-row:1/3;
+  border-radius:14px;
+  overflow:hidden;
+  box-shadow:0 30px 80px rgba(0,0,0,0.8);
+}
+/* Position 4: right top */
+.phone-mock:nth-child(4){grid-column:3;grid-row:1}
+/* Position 5: right bottom */
+.phone-mock:nth-child(5){grid-column:3;grid-row:2}
+/* Position 6: hidden */
+.phone-mock:nth-child(6){display:none}
+.phone-mock .play-icon{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:36px;height:36px;border-radius:50%;
+  background:rgba(255,255,255,0.2);backdrop-filter:blur(4px);
+  display:flex;align-items:center;justify-content:center;
+}
+.phone-mock .play-icon::after{
+  content:'';width:0;height:0;
+  border-left:12px solid #fff;border-top:7px solid transparent;border-bottom:7px solid transparent;
+  margin-left:3px;
+}
+.hero-badge{
+  position:absolute;bottom:20px;right:0;
+  width:100px;height:100px;border-radius:50%;
+  border:1px solid var(--magenta);
+  display:flex;align-items:center;justify-content:center;
+  font-size:9px;text-align:center;color:var(--text-secondary);
+  letter-spacing:0.05em;text-transform:uppercase;
+  line-height:1.3;animation:spinBadge 15s linear infinite;
+}
+@keyframes spinBadge{from{transform:rotate(0)}to{transform:rotate(360deg)}}
 
 /* ===== DATA ===== */
 .data-section{
-  padding:100px 80px;max-width:1200px;margin:auto;
-  border-top:1px solid rgba(255,255,255,0.06);
+  padding:100px 60px;max-width:1600px;margin:auto;
+  border-top:1px solid var(--border);
+  display:flex;align-items:center;gap:80px;
 }
-.data{display:grid;grid-template-columns:repeat(4,1fr);gap:40px}
+.data-header{flex:0 0 280px}
+.data-header h2{font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;line-height:1.3}
+.data-header p{color:var(--text-muted);font-size:14px;margin-top:12px}
+.data-header .accent-line{width:40px;height:3px;background:var(--magenta);margin-top:16px;border-radius:2px}
+.data{display:flex;flex:1;gap:0}
+.data-item{
+  flex:1;padding:0 28px;
+  border-left:1px solid var(--border);
+}
+.data-item:first-child{border-left:none;padding-left:0}
 .data-num{
-  font-size:clamp(2rem,4vw,3.2rem);font-weight:800;
+  font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:800;
   letter-spacing:-0.02em;
-  background:var(--grad);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  color:var(--magenta);
 }
-.data-label{font-size:13px;color:rgba(255,255,255,0.3);margin-top:8px}
-.data-context{font-size:12px;color:rgba(255,255,255,0.2);margin-top:4px}
+.data-label{font-size:14px;color:var(--text-secondary);margin-top:8px}
+.data-context{font-size:13px;color:var(--text-muted);margin-top:4px}
 
 /* ===== FEATURED CASES ===== */
-.featured-section{padding:120px 80px;max-width:1200px;margin:auto}
-.section-label{
-  font-size:13px;font-weight:600;letter-spacing:0.1em;
-  text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:60px;
+.featured-section{padding:120px 60px;max-width:1600px;margin:auto}
+.featured-layout{display:flex;gap:60px;align-items:flex-start}
+.featured-left{flex:0 0 260px;position:sticky;top:120px}
+.featured-left h2{font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;line-height:1.3}
+.featured-left p{color:var(--text-secondary);font-size:14px;margin-top:16px;line-height:1.8}
+.featured-left .view-all{
+  display:inline-block;margin-top:24px;color:var(--magenta);
+  font-size:14px;font-weight:600;text-decoration:none;
+  letter-spacing:0.03em;transition:opacity 0.3s;
 }
+.featured-left .view-all:hover{opacity:0.7}
+.featured-grid{flex:1;display:grid;grid-template-columns:1.28fr 1fr;grid-template-rows:1fr;gap:14px;height:375px}
 .featured-item{
-  position:relative;margin-bottom:60px;
-  border-radius:16px;overflow:hidden;aspect-ratio:16/9;
-  cursor:pointer;
+  position:relative;
+  border-radius:16px;overflow:hidden;
+  cursor:pointer;background:#111;
+  min-height:0;max-height:100%;
 }
-.featured-item video{width:100%;height:100%;object-fit:cover}
+.featured-item.large{grid-column:1;grid-row:1;height:375px}
+.featured-right-grid{grid-column:2;grid-row:1;display:grid;grid-template-columns:1fr 1fr;gap:12px;height:375px}
+.featured-item video,.featured-item img.thumb{width:100%;height:100%;object-fit:cover;display:block}
 .featured-play{
   position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
-  width:64px;height:64px;border-radius:50%;
-  background:rgba(255,255,255,0.15);backdrop-filter:blur(8px);
+  width:52px;height:52px;border-radius:50%;
+  background:rgba(255,140,50,0.9);
   display:flex;align-items:center;justify-content:center;
-  transition:background 0.3s,transform 0.3s;
+  transition:transform 0.3s;
 }
 .featured-play::after{
   content:'';width:0;height:0;
-  border-left:20px solid #fff;border-top:12px solid transparent;border-bottom:12px solid transparent;
+  border-left:16px solid #fff;border-top:10px solid transparent;border-bottom:10px solid transparent;
   margin-left:4px;
 }
-.featured-item:hover .featured-play{background:rgba(255,255,255,0.25);transform:translate(-50%,-50%) scale(1.1)}
+.featured-item:hover .featured-play{transform:translate(-50%,-50%) scale(1.1)}
 .featured-item.playing .featured-play{display:none}
 .featured-overlay{
-  position:absolute;bottom:0;left:0;right:0;padding:40px;
+  position:absolute;bottom:0;left:0;right:0;padding:24px;
   background:linear-gradient(transparent,rgba(0,0,0,0.85));
 }
-.featured-overlay h3{font-size:clamp(1.4rem,3vw,2rem);font-weight:800}
-.featured-overlay p{color:rgba(255,255,255,0.5);font-size:14px;margin-top:8px}
+.featured-overlay h3{font-size:clamp(1rem,2vw,1.3rem);font-weight:700}
+.featured-overlay p{color:var(--text-secondary);font-size:14px;margin-top:6px}
 .featured-stat{
-  display:inline-block;margin-top:12px;padding:6px 14px;
-  border-radius:999px;background:rgba(255,255,255,0.1);
-  backdrop-filter:blur(8px);font-size:13px;font-weight:600;
+  position:absolute;top:16px;left:16px;
+  padding:6px 14px;border-radius:8px;
+  background:rgba(0,0,0,0.6);backdrop-filter:blur(8px);
+  font-size:13px;font-weight:700;color:#4ade80;
+  border:1px solid rgba(74,222,128,0.3);
 }
+/* Works section header */
+.works-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:40px}
+.works-header h2{font-size:clamp(1.4rem,2.5vw,1.8rem);font-weight:800;color:var(--magenta)}
+.works-header a{color:var(--text-secondary);font-size:14px;text-decoration:none;font-weight:500;transition:color 0.3s}
+.works-header a:hover{color:#fff}
 
 /* ===== ALL WORKS ===== */
-.works-section{padding:120px 80px;max-width:1200px;margin:auto}
+.works-section{padding:120px 60px;max-width:1600px;margin:auto}
+
+/* ===== LANDING PAGES ===== */
+.lp-section{padding:120px 60px;max-width:1600px;margin:auto;border-top:1px solid var(--border);overflow:visible}
+.lp-layout{display:grid;grid-template-columns:360px 1fr;gap:40px;align-items:center;overflow:visible}
+.lp-left{}
+.lp-left h2{font-size:clamp(1.4rem,2.5vw,2rem);font-weight:800;font-family:'Playfair Display',serif;line-height:1.3}
+.lp-left .lp-desc{color:var(--text-secondary);font-size:14px;margin-top:16px;line-height:1.8}
+/* LP Compare Cards */
+.lp-compare{
+  display:flex;flex-direction:column;gap:12px;margin-top:28px;
+}
+.lp-compare-card{
+  background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);
+  border-radius:12px;padding:18px 22px;
+}
+.lp-compare-card.lp-compare-dim{}
+.lp-compare-label{
+  font-size:12px;color:var(--magenta);font-weight:700;
+  letter-spacing:0.05em;margin-bottom:10px;text-transform:uppercase;
+}
+.lp-compare-dim .lp-compare-label{color:var(--text-secondary)}
+.lp-compare-metrics{display:flex;gap:20px}
+.lp-metric-value{font-size:15px;color:#fff;font-weight:700}
+.lp-metric-muted{font-size:14px;color:var(--text-muted);font-weight:500}
+.lp-checklist{list-style:none;margin-top:24px}
+.lp-checklist li{
+  padding:8px 0;font-size:14px;color:var(--text-secondary);
+  display:flex;align-items:center;gap:12px;
+}
+.lp-checklist li::before{content:'✓';color:var(--magenta);font-weight:700;font-size:16px}
+.lp-left .view-all{
+  display:inline-block;margin-top:28px;color:var(--magenta);
+  font-size:14px;font-weight:600;text-decoration:none;
+  letter-spacing:0.03em;
+}
+.lp-right{flex:1;display:flex;justify-content:center;align-items:center;perspective:2000px;position:relative;height:460px;overflow:visible}
+.lp-card{
+  position:absolute;width:420px;border-radius:12px;overflow:hidden;
+  background:#111;border:1px solid var(--border);
+  transition:transform 0.4s ease;
+  box-shadow:0 20px 60px rgba(0,0,0,0.5);
+}
+/* Left card - opens outward (left edge toward viewer) */
+.lp-card:nth-child(1){
+  transform:rotateY(-25deg) translateX(-460px) translateZ(-60px);
+  z-index:1;
+}
+/* Center card - front and center, largest */
+.lp-card:nth-child(2){
+  transform:rotateY(0deg) translateZ(30px);
+  z-index:3;
+  box-shadow:0 30px 80px rgba(0,0,0,0.6);
+}
+/* Right card - opens outward (right edge toward viewer) */
+.lp-card:nth-child(3){
+  transform:rotateY(25deg) translateX(460px) translateZ(-60px);
+  z-index:1;
+}
+.lp-card:hover{box-shadow:0 30px 80px rgba(0,0,0,0.6)}
+.lp-card-header{
+  height:28px;background:#1a1a1a;display:flex;align-items:center;
+  padding:0 12px;gap:6px;border-bottom:1px solid var(--border);
+}
+.lp-card-dot{width:8px;height:8px;border-radius:50%;background:#333}
+.lp-card-dot:nth-child(1){background:#ff5f57}
+.lp-card-dot:nth-child(2){background:#ffbd2e}
+.lp-card-dot:nth-child(3){background:#28c840}
+.lp-card-body{
+  display:flex;flex-direction:column;overflow:hidden;background:#fff;
+}
+.lp-card-content{
+  flex:1;padding:24px;display:flex;flex-direction:column;align-items:center;justify-content:center;
+}
+.lp-card-light{background:#f8f8f8}
+.lp-card-dark{background:#1a1a2e}
+.lp-card-teal{background:#0d7377}
+.lp-product-title{font-size:13px;font-weight:700;letter-spacing:0.05em;text-align:center;margin-bottom:14px;color:#222}
+.lp-product-sub{font-size:12px;color:rgba(255,255,255,0.7);margin-bottom:12px;text-align:center}
+.lp-product-price{font-size:22px;font-weight:700;color:#fff;margin-bottom:12px}
+.lp-product-visual{width:80px;height:100px;background:linear-gradient(135deg,#ccc,#999);border-radius:8px;margin:14px auto}
+.lp-vacuum-visual{width:100px;height:80px;background:linear-gradient(135deg,#333,#111);border-radius:6px}
+.lp-pet-visual{width:90px;height:90px;background:linear-gradient(135deg,#222,#444);border-radius:50%}
+.lp-cta-btn{
+  background:#ff8c32;color:#fff;border:none;padding:8px 20px;border-radius:4px;
+  font-size:12px;font-weight:600;cursor:pointer;margin-bottom:10px;
+}
+.lp-rating{display:flex;align-items:baseline;gap:8px;margin-bottom:10px}
+.lp-rating-num{font-size:28px;font-weight:700;color:#222}
+.lp-stars{font-size:12px;color:#f5a623}
+.lp-features-row{display:flex;gap:14px;font-size:10px;color:#666;margin-top:auto}
+.lp-card-features{
+  display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:12px 16px;background:#fff;
+}
+.lp-feat-item{font-size:10px;color:#444;text-align:center;padding:6px;background:#f4f4f4;border-radius:4px}
+.lp-card-body img{width:100%;height:100%;object-fit:cover;border-radius:6px}
+.lp-card-body .lp-placeholder{
+  text-align:center;color:var(--text-muted);font-size:12px;
+}
+.lp-card-body .lp-placeholder h4{color:var(--text-secondary);font-size:14px;font-weight:600;margin-bottom:8px}
 .scroll-wrapper{overflow:hidden;position:relative;margin-bottom:28px}
 .scroll-wrapper::before,.scroll-wrapper::after{
   content:'';position:absolute;top:0;bottom:0;width:80px;z-index:2;pointer-events:none;
@@ -153,7 +340,7 @@ section,.data-section{position:relative;z-index:1}
   border:1px solid rgba(255,255,255,0.04);
   transition:transform 0.4s cubic-bezier(0.16,1,0.3,1),border-color 0.3s;
 }
-.video-card:hover{transform:scale(1.03);border-color:rgba(120,115,245,0.2)}
+.video-card:hover{transform:scale(1.03);border-color:rgba(232,62,140,0.3)}
 .video-card video{width:100%;height:100%;object-fit:cover}
 /* Modal for expanded video */
 .video-modal{
@@ -166,63 +353,154 @@ section,.data-section{position:relative;z-index:1}
   max-width:90vw;max-height:85vh;border-radius:12px;
 }
 
-/* ===== SELECTED VISUALS ===== */
-.visuals-section{padding:120px 80px;max-width:1200px;margin:auto}
-.visuals-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-.visual-item{
-  border-radius:12px;overflow:hidden;aspect-ratio:4/5;
-  background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.04);
-  transition:transform 0.4s cubic-bezier(0.16,1,0.3,1);
+/* ===== AI AGENT SECTION ===== */
+.agent-section{
+  padding:120px 60px;max-width:1600px;margin:auto;
+  border-top:1px solid var(--border);
 }
-.visual-item:hover{transform:scale(1.02)}
-.visual-item img{width:100%;height:100%;object-fit:cover}
+.agent-layout{display:flex;gap:60px;align-items:center}
+.agent-left{flex:0 0 300px}
+.agent-left h2{font-size:clamp(1.6rem,3vw,2.4rem);font-weight:800;line-height:1.4;font-family:'Playfair Display',serif}
+.agent-left h2 .highlight{color:var(--magenta)}
+.agent-desc{color:var(--text-secondary);font-size:14px;margin-top:20px;line-height:1.8}
+.agent-list{
+  list-style:none;padding:0;margin:16px 0 0;
+  display:flex;flex-direction:column;gap:12px;
+}
+.agent-list li{
+  color:var(--text-secondary);font-size:14px;padding-left:20px;position:relative;
+}
+.agent-list li::before{
+  content:'·';position:absolute;left:0;color:var(--magenta);font-weight:700;font-size:22px;line-height:1.2;
+}
+.agent-tags{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+.agent-tag{
+  padding:6px 14px;border-radius:20px;font-size:13px;font-weight:600;
+  color:var(--magenta);border:1px solid var(--magenta);letter-spacing:0.03em;
+}
+.agent-cta{display:inline-block;margin-top:24px;color:#fff;font-size:14px;font-weight:600;letter-spacing:0.05em;text-decoration:none;transition:color 0.3s}
+.agent-cta:hover{color:var(--magenta)}
+.agent-right{flex:1}
+.agent-card-stack{position:relative;height:400px}
+.agent-card{
+  position:absolute;top:0;left:0;right:0;
+  transition:all 0.4s cubic-bezier(0.4,0,0.2,1);
+  cursor:pointer;
+}
+.agent-card .agent-browser{opacity:0;transform:scale(0.95);transition:all 0.4s cubic-bezier(0.4,0,0.2,1)}
+.agent-card.active .agent-browser{opacity:1;transform:scale(1)}
+.agent-card-tab{
+  position:absolute;top:-36px;left:0;
+  padding:8px 18px;border-radius:8px 8px 0 0;
+  background:#1a1a1a;border:1px solid rgba(255,255,255,0.1);border-bottom:none;
+  font-size:14px;color:var(--text-secondary);font-weight:600;
+  letter-spacing:0.02em;white-space:nowrap;
+  transition:all 0.3s;
+}
+.agent-card-tab span{color:var(--magenta);font-size:15px;font-weight:800;margin-right:8px}
+.agent-card.active .agent-card-tab{background:#111;color:#fff}
+/* Stack positions: active on top, others offset behind */
+.agent-card:nth-child(1){z-index:3}
+.agent-card:nth-child(2){z-index:2;transform:translateX(30px) translateY(8px)}
+.agent-card:nth-child(3){z-index:1;transform:translateX(60px) translateY(16px)}
+.agent-card:nth-child(2) .agent-card-tab{left:160px}
+.agent-card:nth-child(3) .agent-card-tab{left:320px}
+/* When card 2 is active */
+.agent-card:nth-child(2).active{z-index:3;transform:translateX(0) translateY(0)}
+.agent-card:nth-child(2).active ~ .agent-card{z-index:1}
+/* When card 3 is active */
+.agent-card:nth-child(3).active{z-index:3;transform:translateX(0) translateY(0)}
+/* Non-active cards when another is hovered/active */
+.agent-card:not(.active) .agent-browser{opacity:0;pointer-events:none}
+.agent-browser{border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,0.1);background:#111;box-shadow:0 24px 80px rgba(0,0,0,0.6),0 0 0 1px rgba(255,255,255,0.05)}
+.agent-browser-header{
+  height:32px;background:#1a1a1a;display:flex;align-items:center;
+  padding:0 14px;gap:7px;border-bottom:1px solid var(--border);
+}
+.agent-dot{width:10px;height:10px;border-radius:50%;background:#333}
+.agent-dot:nth-child(1){background:#ff5f57}
+.agent-dot:nth-child(2){background:#ffbd2e}
+.agent-dot:nth-child(3){background:#28c840}
+.agent-browser-body{overflow:hidden}
+.agent-browser-body img{width:100%;height:auto;display:block}
 
-/* ===== SKILLS ===== */
-.skills-section{padding:80px 80px;max-width:1200px;margin:auto}
-.skills-tags{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
-.skill-tag{
-  padding:10px 20px;border-radius:999px;
-  background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);
-  font-size:13px;color:rgba(255,255,255,0.6);
-  transition:border-color 0.3s,color 0.3s;
+/* ===== HOW I WORK ===== */
+.how-section{
+  padding:120px 60px;max-width:1600px;margin:auto;
+  border-top:1px solid var(--border);
 }
-.skill-tag:hover{border-color:rgba(120,115,245,0.4);color:#fff}
+.how-layout{display:flex;gap:60px;align-items:flex-start}
+.how-left{flex:0 0 32%}
+.how-left h2{
+  font-size:clamp(1.6rem,3vw,2.4rem);font-weight:800;
+  font-family:'Playfair Display',serif;line-height:1.4;
+}
+.how-left h2 .highlight{color:var(--magenta)}
+.how-desc{color:var(--text-secondary);font-size:20px;margin-top:20px;line-height:1.8;font-weight:700}
+.how-footer{color:var(--text-muted);font-size:15px;margin-top:30px;line-height:1.7}
+.how-right{
+  flex:1;display:flex;flex-direction:column;gap:16px;
+}
+.how-step{
+  display:flex;align-items:flex-start;gap:18px;
+  background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);
+  border-radius:14px;padding:22px 24px;
+  transition:border-color 0.3s;
+}
+.how-step:hover{border-color:rgba(232,62,140,0.3)}
+.how-step-content{display:flex;flex-direction:column;gap:8px}
+.how-num{
+  font-size:14px;font-weight:700;color:var(--magenta);
+  min-width:28px;padding-top:2px;
+}
+.how-text{font-size:17px;color:#fff;font-weight:700}
+.how-detail{font-size:14px;color:var(--text-secondary);line-height:1.7}
 
-/* ===== SYSTEM ===== */
-.system-section{
-  padding:120px 80px;max-width:1200px;margin:auto;
-  border-top:1px solid rgba(255,255,255,0.06);
+/* ===== ABOUT ===== */
+.about-section{
+  padding:120px 60px;max-width:1600px;margin:auto;
+  border-top:1px solid var(--border);
 }
-.system-section h2{
-  font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:800;
-  line-height:1.3;letter-spacing:-0.02em;max-width:600px;
+.about-layout{display:flex;gap:80px;align-items:center}
+.about-left{flex:1.2}
+.about-left h2{
+  font-size:clamp(2rem,4vw,3.2rem);font-weight:800;
+  font-family:'Playfair Display',serif;
+  line-height:1.6;letter-spacing:0.01em;
 }
-.system-section .desc{
-  color:rgba(255,255,255,0.4);font-size:15px;
-  margin-top:20px;max-width:520px;line-height:1.8;
-}
-.system-screenshots{
-  margin-top:48px;display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;
-}
-.system-shot{
-  border-radius:12px;overflow:hidden;
-  background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);
-  aspect-ratio:16/10;
-  display:flex;align-items:center;justify-content:center;
-  color:rgba(255,255,255,0.15);font-size:13px;
-  position:relative;
-}
-.system-shot img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
+.about-left h2 .highlight{color:var(--magenta)}
+.about-right{flex:1}
+.about-desc{font-size:18px;color:var(--text-secondary);line-height:1.9}
+.about-focus{font-size:17px;color:var(--text-muted);margin-top:24px;line-height:1.8}
 
 /* ===== FOOTER ===== */
 footer{
-  padding:80px 80px;max-width:1200px;margin:auto;
-  border-top:1px solid rgba(255,255,255,0.06);
-  display:flex;justify-content:space-between;align-items:center;
+  padding:120px 60px 40px;max-width:1600px;margin:auto;
+  border-top:1px solid var(--border);
+  display:flex;flex-direction:column;
 }
-footer span{color:rgba(255,255,255,0.25);font-size:13px}
-footer a{color:rgba(255,255,255,0.4);font-size:13px;text-decoration:none;transition:color 0.2s}
-footer a:hover{color:#fff}
+.footer-cta{text-align:center;margin-bottom:80px}
+.footer-cta h2{
+  font-size:clamp(1.8rem,4vw,3rem);font-weight:800;
+  font-family:'Playfair Display',serif;line-height:1.3;
+}
+.footer-cta h2 .highlight{color:var(--magenta)}
+.footer-cta p{color:var(--text-secondary);font-size:14px;margin-top:20px;max-width:500px;margin-left:auto;margin-right:auto}
+.footer-btn{
+  display:inline-block;margin-top:32px;padding:16px 36px;
+  background:var(--magenta);color:#fff;border-radius:30px;
+  text-decoration:none;font-size:14px;font-weight:600;
+  transition:opacity 0.3s;
+}
+.footer-btn:hover{opacity:0.85}
+.footer-bottom{
+  display:flex;justify-content:space-between;align-items:center;
+  padding-top:32px;border-top:1px solid var(--border);
+}
+.footer-bottom span{color:var(--text-muted);font-size:13px;letter-spacing:0.05em}
+.footer-links{display:flex;gap:24px}
+.footer-links a{color:var(--text-muted);font-size:13px;text-decoration:none;letter-spacing:0.05em;transition:color 0.3s}
+.footer-links a:hover{color:#fff}
 
 /* ===== SCROLL REVEAL ===== */
 .reveal{opacity:0;transform:translateY(20px);transition:opacity 0.8s ease,transform 0.8s ease}
@@ -231,55 +509,79 @@ footer a:hover{color:#fff}
 /* ===== RESPONSIVE ===== */
 @media(max-width:1024px){
   .nav{padding:16px 40px}
-  .hero,.data-section,.featured-section,.works-section,.visuals-section,.skills-section,.system-section,footer{padding-left:40px;padding-right:40px}
-  .data{grid-template-columns:repeat(2,1fr);gap:32px}
-  .visuals-grid{grid-template-columns:repeat(2,1fr)}
+  .hero,.data-section,.featured-section,.works-section,.agent-section,.how-section,.about-section,.lp-section,footer{padding-left:32px;padding-right:32px}
+  .hero{flex-direction:column;gap:40px;text-align:center;padding-top:120px}
+  .hero-left{display:flex;flex-direction:column;align-items:center}
+  .hero-bio{max-width:100%}
+  .phone-mockups{height:400px;gap:8px}
+  .phone-mock{border-radius:12px}
+  .data-section{flex-direction:column;gap:40px}
+  .data-header{flex:none;text-align:center}
+  .data{flex-wrap:wrap}
+  .data-item{flex:0 0 calc(50% - 14px);border-left:none;padding:0;margin-bottom:24px}
+  .featured-layout{flex-direction:column;gap:32px}
+  .featured-left{position:static;text-align:center}
+  .featured-grid{grid-template-columns:1fr 1fr}
+  .featured-item.large{grid-row:auto}
+  .lp-layout{flex-direction:column;gap:40px}
+  .lp-left{flex:none;text-align:center}
+  .lp-checklist{display:inline-block;text-align:left}
+  .lp-right{overflow-x:auto;padding-bottom:12px}
+  .agent-layout{flex-direction:column;gap:40px}
+  .agent-left{flex:none}
+  .footer-bottom{flex-direction:column;gap:16px;text-align:center}
 }
 @media(max-width:768px){
   .nav{padding:14px 20px}
   .nav-links{gap:20px}
   .nav-links a{font-size:12px}
-  .hero,.data-section,.featured-section,.works-section,.visuals-section,.skills-section,.system-section,footer{padding-left:20px;padding-right:20px}
+  .nav-tag{display:none}
+  .hero,.data-section,.featured-section,.works-section,.agent-section,.how-section,.about-section,.lp-section,footer{padding-left:20px;padding-right:20px}
   .hero{min-height:100dvh;padding-top:100px;padding-bottom:60px}
   .hero h1{font-size:clamp(1.8rem,8vw,2.8rem)}
-  .data{grid-template-columns:repeat(2,1fr);gap:20px}
+  .hero-right{min-height:350px}
+  .phone-mockups{height:350px;gap:6px}
+  .data{flex-wrap:wrap}
+  .data-item{flex:0 0 calc(50% - 14px);border-left:none;padding:0}
   .data-num{font-size:clamp(1.6rem,6vw,2.2rem)}
+  .featured-grid{grid-template-columns:1fr}
   .featured-item{aspect-ratio:9/16;max-height:70vh}
   .featured-overlay{padding:24px}
   .video-card{width:160px;height:284px}
-  .visuals-grid{grid-template-columns:repeat(2,1fr);gap:12px}
-  .system-screenshots{grid-template-columns:1fr}
-  footer{flex-direction:column;gap:12px;text-align:center}
+  .lp-card{flex:0 0 220px}
+  footer{padding-left:20px;padding-right:20px}
+  .footer-bottom{flex-direction:column;gap:12px;text-align:center}
 }
 @media(max-width:400px){
   .hero h1{font-size:1.6rem}
-  .data{grid-template-columns:1fr 1fr;gap:16px}
+  .data{flex-wrap:wrap}
+  .data-item{flex:0 0 100%}
   .video-card{width:140px;height:249px}
-  .visuals-grid{grid-template-columns:1fr 1fr}
+  .phone-mockups{height:280px;gap:4px}
+  .hero-badge{display:none}
 }
 
 /* === BACKEND UI === */
 .nav-user-btn{background:none;border:1px solid rgba(255,255,255,0.3);color:#fff;padding:6px 14px;border-radius:20px;cursor:pointer;font-size:13px;transition:all .3s}
-.nav-user-btn:hover{border-color:#7873f5;color:#7873f5}
+.nav-user-btn:hover{border-color:var(--magenta);color:var(--magenta)}
 .auth-modal{display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.8);justify-content:center;align-items:center}
 .auth-modal.active{display:flex}
 .auth-box{background:#1a1a2e;padding:40px;border-radius:16px;width:320px;text-align:center}
 .auth-box h3{margin-bottom:20px;color:#fff}
 .auth-box input{width:100%;padding:12px;margin-bottom:12px;border:1px solid #333;border-radius:8px;background:#0d0d1a;color:#fff;box-sizing:border-box}
-.auth-box button{width:100%;padding:12px;background:linear-gradient(135deg,#7873f5,#ec5fcd);border:none;border-radius:8px;color:#fff;font-weight:600;cursor:pointer}
+.auth-box button{width:100%;padding:12px;background:var(--magenta);border:none;border-radius:8px;color:#fff;font-weight:600;cursor:pointer}
 .auth-switch{margin-top:12px;color:#888;cursor:pointer;font-size:13px}
 .auth-close{position:absolute;top:16px;right:20px;color:#888;cursor:pointer;font-size:20px}
 .toast{position:fixed;bottom:40px;left:50%;transform:translateX(-50%);background:#1a1a2e;color:#fff;padding:12px 24px;border-radius:8px;font-size:14px;opacity:0;pointer-events:none;transition:opacity .3s;z-index:9999;border:1px solid #333}
 .toast.show{opacity:1}
-.edit-toggle{position:fixed;bottom:30px;right:30px;background:linear-gradient(135deg,#7873f5,#ec5fcd);border:none;padding:12px 20px;border-radius:30px;color:#fff;font-size:14px;cursor:pointer;z-index:999;box-shadow:0 4px 20px rgba(120,115,245,0.3)}
+.edit-toggle{position:fixed;bottom:30px;right:30px;background:var(--magenta);border:none;padding:12px 20px;border-radius:30px;color:#fff;font-size:14px;cursor:pointer;z-index:999;box-shadow:0 4px 20px rgba(232,62,140,0.3)}
 .upload-overlay{position:fixed;bottom:0;left:0;right:0;z-index:998;padding:12px;display:flex;justify-content:center}
 .upload-bar{display:flex;gap:10px;background:#1a1a2e;padding:12px 20px;border-radius:12px;border:1px solid #333}
-.upload-btn{background:rgba(120,115,245,0.2);border:1px solid rgba(120,115,245,0.4);color:#fff;padding:8px 14px;border-radius:8px;cursor:pointer;font-size:13px}
-.publish-btn{background:linear-gradient(135deg,#7873f5,#ec5fcd)!important;border:none!important}
-body.edit-mode .editable{outline:2px dashed rgba(120,115,245,0.5);outline-offset:2px}
+.upload-btn{background:rgba(232,62,140,0.15);border:1px solid rgba(232,62,140,0.4);color:#fff;padding:8px 14px;border-radius:8px;cursor:pointer;font-size:13px}
+.publish-btn{background:var(--magenta)!important;border:none!important}
+body.edit-mode .editable{outline:2px dashed rgba(232,62,140,0.5);outline-offset:2px}
 body.edit-mode .remove-btn{display:block!important}
 .remove-btn{display:none;position:absolute;top:4px;right:4px;background:rgba(255,50,50,0.8);border:none;color:#fff;width:20px;height:20px;border-radius:50%;cursor:pointer;font-size:12px;line-height:20px;text-align:center;z-index:10}
-.system-shot img{width:100%;height:100%;object-fit:cover;border-radius:12px}
 </style>
 <!-- Firebase SDK -->
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
@@ -290,93 +592,221 @@ body.edit-mode .remove-btn{display:block!important}
 
 <!-- NAV -->
 <nav class="nav">
-  <div class="nav-logo">韩爽</div>
+  <div class="nav-brand">
+    <div class="nav-logo"><span class="nav-logo-mark">Yami</span>韩爽</div>
+    <span class="nav-tag">AI Creative System Designer</span>
+  </div>
   <div class="nav-links">
     <a href="#works">作品</a>
-    <a href="#system">AI系统</a>
-    <a href="#data">关于我</a>
-    <a href="mailto:contact@example.com">联系</a>
+    <a href="#system">方法论</a>
+    <a href="#about">关于增长</a>
+    <a href="mailto:contact@example.com" class="nav-contact">联系我 →</a>
     <button class="nav-user-btn" id="userBtn" onclick="toggleAuthModal()">登录</button>
   </div>
 </nav>
 
-<canvas id="particles"></canvas>
-
 <!-- HERO -->
 <section class="hero reveal">
-  <div class="hero-glow" id="heroGlow"></div>
-  <h1><span class="gradient editable">韩爽</span><br><span class="dim">AIGC 创意设计 &</span><br><span class="dim">效果广告运营</span></h1>
-  <p class="hero-bio editable">3年跨境电商广告经验，服务北美/欧洲市场。<br>专注 45+ 人群的效果广告投放与 AI 内容系统搭建。<br>核心方法论：数据驱动创意迭代 × AI 规模化生产。</p>
-  <div class="hero-cta">向下探索</div>
+  <div class="hero-left">
+    <h1>I BUILD ADS<br>THAT <span class="highlight">CONVERT.</span></h1>
+    <p class="hero-subtitle">AI驱动广告增长。</p>
+    <p class="hero-bio">服务跨境电商品牌的<br>AI创意与转化增长系统。<br><br>覆盖：<br>素材生产 / AI工作流 /<br>转化页 / 数据优化。</p>
+    <a href="#works" class="hero-cta">→ 查看案例</a>
+  </div>
+  <div class="hero-right">
+    <div class="phone-mockups">
+      <div class="phone-mock">
+        <video src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729669021-9c1c73.mp4" muted loop playsinline preload="none" poster="portfolio-assets/1777729669021-9c1c73.jpg"></video>
+        <div class="play-icon"></div>
+      </div>
+      <div class="phone-mock">
+        <video src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729675445-k1kt91.mp4" muted loop playsinline preload="none" poster="portfolio-assets/1777729675445-k1kt91.jpg"></video>
+        <div class="play-icon"></div>
+      </div>
+      <div class="phone-mock phone-center">
+        <video src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729700452-rfmaj4.mp4" muted loop playsinline preload="none" poster="portfolio-assets/1777729700452-rfmaj4.jpg"></video>
+        <div class="play-icon"></div>
+      </div>
+      <div class="phone-mock">
+        <video src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729748581-54nqqv.mp4" muted loop playsinline preload="none" poster="portfolio-assets/1777729748581-54nqqv.jpg"></video>
+        <div class="play-icon"></div>
+      </div>
+      <div class="phone-mock">
+        <video src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729715457-vtjmpi.mp4" muted loop playsinline preload="none" poster="portfolio-assets/1777729715457-vtjmpi.jpg"></video>
+        <div class="play-icon"></div>
+      </div>
+    </div>
+    <div class="hero-badge">AIGC<br>Creative<br>Design<br>Expert ✦</div>
+  </div>
 </section>
 
 <!-- DATA -->
 <div class="data-section reveal" id="data">
+  <div class="data-header">
+    <h2>用数据证明价值</h2>
+    <p>基于真实广告测试数据<br>覆盖 TikTok / DSP</p>
+    <div class="accent-line"></div>
+  </div>
   <div class="data">
     <div class="data-item">
-      <div class="data-num editable">1,200+</div>
-      <div class="data-label editable">素材产出</div>
-      <div class="data-context editable">3个月内完成</div>
+      <div class="data-num editable">1200+</div>
+      <div class="data-label editable">高质量素材产出</div>
     </div>
     <div class="data-item">
-      <div class="data-num editable">5.8M</div>
-      <div class="data-label editable">总曝光</div>
-      <div class="data-context editable">DSP多渠道投放</div>
+      <div class="data-num editable">5.8M+</div>
+      <div class="data-label editable">素材累计曝光</div>
     </div>
     <div class="data-item">
       <div class="data-num editable">3.2%</div>
-      <div class="data-label editable">平均点击率</div>
-      <div class="data-context editable">行业基准1.8%</div>
+      <div class="data-label editable">平均CTR提升</div>
     </div>
     <div class="data-item">
       <div class="data-num editable">$0.42</div>
-      <div class="data-label editable">平均获客成本</div>
-      <div class="data-context editable">低于竞品均值35%</div>
+      <div class="data-label editable">平均CPA降低</div>
     </div>
   </div>
 </div>
 
 <!-- FEATURED CASES -->
 <section class="featured-section" id="works">
-  <h2 class="section-label reveal editable">精选案例</h2>
-
-  <div class="featured-item reveal" data-video="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729669021-9c1c73.mp4">
-    <img class="thumb" src="portfolio-assets/1777729669021-9c1c73.jpg" alt="取暖器广告">
-    <video src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729669021-9c1c73.mp4" muted loop playsinline preload="none"></video>
-    <div class="featured-play"></div>
-    <div class="featured-overlay">
-      <h3 class="editable">取暖器系列广告</h3>
-      <p>达人口播 · AI脚本生成 · 全链路制作</p>
-      <span class="featured-stat">CTR 超基准 +38%</span>
+  <div class="featured-layout reveal">
+    <div class="featured-left">
+      <h2>精选案例</h2>
+      <p>用策略和创意，为品牌带来真实的增长。</p>
+      <a href="#" class="view-all">查看案例 →</a>
+    </div>
+    <div class="featured-grid">
+      <div class="featured-item large" data-video="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729669021-9c1c73.mp4">
+        <img class="thumb" src="portfolio-assets/1777729669021-9c1c73.jpg" alt="取暖器广告">
+        <video src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729669021-9c1c73.mp4" muted loop playsinline preload="none"></video>
+        <span class="featured-stat">+38% CTR提升</span>
+        <div class="featured-play"></div>
+        <div class="featured-overlay">
+          <h3 class="editable">冬季取暖器 爆款素材案例</h3>
+        </div>
+      </div>
+      <div class="featured-right-grid">
+        <div class="featured-item" data-video="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729700452-rfmaj4.mp4">
+          <img class="thumb" src="portfolio-assets/1777729700452-rfmaj4.jpg" alt="运动品牌">
+          <video src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729700452-rfmaj4.mp4" muted loop playsinline preload="none"></video>
+          <span class="featured-stat">+29% CVR提升</span>
+          <div class="featured-play"></div>
+          <div class="featured-overlay">
+            <h3 class="editable">运动品牌 视频广告案例</h3>
+          </div>
+        </div>
+        <div class="featured-item" data-video="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729748581-54nqqv.mp4">
+          <img class="thumb" src="portfolio-assets/1777729748581-54nqqv.jpg" alt="护肤品">
+          <video src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729748581-54nqqv.mp4" muted loop playsinline preload="none"></video>
+          <span class="featured-stat">+24% ROI提升</span>
+          <div class="featured-play"></div>
+          <div class="featured-overlay">
+            <h3 class="editable">护肤品系列 视觉设计案例</h3>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
+</section>
 
-  <div class="featured-item reveal" data-video="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729700452-rfmaj4.mp4">
-    <img class="thumb" src="portfolio-assets/1777729700452-rfmaj4.jpg" alt="产品演示">
-    <video src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729700452-rfmaj4.mp4" muted loop playsinline preload="none"></video>
-    <div class="featured-play"></div>
-    <div class="featured-overlay">
-      <h3 class="editable">产品功能演示</h3>
-      <p>多版本AB测试 · 数据驱动优化</p>
-      <span class="featured-stat">CPA $0.31</span>
+<!-- LANDING PAGES -->
+<section class="lp-section reveal">
+  <div class="lp-layout">
+    <div class="lp-left">
+      <h2>电商转化页系统</h2>
+      <p class="lp-desc">通过中间页提升用户理解与购买意愿，<br>降低冷流量直投成本。</p>
+      <a href="#" class="view-all">查看案例 →</a>
+      <!-- 数据对比卡片 -->
+      <div class="lp-compare">
+        <div class="lp-compare-card">
+          <div class="lp-compare-label">中间页投放</div>
+          <div class="lp-compare-metrics">
+            <div class="lp-metric"><span class="lp-metric-value">历史总消耗 $5,200</span></div>
+            <div class="lp-metric"><span class="lp-metric-value">平均CPA ↓ 56%</span></div>
+            <div class="lp-metric"><span class="lp-metric-value">平均ROAS ↑ 2.9x</span></div>
+          </div>
+        </div>
+        <div class="lp-compare-card lp-compare-dim">
+          <div class="lp-compare-label">直投商品页</div>
+          <div class="lp-compare-metrics">
+            <div class="lp-metric"><span class="lp-metric-value">历史总消耗 $5,200</span></div>
+            <div class="lp-metric"><span class="lp-metric-value">平均CTR 较低</span></div>
+            <div class="lp-metric"><span class="lp-metric-value">平均转化成本更高</span></div>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
-
-  <div class="featured-item reveal" data-video="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729748581-54nqqv.mp4">
-    <img class="thumb" src="portfolio-assets/1777729748581-54nqqv.jpg" alt="社媒种草">
-    <video src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729748581-54nqqv.mp4" muted loop playsinline preload="none"></video>
-    <div class="featured-play"></div>
-    <div class="featured-overlay">
-      <h3 class="editable">社媒种草内容</h3>
-      <p>UGC风格 · 原生感内容 · 多平台分发</p>
-      <span class="featured-stat">曝光 520万+</span>
+    <div class="lp-right">
+      <!-- Left card - Vitamin C Serum (same structure as center) -->
+      <div class="lp-card">
+        <div class="lp-card-header">
+          <span class="lp-card-dot"></span><span class="lp-card-dot"></span><span class="lp-card-dot"></span>
+        </div>
+        <div class="lp-card-body">
+          <div class="lp-card-content lp-card-light">
+            <h4 class="lp-product-title">VITAMIN C BRIGHTENING SERUM</h4>
+            <p class="lp-product-sub" style="color:#555">Glow From Within, Naturally</p>
+            <button class="lp-cta-btn">Shop Now</button>
+            <div class="lp-product-visual lp-vacuum-visual" style="background:#e0e0e0"></div>
+          </div>
+          <div class="lp-card-features">
+            <div class="lp-feat-item">Vitamin C</div>
+            <div class="lp-feat-item">Brightening</div>
+            <div class="lp-feat-item">Anti-Aging</div>
+            <div class="lp-feat-item">All Skin Types</div>
+          </div>
+        </div>
+      </div>
+      <!-- Center card - Vacuum -->
+      <div class="lp-card">
+        <div class="lp-card-header">
+          <span class="lp-card-dot"></span><span class="lp-card-dot"></span><span class="lp-card-dot"></span>
+        </div>
+        <div class="lp-card-body">
+          <div class="lp-card-content lp-card-dark">
+            <h4 class="lp-product-title" style="color:#fff">Wireless Car Vacuum Cleaner</h4>
+            <p class="lp-product-sub">Powerful Suction For A Cleaner Ride</p>
+            <button class="lp-cta-btn">Shop Now</button>
+            <div class="lp-product-visual lp-vacuum-visual"></div>
+          </div>
+          <div class="lp-card-features">
+            <div class="lp-feat-item">Powerful Suction</div>
+            <div class="lp-feat-item">Long Battery</div>
+            <div class="lp-feat-item">Lightweight</div>
+            <div class="lp-feat-item">Washable Filter</div>
+          </div>
+        </div>
+      </div>
+      <!-- Right card - Pet Feeder (same structure as center) -->
+      <div class="lp-card">
+        <div class="lp-card-header">
+          <span class="lp-card-dot"></span><span class="lp-card-dot"></span><span class="lp-card-dot"></span>
+        </div>
+        <div class="lp-card-body">
+          <div class="lp-card-content lp-card-teal">
+            <h4 class="lp-product-title" style="color:#fff">Smart Pet Feeder</h4>
+            <p class="lp-product-sub" style="color:rgba(255,255,255,0.8)">Feed Your Pet, Anywhere</p>
+            <button class="lp-cta-btn">Shop Now</button>
+            <div class="lp-product-visual lp-pet-visual"></div>
+          </div>
+          <div class="lp-card-features">
+            <div class="lp-feat-item">Remote Control</div>
+            <div class="lp-feat-item">Customizable</div>
+            <div class="lp-feat-item">Pet Friendly</div>
+            <div class="lp-feat-item">Compatible</div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
 <!-- ALL WORKS -->
 <section class="works-section">
-  <h2 class="section-label reveal editable">全部作品</h2>
+  <div class="works-header reveal">
+    <h2>全部作品</h2>
+    <a href="#">VIEW MORE →</a>
+  </div>
 
   <div class="scroll-wrapper reveal">
     <div class="scroll-track" id="track1"></div>
@@ -386,44 +816,111 @@ body.edit-mode .remove-btn{display:block!important}
   </div>
 </section>
 
-<!-- SELECTED VISUALS -->
-<section class="visuals-section">
-  <h2 class="section-label reveal editable">静态素材精选</h2>
-  <div class="visuals-grid reveal">
-    <div class="visual-item"></div>
-    <div class="visual-item"></div>
-    <div class="visual-item"></div>
-    <div class="visual-item"></div>
-    <div class="visual-item"></div>
-    <div class="visual-item"></div>
+<!-- AI AGENT SYSTEM -->
+<section class="agent-section" id="system">
+  <div class="agent-layout reveal">
+    <div class="agent-left">
+      <h2><span class="highlight">我搭建的</span><br>AI Agent 系统</h2>
+      <p class="agent-desc">自研AI素材生产Agent<br>实现全链路自动化流程</p>
+      <ul class="agent-list">
+        <li>产品分析</li>
+        <li>脚本生成</li>
+        <li>Prompt生成</li>
+        <li>批量出图</li>
+        <li>数据优化</li>
+      </ul>
+      <div class="agent-tags">
+        <span class="agent-tag">Content Production</span>
+        <span class="agent-tag">Data Testing</span>
+        <span class="agent-tag">Optimization Loop</span>
+      </div>
+      <a href="#" class="agent-cta">了解更多 →</a>
+    </div>
+    <div class="agent-right">
+      <div class="agent-card-stack">
+        <div class="agent-card active" data-index="1" data-label="AI素材工作台">
+          <div class="agent-card-tab"><span>01</span> AI素材工作台</div>
+          <div class="agent-browser">
+            <div class="agent-browser-header">
+              <span class="agent-dot"></span><span class="agent-dot"></span><span class="agent-dot"></span>
+            </div>
+            <div class="agent-browser-body">
+              <img src="portfolio-assets/agent-workflow.png" alt="AI Agent工作流界面">
+            </div>
+          </div>
+        </div>
+        <div class="agent-card" data-index="2" data-label="智能分析面板">
+          <div class="agent-card-tab"><span>02</span> 智能分析面板</div>
+          <div class="agent-browser">
+            <div class="agent-browser-header">
+              <span class="agent-dot"></span><span class="agent-dot"></span><span class="agent-dot"></span>
+            </div>
+            <div class="agent-browser-body">
+              <img src="portfolio-assets/agent-ui.png" alt="AI Agent分析界面">
+            </div>
+          </div>
+        </div>
+        <div class="agent-card" data-index="3" data-label="批量生成结果">
+          <div class="agent-card-tab"><span>03</span> 批量生成结果</div>
+          <div class="agent-browser">
+            <div class="agent-browser-header">
+              <span class="agent-dot"></span><span class="agent-dot"></span><span class="agent-dot"></span>
+            </div>
+            <div class="agent-browser-body">
+              <img src="portfolio-assets/agent-product.png" alt="AI Agent生成结果">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
-<!-- SKILLS -->
-<section class="skills-section">
-  <h2 class="section-label reveal editable">工具栈</h2>
-  <div class="skills-tags reveal">
-    <span class="skill-tag">Midjourney</span>
-    <span class="skill-tag">ComfyUI</span>
-    <span class="skill-tag">Stable Diffusion</span>
-    <span class="skill-tag">Runway</span>
-    <span class="skill-tag">Seedance</span>
-    <span class="skill-tag">Claude</span>
-    <span class="skill-tag">Cursor</span>
-    <span class="skill-tag">Premiere Pro</span>
-    <span class="skill-tag">After Effects</span>
-    <span class="skill-tag">Figma</span>
-  </div>
-</section>
-
-<!-- SYSTEM (AI Agent) -->
-<section class="system-section" id="system">
-  <h2 class="reveal editable">我构建创意系统，<br>而不只是做素材。</h2>
-  <p class="desc reveal editable">一个人 + AI 系统完成从策略到投放的全链路。不是做更多素材，而是构建让素材自己进化的系统。</p>
-  <div class="system-screenshots reveal">
-    <div class="system-shot">上传截图</div>
-    <div class="system-shot">上传截图</div>
-    <div class="system-shot">上传截图</div>
+<!-- HOW I WORK -->
+<section class="how-section">
+  <div class="how-layout reveal">
+    <div class="how-left">
+      <h2><span class="highlight">How Do I Work</span></h2>
+      <p class="how-desc">从创意到转化，<br>形成完整的增长闭环。</p>
+      <p class="how-footer">从市场洞察到AI生产，再到数据验证与持续迭代，构建可复用的广告增长流程。</p>
+    </div>
+    <div class="how-right">
+      <div class="how-step">
+        <span class="how-num">01</span>
+        <div class="how-step-content">
+          <span class="how-text">分析市场</span>
+          <p class="how-detail">全网调研产品、竞品、用户评论与真实使用场景，找出用户真正关心的购买理由，而不是卖家自认为的产品卖点。最终沉淀为一句清晰的用户核心需求。</p>
+        </div>
+      </div>
+      <div class="how-step">
+        <span class="how-num">02</span>
+        <div class="how-step-content">
+          <span class="how-text">生成创意方向</span>
+          <p class="how-detail">根据产品类型、目标用户画像、投放国家与使用场景，拆解不同创意角度，形成可测试的广告方向与内容结构。</p>
+        </div>
+      </div>
+      <div class="how-step">
+        <span class="how-num">03</span>
+        <div class="how-step-content">
+          <span class="how-text">AI批量生产</span>
+          <p class="how-detail">通过自建静态图工作流完成素材制作、尺寸适配、命名整理与上传；通过自建视频 Prompt 工作流完成视频创意生成、格式处理、命名整理与上传。</p>
+        </div>
+      </div>
+      <div class="how-step">
+        <span class="how-num">04</span>
+        <div class="how-step-content">
+          <span class="how-text">数据回溯</span>
+          <p class="how-detail">基于 CPA、ROAS 等投放数据，判断素材是否具备放量价值，识别真正有效的创意方向，而不是只看单条素材表现。</p>
+        </div>
+      </div>
+      <div class="how-step">
+        <span class="how-num">05</span>
+        <div class="how-step-content">
+          <span class="how-text">快速迭代</span>
+          <p class="how-detail">根据数据反馈调整后续创意方向，持续优化素材、文案与页面承接，形成从创意生产到投放验证的增长闭环。</p>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -462,69 +959,65 @@ body.edit-mode .remove-btn{display:block!important}
   </div>
 </div>
 
+<!-- ABOUT -->
+<section class="about-section" id="about">
+  <div class="about-layout reveal">
+    <div class="about-left">
+      <h2>不是做素材。<br><br>而是构建<br>可持续增长的<br><span class="highlight">创意系统。</span></h2>
+    </div>
+    <div class="about-right">
+      <p class="about-desc">10年广告内容创意与运营经验，<br>正在用AI重构广告生产流程。</p>
+      <p class="about-focus">专注：<br>AI创意 / 电商转化 / 自动化工作流 / APP转化</p>
+    </div>
+  </div>
+</section>
+
 <!-- FOOTER -->
 <footer>
-  <span>© 2026 韩爽</span>
-  <a href="mailto:contact@example.com">联系我 →</a>
+  <div class="footer-cta reveal">
+    <h2>让创意真正带来增长。</h2>
+    <p>如果你正在寻找真正能带来结果的创意伙伴，<br>我很乐意和你聊聊。</p>
+    <a href="mailto:contact@example.com" class="footer-btn">→ 联系我 / Start a Project</a>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2024 HANSHUANG. ALL RIGHTS RESERVED.</span>
+    <div class="footer-links">
+      <a href="mailto:contact@example.com">EMAIL</a>
+      <a href="#">WECHAT</a>
+      <a href="#">LINKEDIN</a>
+    </div>
+  </div>
 </footer>
 
 <script>
-// ===== PARTICLES =====
-const canvas=document.getElementById('particles'),ctx=canvas.getContext('2d');
-let w,h,particles=[];
-function resize(){w=canvas.width=innerWidth;h=canvas.height=innerHeight}
-resize();window.addEventListener('resize',resize);
-
-class Particle{
-  constructor(){this.reset()}
-  reset(){
-    this.x=Math.random()*w;this.y=Math.random()*h;
-    this.vx=(Math.random()-0.5)*0.3;this.vy=(Math.random()-0.5)*0.3;
-    this.r=Math.random()*1.5+0.5;
-    this.alpha=Math.random()*0.4+0.05;
-  }
-  update(){
-    this.x+=this.vx;this.y+=this.vy;
-    if(this.x<0||this.x>w||this.y<0||this.y>h)this.reset();
-  }
-  draw(){
-    ctx.beginPath();ctx.arc(this.x,this.y,this.r,0,Math.PI*2);
-    ctx.fillStyle=`rgba(120,115,245,${this.alpha})`;ctx.fill();
-  }
-}
-for(let i=0;i<60;i++)particles.push(new Particle());
-
-let mx=-1000,my=-1000;
-document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY});
-
-function animateParticles(){
-  ctx.clearRect(0,0,w,h);
-  particles.forEach(p=>{p.update();p.draw()});
-  for(let i=0;i<particles.length;i++){
-    const a=particles[i];
-    const dm=Math.hypot(a.x-mx,a.y-my);
-    if(dm<120){
-      ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(mx,my);
-      ctx.strokeStyle=`rgba(120,115,245,${(1-dm/120)*0.25})`;ctx.lineWidth=0.5;ctx.stroke();
-    }
-    for(let j=i+1;j<particles.length;j++){
-      const b=particles[j];
-      const d=Math.hypot(a.x-b.x,a.y-b.y);
-      if(d<100){
-        ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);
-        ctx.strokeStyle=`rgba(120,115,245,${(1-d/100)*0.08})`;ctx.lineWidth=0.5;ctx.stroke();
-      }
-    }
-  }
-  requestAnimationFrame(animateParticles);
-}
-animateParticles();
-
-// ===== HERO GLOW =====
-const glow=document.getElementById('heroGlow');
-document.addEventListener('mousemove',e=>{
-  glow.style.transform=`translate(${e.clientX-300}px,${e.clientY-300}px)`;
+// ===== AGENT CARD STACK =====
+document.querySelectorAll('.agent-card-tab').forEach(tab=>{
+  tab.addEventListener('click',function(e){
+    e.stopPropagation();
+    const card=this.closest('.agent-card');
+    const stack=card.closest('.agent-card-stack');
+    stack.querySelectorAll('.agent-card').forEach(c=>c.classList.remove('active'));
+    card.classList.add('active');
+  });
 });
+document.querySelectorAll('.agent-card').forEach(card=>{
+  card.addEventListener('mouseenter',function(){
+    const stack=this.closest('.agent-card-stack');
+    stack.querySelectorAll('.agent-card').forEach(c=>c.classList.remove('active'));
+    this.classList.add('active');
+  });
+});
+
+// ===== HERO PHONE MOCKUPS - AUTO PLAY =====
+const heroSection=document.querySelector('.hero');
+const heroObserver=new IntersectionObserver((entries)=>{
+  if(entries[0].isIntersecting){
+    document.querySelectorAll('.phone-mock video').forEach(vid=>{
+      vid.play().catch(()=>{});
+    });
+  }
+},{threshold:0.3});
+heroObserver.observe(heroSection);
 
 // ===== FEATURED - CLICK TO PLAY =====
 document.querySelectorAll('.featured-item').forEach(item=>{
