@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
-<head>
+<html lang="zh-CN"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>韩爽 | AI Creative System Designer</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;family=Playfair+Display:wght@700;800;900&amp;display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
@@ -574,7 +573,7 @@ body.edit-mode .remove-btn{display:block!important}
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 </head>
-<body>
+<body class="">
 
 <!-- NAV -->
 <nav class="nav">
@@ -587,12 +586,12 @@ body.edit-mode .remove-btn{display:block!important}
     <a href="#system">方法论</a>
     <a href="#about">关于增长</a>
     <a href="mailto:contact@example.com" class="nav-contact">联系我 →</a>
-    <button class="nav-user-btn" id="userBtn" onclick="toggleAuthModal()">登录</button>
+    
   </div>
 </nav>
 
 <!-- HERO -->
-<section class="hero reveal">
+<section class="hero reveal visible">
   <div class="hero-left">
     <h1>I BUILD ADS<br>THAT <span class="highlight">CONVERT.</span></h1>
     <p class="hero-subtitle">AI驱动广告增长。</p>
@@ -601,20 +600,20 @@ body.edit-mode .remove-btn{display:block!important}
   </div>
   <div class="hero-right">
     <div class="phone-mockups">
-      <div class="phone-mock">
-        <video src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729669021-9c1c73.mp4" muted loop playsinline preload="none" poster="portfolio-assets/1777729669021-9c1c73.jpg"></video>
+      <div class="phone-mock" style="position: relative;">
+        <video src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729669021-9c1c73.mp4" muted="" loop="" playsinline="" preload="none" poster="portfolio-assets/1777729669021-9c1c73.jpg"></video>
       </div>
-      <div class="phone-mock">
-        <video src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729675445-k1kt91.mp4" muted loop playsinline preload="none" poster="portfolio-assets/1777729675445-k1kt91.jpg"></video>
+      <div class="phone-mock" style="position: relative;">
+        <video src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729675445-k1kt91.mp4" muted="" loop="" playsinline="" preload="none" poster="portfolio-assets/1777729675445-k1kt91.jpg"></video>
       </div>
-      <div class="phone-mock phone-center">
-        <video src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729700452-rfmaj4.mp4" muted loop playsinline preload="none" poster="portfolio-assets/1777729700452-rfmaj4.jpg"></video>
+      <div class="phone-mock phone-center" style="position: relative;">
+        <video src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729700452-rfmaj4.mp4" muted="" loop="" playsinline="" preload="none" poster="portfolio-assets/1777729700452-rfmaj4.jpg"></video>
       </div>
-      <div class="phone-mock">
-        <video src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729748581-54nqqv.mp4" muted loop playsinline preload="none" poster="portfolio-assets/1777729748581-54nqqv.jpg"></video>
+      <div class="phone-mock" style="position: relative;">
+        <video src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729748581-54nqqv.mp4" muted="" loop="" playsinline="" preload="none" poster="portfolio-assets/1777729748581-54nqqv.jpg"></video>
       </div>
-      <div class="phone-mock">
-        <video src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729715457-vtjmpi.mp4" muted loop playsinline preload="none" poster="portfolio-assets/1777729715457-vtjmpi.jpg"></video>
+      <div class="phone-mock" style="position: relative;">
+        <video src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729715457-vtjmpi.mp4" muted="" loop="" playsinline="" preload="none" poster="portfolio-assets/1777729715457-vtjmpi.jpg"></video>
       </div>
     </div>
 
@@ -657,9 +656,9 @@ body.edit-mode .remove-btn{display:block!important}
       <a href="#" class="view-all">查看案例 →</a>
     </div>
     <div class="featured-grid">
-      <div class="featured-item large" data-video="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729669021-9c1c73.mp4">
-        <img class="thumb" src="portfolio-assets/1777729669021-9c1c73.jpg" alt="取暖器广告">
-        <video src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729669021-9c1c73.mp4" muted loop playsinline preload="none"></video>
+      <div class="featured-item large" data-video="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729669021-9c1c73.mp4" style="position: relative;">
+        <img class="thumb" src="https://yamihan.cn/portfolio-assets/1777729669021-9c1c73.jpg" alt="取暖器广告">
+        <video src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729669021-9c1c73.mp4" muted="" loop="" playsinline="" preload="none"></video>
         <span class="featured-stat editable">+38% CTR提升</span>
         <div class="featured-play"></div>
         <div class="featured-overlay">
@@ -667,18 +666,18 @@ body.edit-mode .remove-btn{display:block!important}
         </div>
       </div>
       <div class="featured-right-grid">
-        <div class="featured-item" data-video="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729700452-rfmaj4.mp4">
-          <img class="thumb" src="portfolio-assets/1777729700452-rfmaj4.jpg" alt="运动品牌">
-          <video src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729700452-rfmaj4.mp4" muted loop playsinline preload="none"></video>
+        <div class="featured-item" data-video="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729700452-rfmaj4.mp4" style="position: relative;">
+          <img class="thumb" src="https://yamihan.cn/portfolio-assets/1777729700452-rfmaj4.jpg" alt="运动品牌">
+          <video src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729700452-rfmaj4.mp4" muted="" loop="" playsinline="" preload="none"></video>
           <span class="featured-stat editable">+29% CVR提升</span>
           <div class="featured-play"></div>
           <div class="featured-overlay">
             <h3 class="editable">运动品牌 视频广告案例</h3>
           </div>
         </div>
-        <div class="featured-item" data-video="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729748581-54nqqv.mp4">
-          <img class="thumb" src="portfolio-assets/1777729748581-54nqqv.jpg" alt="护肤品">
-          <video src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729748581-54nqqv.mp4" muted loop playsinline preload="none"></video>
+        <div class="featured-item" data-video="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729748581-54nqqv.mp4" style="position: relative;">
+          <img class="thumb" src="https://yamihan.cn/portfolio-assets/1777729748581-54nqqv.jpg" alt="护肤品">
+          <video src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729748581-54nqqv.mp4" muted="" loop="" playsinline="" preload="none"></video>
           <span class="featured-stat editable">+24% ROI提升</span>
           <div class="featured-play"></div>
           <div class="featured-overlay">
@@ -790,10 +789,10 @@ body.edit-mode .remove-btn{display:block!important}
   </div>
 
   <div class="scroll-wrapper reveal">
-    <div class="scroll-track" id="track1"></div>
+    <div class="scroll-track" id="track1"><div class="video-card" style="position: relative;"><video loop="" playsinline="" preload="none" poster="portfolio-assets/1777729669021-9c1c73.jpg" data-src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729669021-9c1c73.mp4"></video></div><div class="video-card" style="position: relative;"><video loop="" playsinline="" preload="none" poster="portfolio-assets/1777729675445-k1kt91.jpg" data-src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729675445-k1kt91.mp4"></video></div><div class="video-card" style="position: relative;"><video loop="" playsinline="" preload="none" poster="portfolio-assets/1777729690115-uflbdg.jpg" data-src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729690115-uflbdg.mp4"></video></div><div class="video-card" style="position: relative;"><video loop="" playsinline="" preload="none" poster="portfolio-assets/1777729700452-rfmaj4.jpg" data-src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729700452-rfmaj4.mp4"></video></div><div class="video-card" style="position: relative;"><video loop="" playsinline="" preload="none" poster="portfolio-assets/1777729715457-vtjmpi.jpg" data-src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729715457-vtjmpi.mp4"></video></div><div class="video-card" style="position: relative;"><video loop="" playsinline="" preload="none" poster="portfolio-assets/1777729721804-n46r23.jpg" data-src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729721804-n46r23.mp4"></video></div><div class="video-card" style="position: relative;"><video loop="" playsinline="" preload="none" poster="portfolio-assets/1777729748581-54nqqv.jpg" data-src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729748581-54nqqv.mp4"></video></div><div class="video-card" style="position: relative;"><video loop="" playsinline="" preload="none" poster="portfolio-assets/1777729669021-9c1c73.jpg" data-src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729669021-9c1c73.mp4"></video></div><div class="video-card" style="position: relative;"><video loop="" playsinline="" preload="none" poster="portfolio-assets/1777729675445-k1kt91.jpg" data-src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729675445-k1kt91.mp4"></video></div><div class="video-card" style="position: relative;"><video loop="" playsinline="" preload="none" poster="portfolio-assets/1777729690115-uflbdg.jpg" data-src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729690115-uflbdg.mp4"></video></div><div class="video-card" style="position: relative;"><video loop="" playsinline="" preload="none" poster="portfolio-assets/1777729700452-rfmaj4.jpg" data-src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729700452-rfmaj4.mp4"></video></div><div class="video-card" style="position: relative;"><video loop="" playsinline="" preload="none" poster="portfolio-assets/1777729715457-vtjmpi.jpg" data-src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729715457-vtjmpi.mp4"></video></div><div class="video-card" style="position: relative;"><video loop="" playsinline="" preload="none" poster="portfolio-assets/1777729721804-n46r23.jpg" data-src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729721804-n46r23.mp4"></video></div><div class="video-card" style="position: relative;"><video loop="" playsinline="" preload="none" poster="portfolio-assets/1777729748581-54nqqv.jpg" data-src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729748581-54nqqv.mp4"></video></div></div>
   </div>
   <div class="scroll-wrapper reveal">
-    <div class="scroll-track reverse" id="track2"></div>
+    <div class="scroll-track reverse" id="track2"><div class="video-card" style="position: relative;"><video loop="" playsinline="" preload="none" poster="portfolio-assets/1777729748581-54nqqv.jpg" data-src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729748581-54nqqv.mp4"></video></div><div class="video-card" style="position: relative;"><video loop="" playsinline="" preload="none" poster="portfolio-assets/1777729721804-n46r23.jpg" data-src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729721804-n46r23.mp4"></video></div><div class="video-card" style="position: relative;"><video loop="" playsinline="" preload="none" poster="portfolio-assets/1777729715457-vtjmpi.jpg" data-src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729715457-vtjmpi.mp4"></video></div><div class="video-card" style="position: relative;"><video loop="" playsinline="" preload="none" poster="portfolio-assets/1777729700452-rfmaj4.jpg" data-src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729700452-rfmaj4.mp4"></video></div><div class="video-card" style="position: relative;"><video loop="" playsinline="" preload="none" poster="portfolio-assets/1777729690115-uflbdg.jpg" data-src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729690115-uflbdg.mp4"></video></div><div class="video-card" style="position: relative;"><video loop="" playsinline="" preload="none" poster="portfolio-assets/1777729675445-k1kt91.jpg" data-src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729675445-k1kt91.mp4"></video></div><div class="video-card" style="position: relative;"><video loop="" playsinline="" preload="none" poster="portfolio-assets/1777729669021-9c1c73.jpg" data-src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729669021-9c1c73.mp4"></video></div><div class="video-card" style="position: relative;"><video loop="" playsinline="" preload="none" poster="portfolio-assets/1777729748581-54nqqv.jpg" data-src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729748581-54nqqv.mp4"></video></div><div class="video-card" style="position: relative;"><video loop="" playsinline="" preload="none" poster="portfolio-assets/1777729721804-n46r23.jpg" data-src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729721804-n46r23.mp4"></video></div><div class="video-card" style="position: relative;"><video loop="" playsinline="" preload="none" poster="portfolio-assets/1777729715457-vtjmpi.jpg" data-src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729715457-vtjmpi.mp4"></video></div><div class="video-card" style="position: relative;"><video loop="" playsinline="" preload="none" poster="portfolio-assets/1777729700452-rfmaj4.jpg" data-src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729700452-rfmaj4.mp4"></video></div><div class="video-card" style="position: relative;"><video loop="" playsinline="" preload="none" poster="portfolio-assets/1777729690115-uflbdg.jpg" data-src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729690115-uflbdg.mp4"></video></div><div class="video-card" style="position: relative;"><video loop="" playsinline="" preload="none" poster="portfolio-assets/1777729675445-k1kt91.jpg" data-src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729675445-k1kt91.mp4"></video></div><div class="video-card" style="position: relative;"><video loop="" playsinline="" preload="none" poster="portfolio-assets/1777729669021-9c1c73.jpg" data-src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729669021-9c1c73.mp4"></video></div></div>
   </div>
 </section>
 
@@ -826,7 +825,7 @@ body.edit-mode .remove-btn{display:block!important}
               <span class="agent-dot"></span><span class="agent-dot"></span><span class="agent-dot"></span>
             </div>
             <div class="agent-browser-body">
-              <img src="portfolio-assets/agent-workflow.png" alt="AI Agent工作流界面">
+              <img src="https://yamihan.cn/portfolio-assets/agent-workflow.png" alt="AI Agent工作流界面">
             </div>
           </div>
         </div>
@@ -837,7 +836,7 @@ body.edit-mode .remove-btn{display:block!important}
               <span class="agent-dot"></span><span class="agent-dot"></span><span class="agent-dot"></span>
             </div>
             <div class="agent-browser-body">
-              <img src="portfolio-assets/agent-ui.png" alt="AI Agent分析界面">
+              <img src="https://yamihan.cn/portfolio-assets/agent-ui.png" alt="AI Agent分析界面">
             </div>
           </div>
         </div>
@@ -848,7 +847,7 @@ body.edit-mode .remove-btn{display:block!important}
               <span class="agent-dot"></span><span class="agent-dot"></span><span class="agent-dot"></span>
             </div>
             <div class="agent-browser-body">
-              <img src="portfolio-assets/agent-product.png" alt="AI Agent生成结果">
+              <img src="https://yamihan.cn/portfolio-assets/agent-product.png" alt="AI Agent生成结果">
             </div>
           </div>
         </div>
@@ -907,38 +906,21 @@ body.edit-mode .remove-btn{display:block!important}
 
 <!-- VIDEO MODAL -->
 <div class="video-modal" id="videoModal">
-  <video id="modalVideo" controls></video>
+  <video id="modalVideo" controls=""></video>
 </div>
 
 
 <!-- AUTH MODAL -->
-<div class="auth-modal" id="authModal">
-  <div class="auth-box">
-    <h3 id="authTitle">登录</h3>
-    <input type="email" id="authEmail" placeholder="邮箱">
-    <input type="password" id="authPass" placeholder="密码">
-    <button onclick="handleAuth()">确认</button>
-    <p class="auth-switch" onclick="switchAuthMode()">没有账号？注册</p>
-    <p class="auth-close" onclick="closeAuthModal()">✕</p>
-  </div>
-</div>
+
 
 <!-- TOAST -->
-<div class="toast" id="toast"></div>
+
 
 <!-- EDIT BUTTON -->
-<button class="edit-toggle" id="editToggle" style="display:none" onclick="toggleEditMode()">✏️ 编辑</button>
+
 
 <!-- UPLOAD OVERLAY (edit mode) -->
-<div class="upload-overlay" id="uploadOverlay" style="display:none">
-  <div class="upload-bar">
-    <label class="upload-btn">➕ 添加视频 <input type="file" accept="video/*,image/gif" onchange="handleVideoUpload(this.files[0])" hidden></label>
-    <label class="upload-btn">🖼 添加图片 <input type="file" accept="image/*" onchange="handleImageUpload(this.files[0])" hidden></label>
-    <label class="upload-btn">📸 添加AI截图 <input type="file" accept="image/*" onchange="handleAgentUpload(this.files[0])" hidden></label>
-    <button class="upload-btn publish-btn" onclick="publishToGitHub()">🚀 发布</button>
-    <button class="upload-btn" onclick="saveAndDownload()">💾 备份</button>
-  </div>
-</div>
+
 
 <!-- ABOUT -->
 <section class="about-section" id="about">
@@ -1230,8 +1212,8 @@ function showToast(msg){
 // ===== GITHUB TOKEN =====
 function getGHToken(){
   let t=localStorage.getItem('pf_gh_token');
-  if(!t||t==='null'||t==='undefined'||t===''){t=prompt('请输入 GitHub Personal Access Token:');if(t&&t.trim())localStorage.setItem('pf_gh_token',t.trim())}
-  return t?t.trim():null;
+  if(!t||t==='null'||t===''){t=prompt('请输入 GitHub Personal Access Token:');if(t)localStorage.setItem('pf_gh_token',t)}
+  return t;
 }
 
 // ===== UPLOAD TO GITHUB =====
@@ -1358,5 +1340,7 @@ function saveAndDownload(){
 }
 
 </script>
-</body>
-</html>
+<script defer="" src="https://static.cloudflareinsights.com/beacon.min.js/v8c78df7c7c0f484497ecbca7046644da1771523124516" integrity="sha512-8DS7rgIrAmghBFwoOTujcf6D9rXvH8xm8JQ1Ja01h9QX8EzXldiszufYa4IFfKdLUKTTrnSFXLDkUEOTrZQ8Qg==" data-cf-beacon="{&quot;version&quot;:&quot;2024.11.0&quot;,&quot;token&quot;:&quot;2ab3505cadb04c88908c2fa984173e8b&quot;,&quot;r&quot;:1,&quot;server_timing&quot;:{&quot;name&quot;:{&quot;cfCacheStatus&quot;:true,&quot;cfEdge&quot;:true,&quot;cfExtPri&quot;:true,&quot;cfL4&quot;:true,&quot;cfOrigin&quot;:true,&quot;cfSpeedBrain&quot;:true},&quot;location_startswith&quot;:null}}" crossorigin="anonymous"></script>
+
+
+</body></html>
