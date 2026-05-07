@@ -932,7 +932,7 @@ body.edit-mode .remove-btn{display:block!important}
 <!-- UPLOAD OVERLAY (edit mode) -->
 <div class="upload-overlay" id="uploadOverlay" style="display:none">
   <div class="upload-bar">
-    <label class="upload-btn">➕ 添加视频 <input type="file" accept="video/*" onchange="handleVideoUpload(this.files[0])" hidden></label>
+    <label class="upload-btn">➕ 添加视频 <input type="file" accept="video/*,image/gif" onchange="handleVideoUpload(this.files[0])" hidden></label>
     <label class="upload-btn">🖼 添加图片 <input type="file" accept="image/*" onchange="handleImageUpload(this.files[0])" hidden></label>
     <label class="upload-btn">📸 添加AI截图 <input type="file" accept="image/*" onchange="handleAgentUpload(this.files[0])" hidden></label>
     <button class="upload-btn publish-btn" onclick="publishToGitHub()">🚀 发布</button>
@@ -1146,12 +1146,20 @@ function toggleEditMode(){
         const rbtn=document.createElement('button');rbtn.className='replace-btn';rbtn.textContent='🔄 替换';
         rbtn.onclick=(e)=>{
           e.stopPropagation();
-          const input=document.createElement('input');input.type='file';input.accept='video/*';
+          const input=document.createElement('input');input.type='file';input.accept='video/*,image/gif';
           input.onchange=async()=>{
             const file=input.files[0];if(!file)return;
             const url=await uploadAssetToGitHub(file);if(!url)return;
-            const vid=el.querySelector('video');if(vid){vid.src=url;vid.poster=''}
-            showToast('视频已替换');
+            if(file.type==='image/gif'){
+              const vid=el.querySelector('video');if(vid)vid.remove();
+              let img=el.querySelector('img.media');if(!img){img=document.createElement('img');img.className='media';img.style.cssText='width:100%;height:100%;object-fit:cover;border-radius:12px';el.prepend(img)}
+              img.src=url;
+            }else{
+              const img=el.querySelector('img.media');if(img)img.remove();
+              let vid=el.querySelector('video');if(!vid){vid=document.createElement('video');vid.muted=true;vid.loop=true;vid.playsInline=true;vid.style.cssText='width:100%;height:100%;object-fit:cover';el.prepend(vid);vid.play().catch(()=>{})}
+              vid.src=url;vid.poster='';
+            }
+            showToast('已替换');
           };
           input.click();
         };
@@ -1164,7 +1172,7 @@ function toggleEditMode(){
         const rbtn=document.createElement('button');rbtn.className='replace-btn';rbtn.textContent='🔄 替换视频';
         rbtn.onclick=(e)=>{
           e.stopPropagation();
-          const input=document.createElement('input');input.type='file';input.accept='video/*';
+          const input=document.createElement('input');input.type='file';input.accept='video/*,image/gif';
           input.onchange=async()=>{
             const file=input.files[0];if(!file)return;
             const url=await uploadAssetToGitHub(file);if(!url)return;
@@ -1193,7 +1201,7 @@ function toggleEditMode(){
       const addBtn=document.createElement('div');addBtn.className='add-featured-btn';
       addBtn.innerHTML='<span>+ 添加案例视频</span>';
       addBtn.onclick=()=>{
-        const input=document.createElement('input');input.type='file';input.accept='video/*';
+        const input=document.createElement('input');input.type='file';input.accept='video/*,image/gif';
         input.onchange=async()=>{
           const file=input.files[0];if(!file)return;
           const url=await uploadAssetToGitHub(file);if(!url)return;
@@ -1222,7 +1230,7 @@ function showToast(msg){
 // ===== GITHUB TOKEN =====
 function getGHToken(){
   let t=localStorage.getItem('pf_gh_token');
-  if(!t){t=prompt('请输入 GitHub Personal Access Token:');if(t)localStorage.setItem('pf_gh_token',t)}
+  if(!t||t==='null'||t===''){t=prompt('请输入 GitHub Personal Access Token:');if(t)localStorage.setItem('pf_gh_token',t)}
   return t;
 }
 
