@@ -117,27 +117,8 @@ section,.data-section{position:relative;z-index:1}
 .phone-mock:nth-child(5){grid-column:3;grid-row:2}
 /* Position 6: hidden */
 .phone-mock:nth-child(6){display:none}
-.phone-mock .play-icon{
-  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
-  width:36px;height:36px;border-radius:50%;
-  background:rgba(255,255,255,0.2);backdrop-filter:blur(4px);
-  display:flex;align-items:center;justify-content:center;
-}
-.phone-mock .play-icon::after{
-  content:'';width:0;height:0;
-  border-left:12px solid #fff;border-top:7px solid transparent;border-bottom:7px solid transparent;
-  margin-left:3px;
-}
-.hero-badge{
-  position:absolute;bottom:20px;right:0;
-  width:100px;height:100px;border-radius:50%;
-  border:1px solid var(--magenta);
-  display:flex;align-items:center;justify-content:center;
-  font-size:9px;text-align:center;color:var(--text-secondary);
-  letter-spacing:0.05em;text-transform:uppercase;
-  line-height:1.3;animation:spinBadge 15s linear infinite;
-}
-@keyframes spinBadge{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+
+
 
 /* ===== DATA ===== */
 .data-section{
@@ -558,7 +539,7 @@ footer{
   .data-item{flex:0 0 100%}
   .video-card{width:140px;height:249px}
   .phone-mockups{height:280px;gap:4px}
-  .hero-badge{display:none}
+
 }
 
 /* === BACKEND UI === */
@@ -622,26 +603,21 @@ body.edit-mode .remove-btn{display:block!important}
     <div class="phone-mockups">
       <div class="phone-mock">
         <video src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729669021-9c1c73.mp4" muted loop playsinline preload="none" poster="portfolio-assets/1777729669021-9c1c73.jpg"></video>
-        <div class="play-icon"></div>
       </div>
       <div class="phone-mock">
         <video src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729675445-k1kt91.mp4" muted loop playsinline preload="none" poster="portfolio-assets/1777729675445-k1kt91.jpg"></video>
-        <div class="play-icon"></div>
       </div>
       <div class="phone-mock phone-center">
         <video src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729700452-rfmaj4.mp4" muted loop playsinline preload="none" poster="portfolio-assets/1777729700452-rfmaj4.jpg"></video>
-        <div class="play-icon"></div>
       </div>
       <div class="phone-mock">
         <video src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729748581-54nqqv.mp4" muted loop playsinline preload="none" poster="portfolio-assets/1777729748581-54nqqv.jpg"></video>
-        <div class="play-icon"></div>
       </div>
       <div class="phone-mock">
         <video src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1777729715457-vtjmpi.mp4" muted loop playsinline preload="none" poster="portfolio-assets/1777729715457-vtjmpi.jpg"></video>
-        <div class="play-icon"></div>
       </div>
     </div>
-    <div class="hero-badge">AIGC<br>Creative<br>Design<br>Expert ✦</div>
+
   </div>
 </section>
 
