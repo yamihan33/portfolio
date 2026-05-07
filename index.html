@@ -1152,12 +1152,17 @@ function toggleEditMode(){
             const url=await uploadAssetToGitHub(file);if(!url)return;
             if(file.type==='image/gif'){
               const vid=el.querySelector('video');if(vid)vid.remove();
-              let img=el.querySelector('img.media');if(!img){img=document.createElement('img');img.className='media';img.style.cssText='width:100%;height:100%;object-fit:cover;border-radius:12px';el.prepend(img)}
-              img.src=url;
+              const oldImg=el.querySelector('img');if(oldImg)oldImg.remove();
+              const img=document.createElement('img');img.className='media';img.style.cssText='width:100%;height:100%;object-fit:cover;border-radius:12px';img.src=url;
+              el.prepend(img);
             }else{
-              const img=el.querySelector('img.media');if(img)img.remove();
-              let vid=el.querySelector('video');if(!vid){vid=document.createElement('video');vid.muted=true;vid.loop=true;vid.playsInline=true;vid.style.cssText='width:100%;height:100%;object-fit:cover';el.prepend(vid);vid.play().catch(()=>{})}
-              vid.src=url;vid.poster='';
+              const oldImg=el.querySelector('img');if(oldImg)oldImg.remove();
+              const oldVid=el.querySelector('video');if(oldVid)oldVid.remove();
+              const vid=document.createElement('video');vid.muted=true;vid.loop=true;vid.playsInline=true;vid.autoplay=true;
+              vid.style.cssText='width:100%;height:100%;object-fit:cover;border-radius:12px';
+              vid.src=url;
+              el.prepend(vid);
+              vid.play().catch(()=>{});
             }
             showToast('已替换');
           };
