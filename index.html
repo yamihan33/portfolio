@@ -308,9 +308,9 @@ section,.data-section{position:relative;z-index:1}
 .scroll-wrapper::after{right:0;background:linear-gradient(-90deg,var(--bg),transparent)}
 .scroll-track{
   display:flex;gap:16px;width:max-content;
-  animation:scrollL 110s linear infinite;
+  animation:scrollL 220s linear infinite;
 }
-.scroll-track.reverse{animation:scrollR 110s linear infinite}
+.scroll-track.reverse{animation:scrollR 220s linear infinite}
 .scroll-track:hover{animation-play-state:paused}
 @keyframes scrollL{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 @keyframes scrollR{0%{transform:translateX(-50%)}100%{transform:translateX(0)}}
@@ -772,7 +772,6 @@ body.edit-mode .featured-item{overflow:visible!important}
 <section class="works-section">
   <div class="works-header reveal visible">
     <h2>全部作品</h2>
-    <a href="#">VIEW MORE →</a>
   </div>
 
   <div class="scroll-wrapper reveal visible">
