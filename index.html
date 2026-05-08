@@ -739,7 +739,7 @@ body.edit-mode .featured-item{overflow:visible!important}
         <div class="lp-card-header">
           <span class="lp-card-dot"></span><span class="lp-card-dot"></span><span class="lp-card-dot"></span>
         </div>
-        <div class="lp-card-body lp-body-uploadable" style="position: relative;"><img src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1778231172985-3og3rt.jpg" style="width: 100%; height: auto; display: block;"></div>
+        <div class="lp-card-body lp-body-uploadable" style="position: relative;"><img src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1778232491896-v97t0v.jpg" style="width: 100%; height: auto; display: block;"></div>
       </div>
     </div>
   </div>
@@ -1351,33 +1351,13 @@ async function handleBatchUpload(files){
   if(!files||files.length===0)return;
   const total=files.length;
   let uploaded=[];
-  // Dedup: collect existing video URLs on page
-  const existingUrls=new Set();
-  document.querySelectorAll('.video-card video').forEach(v=>{
-    if(v.src) existingUrls.add(v.src);
-    if(v.dataset.src) existingUrls.add(v.dataset.src);
-  });
-  // Track file fingerprints (name+size) to skip duplicates in this batch
-  const seen=new Set();
-  let skipped=0;
   showToast(`批量上传开始 (共${total}个)...`);
   for(let i=0;i<total;i++){
-    const file=files[i];
-    const fingerprint=file.name+'_'+file.size;
-    // Skip if same file already in this batch
-    if(seen.has(fingerprint)){skipped++;continue}
-    seen.add(fingerprint);
-    // Skip if filename already exists on page (match by filename part of URL)
-    const nameBase=file.name.replace(/\.\w+$/,'').toLowerCase();
-    let alreadyOnPage=false;
-    existingUrls.forEach(u=>{if(u.toLowerCase().includes(nameBase))alreadyOnPage=true});
-    if(alreadyOnPage){skipped++;continue}
-    showToast(`上传中 ${i+1-skipped}/${total-skipped}...`);
-    const url=await uploadAssetToGitHub(file);
-    if(url){uploaded.push(url);existingUrls.add(url)}
+    showToast(`上传中 ${i+1}/${total}...`);
+    const url=await uploadAssetToGitHub(files[i]);
+    if(url) uploaded.push(url);
   }
-  if(skipped>0) showToast(`已跳过${skipped}个重复文件`);
-  if(uploaded.length===0){showToast(skipped>0?`全部为重复文件，无需上传`:'全部上传失败');return}
+  if(uploaded.length===0){showToast('全部上传失败');return}
   // Shuffle the uploaded URLs to scatter same-product videos
   for(let i=uploaded.length-1;i>0;i--){
     const j=Math.floor(Math.random()*(i+1));
