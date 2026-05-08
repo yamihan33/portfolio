@@ -1286,6 +1286,9 @@ function compressImage(file,maxWidth=2000,quality=0.8){
     img.onload=()=>{
       let w=img.naturalWidth,h=img.naturalHeight;
       if(w>maxWidth){h=Math.round(h*(maxWidth/w));w=maxWidth}
+      // Browser canvas max height ~16384px; scale down if needed
+      const maxH=16000;
+      if(h>maxH){w=Math.round(w*(maxH/h));h=maxH}
       const canvas=document.createElement('canvas');canvas.width=w;canvas.height=h;
       const ctx=canvas.getContext('2d');ctx.drawImage(img,0,0,w,h);
       canvas.toBlob((blob)=>{
