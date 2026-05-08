@@ -386,7 +386,8 @@ section,.data-section{position:relative;z-index:1}
 .agent-screenshot-header .dot:nth-child(2){background:#ffbd2e}
 .agent-screenshot-header .dot:nth-child(3){background:#28c840}
 .agent-screenshot-header .label{margin-left:auto;font-size:11px;color:var(--text-muted);letter-spacing:0.03em}
-.agent-screenshot img{width:100%;height:360px;object-fit:contain;object-position:top center;display:block;background:#111}
+.agent-screenshot img{max-width:100%;max-height:360px;object-fit:contain;display:block;margin:0 auto;background:#111}
+.agent-screenshot .img-wrap{width:100%;height:360px;display:flex;align-items:center;justify-content:center;background:#111}
 
 /* ===== HOW I WORK ===== */
 .how-section{
@@ -779,11 +780,11 @@ body.edit-mode .featured-item{overflow:visible!important}
         <div class="agent-panel-grid cols-2">
           <div class="agent-screenshot">
             <div class="agent-screenshot-header"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="label">技能选择面板</span></div>
-            <img src="portfolio-assets/agent/tab1-workbench-skills.jpg" alt="AI素材工作台 - 技能选择">
+            <div class="img-wrap"><img src="portfolio-assets/agent/tab1-workbench-skills.jpg" alt="AI素材工作台 - 技能选择"></div>
           </div>
           <div class="agent-screenshot">
             <div class="agent-screenshot-header"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="label">卖点分析</span></div>
-            <img src="portfolio-assets/agent/tab1-workbench-analysis.jpg" alt="AI素材工作台 - 卖点分析">
+            <div class="img-wrap"><img src="portfolio-assets/agent/tab1-workbench-analysis.jpg" alt="AI素材工作台 - 卖点分析"></div>
           </div>
         </div>
       </div>
@@ -792,11 +793,11 @@ body.edit-mode .featured-item{overflow:visible!important}
         <div class="agent-panel-grid cols-2">
           <div class="agent-screenshot">
             <div class="agent-screenshot-header"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="label">12套图片Skill</span></div>
-            <img src="portfolio-assets/agent/tab2-image-skills.jpg" alt="12套图片工作流">
+            <div class="img-wrap"><img src="portfolio-assets/agent/tab2-image-skills.jpg" alt="12套图片工作流"></div>
           </div>
           <div class="agent-screenshot">
             <div class="agent-screenshot-header"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="label">图片产出记录</span></div>
-            <img src="portfolio-assets/agent/tab2-image-output.jpg" alt="图片产出流程表">
+            <div class="img-wrap"><img src="portfolio-assets/agent/tab2-image-output.jpg" alt="图片产出流程表"></div>
           </div>
         </div>
       </div>
@@ -805,11 +806,11 @@ body.edit-mode .featured-item{overflow:visible!important}
         <div class="agent-panel-grid cols-2">
           <div class="agent-screenshot">
             <div class="agent-screenshot-header"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="label">8套视频Skill</span></div>
-            <img src="portfolio-assets/agent/tab3-video-skills.jpg" alt="视频工作流文件">
+            <div class="img-wrap"><img src="portfolio-assets/agent/tab3-video-skills.jpg" alt="视频工作流文件"></div>
           </div>
           <div class="agent-screenshot">
             <div class="agent-screenshot-header"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="label">完整分镜脚本</span></div>
-            <img src="portfolio-assets/agent/tab3-video-storyboard.jpg" alt="完整分镜脚本">
+            <div class="img-wrap"><img src="portfolio-assets/agent/tab3-video-storyboard.jpg" alt="完整分镜脚本"></div>
           </div>
         </div>
       </div>
@@ -818,11 +819,11 @@ body.edit-mode .featured-item{overflow:visible!important}
         <div class="agent-panel-grid cols-2">
           <div class="agent-screenshot">
             <div class="agent-screenshot-header"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="label">需求流程表</span></div>
-            <img src="portfolio-assets/agent/tab4-lp-workflow.jpg" alt="中间页流程表">
+            <div class="img-wrap"><img src="portfolio-assets/agent/tab4-lp-workflow.jpg" alt="中间页流程表"></div>
           </div>
           <div class="agent-screenshot">
             <div class="agent-screenshot-header"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="label">单品页配置</span></div>
-            <img src="portfolio-assets/agent/tab4-lp-config.jpg" alt="单品页配置系统">
+            <div class="img-wrap"><img src="portfolio-assets/agent/tab4-lp-config.jpg" alt="单品页配置系统"></div>
           </div>
         </div>
       </div>
@@ -831,11 +832,11 @@ body.edit-mode .featured-item{overflow:visible!important}
         <div class="agent-panel-grid cols-2">
           <div class="agent-screenshot">
             <div class="agent-screenshot-header"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="label">SKU库管理</span></div>
-            <img src="portfolio-assets/agent/tab5-sku-management.jpg" alt="SKU库管理">
+            <div class="img-wrap"><img src="portfolio-assets/agent/tab5-sku-management.jpg" alt="SKU库管理"></div>
           </div>
           <div class="agent-screenshot">
             <div class="agent-screenshot-header"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="label">素材归档表</span></div>
-            <img src="portfolio-assets/agent/tab5-archive-table.jpg" alt="素材归档表">
+            <div class="img-wrap"><img src="portfolio-assets/agent/tab5-archive-table.jpg" alt="素材归档表"></div>
           </div>
         </div>
       </div>
@@ -844,7 +845,7 @@ body.edit-mode .featured-item{overflow:visible!important}
         <div class="agent-panel-grid">
           <div class="agent-screenshot">
             <div class="agent-screenshot-header"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="label">电商数据看板</span></div>
-            <img src="portfolio-assets/agent/tab6-dashboard.jpg" alt="电商数据看板">
+            <div class="img-wrap"><img src="portfolio-assets/agent/tab6-dashboard.jpg" alt="电商数据看板"></div>
           </div>
         </div>
       </div>
