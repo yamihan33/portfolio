@@ -118,7 +118,6 @@ section,.data-section{position:relative;z-index:1}
 .phone-mock:nth-child(6){display:none}
 
 
-
 /* ===== DATA ===== */
 .data-section{
   padding:100px 60px;max-width:1600px;margin:auto;
@@ -563,9 +562,10 @@ body.edit-mode .featured-item{overflow:visible!important}
 .add-featured-btn span{color:var(--text-secondary);font-size:14px}
 </style>
 <!-- Firebase SDK -->
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js" defer></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js" defer></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js" defer></script>
+<link rel="preconnect" href="https://raw.githubusercontent.com" crossorigin>
 </head>
 <body class="">
 
@@ -710,21 +710,21 @@ body.edit-mode .featured-item{overflow:visible!important}
         <div class="lp-card-header">
           <span class="lp-card-dot"></span><span class="lp-card-dot"></span><span class="lp-card-dot"></span>
         </div>
-        <div class="lp-card-body lp-body-uploadable" style="position: relative;"><img src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1778230428146-apc7kt.jpg" style="width: 100%; height: auto; display: block;"></div>
+        <div class="lp-card-body lp-body-uploadable" style="position: relative;"><img src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1778230428146-apc7kt.jpg" style="width: 100%; height: auto; display: block;" loading="lazy"></div>
       </div>
       <!-- Center card - Vacuum -->
       <div class="lp-card">
         <div class="lp-card-header">
           <span class="lp-card-dot"></span><span class="lp-card-dot"></span><span class="lp-card-dot"></span>
         </div>
-        <div class="lp-card-body lp-body-uploadable" style="position: relative;"><img src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1778230889035-xyivfl.jpg" style="width: 100%; height: auto; display: block;"></div>
+        <div class="lp-card-body lp-body-uploadable" style="position: relative;"><img src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1778230889035-xyivfl.jpg" style="width: 100%; height: auto; display: block;" loading="lazy"></div>
       </div>
       <!-- Right card - Pet Feeder -->
       <div class="lp-card">
         <div class="lp-card-header">
           <span class="lp-card-dot"></span><span class="lp-card-dot"></span><span class="lp-card-dot"></span>
         </div>
-        <div class="lp-card-body lp-body-uploadable" style="position: relative;"><img src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1778248868754-si83ks.jpg" style="width: 100%; height: auto; display: block;"></div>
+        <div class="lp-card-body lp-body-uploadable" style="position: relative;"><img src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1778248868754-si83ks.jpg" style="width: 100%; height: auto; display: block;" loading="lazy"></div>
       </div>
     </div>
   </div>
@@ -781,11 +781,11 @@ body.edit-mode .featured-item{overflow:visible!important}
         <div class="agent-panel-grid cols-2">
           <div class="agent-screenshot">
             <div class="agent-screenshot-header"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="label">技能选择面板</span></div>
-            <div class="img-wrap bg-white"><img src="portfolio-assets/agent/tab1-workbench-skills.jpg" alt="AI素材工作台 - 技能选择"></div>
+            <div class="img-wrap bg-white"><img src="portfolio-assets/agent/tab1-workbench-skills.jpg" alt="AI素材工作台 - 技能选择" loading="lazy"></div>
           </div>
           <div class="agent-screenshot">
             <div class="agent-screenshot-header"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="label">卖点分析</span></div>
-            <div class="img-wrap bg-white"><img src="portfolio-assets/agent/tab1-workbench-analysis.jpg" alt="AI素材工作台 - 卖点分析"></div>
+            <div class="img-wrap bg-white"><img src="portfolio-assets/agent/tab1-workbench-analysis.jpg" alt="AI素材工作台 - 卖点分析" loading="lazy"></div>
           </div>
         </div>
       </div>
@@ -794,11 +794,11 @@ body.edit-mode .featured-item{overflow:visible!important}
         <div class="agent-panel-grid cols-2">
           <div class="agent-screenshot">
             <div class="agent-screenshot-header"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="label">12套图片Skill</span></div>
-            <div class="img-wrap bg-dark"><img src="portfolio-assets/agent/tab2-image-skills.jpg" alt="12套图片工作流"></div>
+            <div class="img-wrap bg-dark"><img src="portfolio-assets/agent/tab2-image-skills.jpg" alt="12套图片工作流" loading="lazy"></div>
           </div>
           <div class="agent-screenshot">
             <div class="agent-screenshot-header"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="label">图片产出记录</span></div>
-            <div class="img-wrap bg-white"><img src="portfolio-assets/agent/tab2-image-output.jpg" alt="图片产出流程表"></div>
+            <div class="img-wrap bg-white"><img src="portfolio-assets/agent/tab2-image-output.jpg" alt="图片产出流程表" loading="lazy"></div>
           </div>
         </div>
       </div>
@@ -807,11 +807,11 @@ body.edit-mode .featured-item{overflow:visible!important}
         <div class="agent-panel-grid cols-2">
           <div class="agent-screenshot">
             <div class="agent-screenshot-header"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="label">8套视频Skill</span></div>
-            <div class="img-wrap bg-dark"><img src="portfolio-assets/agent/tab3-video-skills.jpg" alt="视频工作流文件"></div>
+            <div class="img-wrap bg-dark"><img src="portfolio-assets/agent/tab3-video-skills.jpg" alt="视频工作流文件" loading="lazy"></div>
           </div>
           <div class="agent-screenshot">
             <div class="agent-screenshot-header"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="label">完整分镜脚本</span></div>
-            <div class="img-wrap bg-white"><img src="portfolio-assets/agent/tab3-video-storyboard.jpg" alt="完整分镜脚本"></div>
+            <div class="img-wrap bg-white"><img src="portfolio-assets/agent/tab3-video-storyboard.jpg" alt="完整分镜脚本" loading="lazy"></div>
           </div>
         </div>
       </div>
@@ -820,11 +820,11 @@ body.edit-mode .featured-item{overflow:visible!important}
         <div class="agent-panel-grid cols-2">
           <div class="agent-screenshot">
             <div class="agent-screenshot-header"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="label">需求流程表</span></div>
-            <div class="img-wrap bg-white"><img src="portfolio-assets/agent/tab4-lp-workflow.jpg" alt="中间页流程表"></div>
+            <div class="img-wrap bg-white"><img src="portfolio-assets/agent/tab4-lp-workflow.jpg" alt="中间页流程表" loading="lazy"></div>
           </div>
           <div class="agent-screenshot">
             <div class="agent-screenshot-header"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="label">单品页配置</span></div>
-            <div class="img-wrap bg-white"><img src="portfolio-assets/agent/tab4-lp-config.jpg" alt="单品页配置系统"></div>
+            <div class="img-wrap bg-white"><img src="portfolio-assets/agent/tab4-lp-config.jpg" alt="单品页配置系统" loading="lazy"></div>
           </div>
         </div>
       </div>
@@ -833,11 +833,11 @@ body.edit-mode .featured-item{overflow:visible!important}
         <div class="agent-panel-grid cols-2">
           <div class="agent-screenshot">
             <div class="agent-screenshot-header"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="label">SKU库管理</span></div>
-            <div class="img-wrap bg-white"><img src="portfolio-assets/agent/tab5-sku-management.jpg" alt="SKU库管理"></div>
+            <div class="img-wrap bg-white"><img src="portfolio-assets/agent/tab5-sku-management.jpg" alt="SKU库管理" loading="lazy"></div>
           </div>
           <div class="agent-screenshot">
             <div class="agent-screenshot-header"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="label">素材归档表</span></div>
-            <div class="img-wrap bg-white"><img src="portfolio-assets/agent/tab5-archive-table.jpg" alt="素材归档表"></div>
+            <div class="img-wrap bg-white"><img src="portfolio-assets/agent/tab5-archive-table.jpg" alt="素材归档表" loading="lazy"></div>
           </div>
         </div>
       </div>
@@ -846,7 +846,7 @@ body.edit-mode .featured-item{overflow:visible!important}
         <div class="agent-panel-grid">
           <div class="agent-screenshot">
             <div class="agent-screenshot-header"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="label">电商数据看板</span></div>
-            <div class="img-wrap bg-dark"><img src="portfolio-assets/agent/tab6-dashboard.jpg" alt="电商数据看板"></div>
+            <div class="img-wrap bg-dark"><img src="portfolio-assets/agent/tab6-dashboard.jpg" alt="电商数据看板" loading="lazy"></div>
           </div>
         </div>
       </div>
@@ -1568,9 +1568,6 @@ function saveAndDownload(){
 }
 
 </script>
-
-
-
 
 
 </body></html>
