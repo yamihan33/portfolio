@@ -921,6 +921,7 @@ body.edit-mode .featured-item{overflow:visible!important}
 <div class="upload-overlay" id="uploadOverlay" style="display: none;">
   <div class="upload-bar">
     <label class="upload-btn">➕ 添加视频 <input type="file" accept="video/*,image/gif" onchange="handleVideoUpload(this.files[0])" hidden=""></label>
+    <label class="upload-btn">📦 批量上传 <input type="file" accept="video/*,image/gif" multiple onchange="handleBatchUpload(this.files)" hidden=""></label>
     <label class="upload-btn">🖼 添加图片 <input type="file" accept="image/*" onchange="handleImageUpload(this.files[0])" hidden=""></label>
     <label class="upload-btn">📸 添加AI截图 <input type="file" accept="image/*" onchange="handleAgentUpload(this.files[0])" hidden=""></label>
     <button class="upload-btn publish-btn" onclick="publishToGitHub()">🚀 发布</button>
@@ -1368,6 +1369,47 @@ function compressVideo(file,targetMB=8){
 }
 
 // ===== HANDLE UPLOADS =====
+// ===== BATCH UPLOAD =====
+async function handleBatchUpload(files){
+  if(!files||files.length===0)return;
+  const total=files.length;
+  let uploaded=[];
+  showToast(`批量上传开始 (共${total}个)...`);
+  for(let i=0;i<total;i++){
+    showToast(`上传中 ${i+1}/${total}...`);
+    const url=await uploadAssetToGitHub(files[i]);
+    if(url) uploaded.push(url);
+  }
+  if(uploaded.length===0){showToast('全部上传失败');return}
+  // Shuffle the uploaded URLs to scatter same-product videos
+  for(let i=uploaded.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [uploaded[i],uploaded[j]]=[uploaded[j],uploaded[i]];
+  }
+  // Distribute alternately between track1 and track2, insert at random positions
+  const track1=document.getElementById('track1');
+  const track2=document.getElementById('track2');
+  uploaded.forEach((url,idx)=>{
+    const track=(idx%2===0)?track1:track2;
+    const card=createCard(url);
+    const vid=card.querySelector('video');
+    vid.src=url;
+    vid.addEventListener('loadedmetadata',()=>{
+      if(vid.videoWidth>vid.videoHeight) card.classList.add('landscape');
+    },{once:true});
+    vid.play().catch(()=>{});
+    // Insert at random position among existing cards
+    const cards=track.querySelectorAll('.video-card');
+    if(cards.length>0){
+      const pos=Math.floor(Math.random()*cards.length);
+      track.insertBefore(card,cards[pos]);
+    }else{
+      track.appendChild(card);
+    }
+  });
+  showToast(`批量上传完成！已添加${uploaded.length}个视频（已打散顺序）`);
+}
+
 async function handleVideoUpload(file){
   const url=await uploadAssetToGitHub(file);if(!url)return;
   const track=document.getElementById('track1');
