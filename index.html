@@ -613,7 +613,8 @@ body.edit-mode .featured-item{overflow:visible!important}
       <div class="phone-mock" style="position: relative;">
         <video loop="" playsinline="" preload="none" muted="" data-src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1778164826904-0qxzad.mp4"></video>
       </div>
-      <div class="phone-mock" style="position: relative;"><img class="media" src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1778166592030-ye9jlu.mp4" style="width: 100%; height: 100%; object-fit: cover; border-radius: 12px;">
+      <div class="phone-mock" style="position: relative;">
+        <video loop="" playsinline="" preload="none" muted="" data-src="https://raw.githubusercontent.com/yamihan33/portfolio/main/assets/1778166592030-ye9jlu.mp4"></video>
         
       </div>
       <div class="phone-mock phone-center" style="position: relative;">
@@ -964,6 +965,7 @@ const heroSection=document.querySelector('.hero');
 const heroObserver=new IntersectionObserver((entries)=>{
   if(entries[0].isIntersecting){
     document.querySelectorAll('.phone-mock video').forEach(vid=>{
+      if(!vid.src && vid.dataset.src){vid.src=vid.dataset.src;}
       vid.play().catch(()=>{});
     });
   }
@@ -1041,6 +1043,30 @@ const videoObserver=new IntersectionObserver((entries)=>{
 function observeVideos(){
   document.querySelectorAll('.video-card video').forEach(vid=>videoObserver.observe(vid));
 }
+
+
+// For scroll-track videos: CSS animation moves cards so IntersectionObserver
+// on individual cards won't fire. Instead, load all track videos when wrapper enters viewport.
+const wrapperObserver=new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      entry.target.querySelectorAll('.video-card video').forEach(vid=>{
+        if(!vid.src && vid.dataset.src){
+          vid.src=vid.dataset.src;
+          vid.muted=true;
+          vid.addEventListener('loadedmetadata',()=>{
+            if(vid.videoWidth>vid.videoHeight){
+              vid.closest('.video-card').classList.add('landscape');
+            }
+          },{once:true});
+        }
+        vid.play().catch(()=>{});
+      });
+      wrapperObserver.unobserve(entry.target);
+    }
+  });
+},{threshold:0,rootMargin:'300px'});
+document.querySelectorAll('.scroll-wrapper').forEach(w=>wrapperObserver.observe(w));
 
 
 // Clone cards for seamless infinite scroll (clones marked with .clone class)
