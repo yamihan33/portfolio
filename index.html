@@ -565,15 +565,15 @@ footer{
   .featured-left h2{font-size:1.4rem}
   .featured-grid{grid-template-columns:1fr;height:auto;gap:16px}
   .featured-item.large{height:auto;aspect-ratio:9/16;max-height:60vh}
-  .featured-right-grid{grid-column:1;grid-template-columns:1fr 1fr;height:auto}
-  .featured-right-grid .featured-item{aspect-ratio:9/16;max-height:50vh}
+  .featured-right-grid{grid-column:1;grid-template-columns:1fr 1fr;height:auto;gap:12px}
+  .featured-right-grid .featured-item{aspect-ratio:9/16;max-height:50vh;height:auto}
   .featured-overlay{padding:16px}
   .featured-overlay h3{font-size:1rem}
   .featured-stat{font-size:11px;padding:4px 10px}
   .featured-play{width:40px;height:40px}
   .featured-play::after{border-left-width:12px;border-top-width:7px;border-bottom-width:7px;margin-left:3px}
 
-  /* LP section: stack, hide 3D cards */
+  /* LP section: stack, show cards vertically */
   .lp-section{padding:60px 20px}
   .lp-layout{grid-template-columns:1fr;gap:24px}
   .lp-left h2{font-size:1.3rem}
@@ -581,11 +581,9 @@ footer{
   .lp-compare{margin-top:20px}
   .lp-compare-metrics{flex-direction:column;gap:6px}
   .lp-metric-value{font-size:13px}
-  .lp-right{height:300px;perspective:1000px}
-  .lp-card{width:280px}
-  .lp-card:nth-child(1){transform:rotateY(-15deg) translateX(-280px) translateZ(-40px)}
-  .lp-card:nth-child(2){transform:rotateY(0deg) translateZ(20px)}
-  .lp-card:nth-child(3){transform:rotateY(15deg) translateX(280px) translateZ(-40px)}
+  .lp-right{height:auto;perspective:none;position:static;display:flex;flex-direction:column;gap:16px;overflow:visible}
+  .lp-card{position:static!important;width:100%!important;transform:none!important;box-shadow:0 8px 30px rgba(0,0,0,0.3)}
+  .lp-card-body img{max-height:300px;object-fit:cover}
 
   /* All works: change hint text for mobile */
   .works-section{padding:60px 20px}
@@ -641,7 +639,7 @@ footer{
   .hero{padding-top:70px}
   .phone-mockups{grid-template-columns:1fr 1.5fr 1fr;height:240px}
   .featured-right-grid{grid-template-columns:1fr}
-  .lp-right{display:none}
+  .lp-card-body img{max-height:200px}
   .agent-tab-btn{padding:6px 10px;font-size:10px}
   .agent-tab-btn .tab-num{display:none}
 }
