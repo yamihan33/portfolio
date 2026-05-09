@@ -1041,97 +1041,84 @@ modal.addEventListener('click',e=>{
   }
 });
 
-// Lazy load & play individual videos only when they enter viewport
-const videoObserver=new IntersectionObserver((entries)=>{
-  entries.forEach(entry=>{
-    const vid=entry.target;
-    if(entry.isIntersecting){
-      if(!vid.src && vid.dataset.src){
-        vid.src=vid.dataset.src;
-        vid.addEventListener('loadedmetadata',()=>{
-          if(vid.videoWidth>vid.videoHeight){
-            vid.closest('.video-card').classList.add('landscape');
-          }
-        },{once:true});
-      }
-      vid.play().catch(()=>{});
-    }else{
-      vid.pause();
-    }
-  });
-},{threshold:0.1,rootMargin:'200px'});
-// Observe all video elements (after clones are created)
-function observeVideos(){
-  document.querySelectorAll('.video-card video').forEach(vid=>videoObserver.observe(vid));
-}
 
-
-// For scroll-track videos: load all when wrapper enters viewport.
-// With Cloudflare CDN, parallel loading is fast. Poster images prevent black frames.
-function loadAllTrackVideos(wrapper){
-  wrapper.querySelectorAll('.video-card video').forEach(vid=>{
-    if(!vid.src && vid.dataset.src){
-      vid.src=vid.dataset.src;
-      vid.muted=true;
-      vid.load();
-      vid.addEventListener('canplay',()=>{
-        vid.play().catch(()=>{});
-      },{once:true});
-      vid.addEventListener('loadedmetadata',()=>{
-        if(vid.videoWidth>vid.videoHeight){
-          vid.closest('.video-card').classList.add('landscape');
-        }
-      },{once:true});
-      // Retry on error after 3s
-      vid.addEventListener('error',function retry(){
-        vid.removeEventListener('error',retry);
-        setTimeout(()=>{
-          const src=vid.dataset.src;
-          vid.src='';
+// For scroll-track: use poster images by default, load video only on hover
+// This eliminates 238 simultaneous video requests entirely
+function initScrollTracks(){
+  document.querySelectorAll('.scroll-track .video-card').forEach(card=>{
+    const vid=card.querySelector('video');
+    if(!vid) return;
+    const src=vid.dataset.src||vid.getAttribute('data-src');
+    const poster=vid.getAttribute('poster');
+    if(poster){
+      // Replace video with img for initial display
+      const img=document.createElement('img');
+      img.src=poster;
+      img.style.cssText='width:100%;height:100%;object-fit:cover;';
+      img.loading='lazy';
+      card.insertBefore(img,vid);
+      vid.style.display='none';
+      vid.removeAttribute('src');
+      // On hover: load and play video, hide poster
+      card.addEventListener('mouseenter',()=>{
+        if(!vid.src){
           vid.src=src;
+          vid.muted=true;
           vid.load();
-        },3000);
+        }
+        vid.style.display='';
+        img.style.display='none';
+        vid.play().catch(()=>{});
+        // Detect landscape
+        vid.addEventListener('loadedmetadata',()=>{
+          if(vid.videoWidth>vid.videoHeight) card.classList.add('landscape');
+        },{once:true});
       });
+      card.addEventListener('mouseleave',()=>{
+        vid.pause();
+        vid.style.display='none';
+        img.style.display='';
+      });
+    } else {
+      // No poster available - just lazy load normally
+      vid.dataset.src=src;
+      vid.removeAttribute('src');
     }
   });
 }
-const wrapperObserver=new IntersectionObserver((entries)=>{
-  entries.forEach(entry=>{
-    if(entry.isIntersecting){
-      loadAllTrackVideos(entry.target);
-      wrapperObserver.unobserve(entry.target);
-    }
-  });
-},{threshold:0,rootMargin:'300px'});
-document.querySelectorAll('.scroll-wrapper').forEach(w=>wrapperObserver.observe(w));
-
 
 // Clone cards for seamless infinite scroll (clones marked with .clone class)
 function populateClones(){
   document.querySelectorAll('.scroll-track').forEach(track=>{
-    // Remove old clones first
     track.querySelectorAll('.video-card.clone').forEach(c=>c.remove());
-    // Clone all original cards and append
-    const originals=track.querySelectorAll('.video-card:not(.clone)');
+    const originals=[...track.querySelectorAll('.video-card:not(.clone)')];
     originals.forEach(card=>{
       const clone=card.cloneNode(true);
       clone.classList.add('clone');
-      // For cloned videos: copy src from original if loaded, otherwise keep data-src for lazy load
-      const origVid=card.querySelector('video');
-      const cloneVid=clone.querySelector('video');
-      if(origVid && cloneVid){
-        if(origVid.src && origVid.src!==''){
-          cloneVid.src=origVid.src;
-          cloneVid.muted=true;
-          cloneVid.play().catch(()=>{});
-        }
-      }
       track.appendChild(clone);
     });
   });
 }
+
+// Initialize: first setup poster/hover behavior, then clone
+initScrollTracks();
 populateClones();
-observeVideos();
+// Re-init hover listeners on cloned cards
+document.querySelectorAll('.scroll-track .video-card.clone').forEach(card=>{
+  const vid=card.querySelector('video');
+  const img=card.querySelector('img');
+  if(!vid||!img) return;
+  const src=vid.dataset.src||vid.getAttribute('data-src');
+  card.addEventListener('mouseenter',()=>{
+    if(!vid.src){vid.src=src;vid.muted=true;vid.load();}
+    vid.style.display='';img.style.display='none';
+    vid.play().catch(()=>{});
+  });
+  card.addEventListener('mouseleave',()=>{
+    vid.pause();vid.style.display='none';img.style.display='';
+  });
+});
+
 
 // ===== SCROLL REVEAL =====
 const obs=new IntersectionObserver(entries=>{
