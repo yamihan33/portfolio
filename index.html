@@ -643,16 +643,19 @@ footer{
   .agent-tab-btn{padding:6px 10px;font-size:10px}
   .agent-tab-btn .tab-num{display:none}
 }
+@media(max-width:400px) and (hover:none){
+  .scroll-track{grid-template-columns:repeat(2,1fr)!important}
+}
 
 /* ===== MOBILE TOUCH: tap to play for scroll-track videos ===== */
 @media(hover:none) and (pointer:coarse){
   .works-hint-mobile{display:block}
   .works-hint-desktop{display:none}
   .video-card:hover{transform:none;border-color:rgba(255,255,255,0.04)}
-  .scroll-track{animation-play-state:paused!important}
-  .scroll-wrapper{overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch}
+  .scroll-track{animation-play-state:paused!important;animation:none!important;display:grid!important;grid-template-columns:repeat(3,1fr);gap:8px;padding:0 16px;width:auto}
+  .scroll-wrapper{overflow:hidden}
   .scroll-wrapper::before,.scroll-wrapper::after{display:none}
-  .scroll-track{width:max-content;gap:12px;padding:0 16px}
+  .video-card{width:auto!important;min-width:0}
 }
 @media(hover:hover){
   .works-hint-mobile{display:none}
@@ -780,7 +783,7 @@ body.edit-mode .featured-item{overflow:visible!important}
       <a href="#" class="view-all">查看案例 →</a>
     </div>
     <div class="featured-grid">
-      <div class="featured-item large" data-video="assets/1778225384486-3d39b6.mp4" style="position: relative;"><video class="thumb" src="assets/1778225384486-3d39b6.mp4" muted="" playsinline="" preload="metadata" style="width: 100%; height: 100%; object-fit: cover; display: block;"></video>
+      <div class="featured-item large" data-video="assets/1778225384486-3d39b6.mp4" style="position: relative;"><video class="thumb" src="assets/1778225384486-3d39b6.mp4" muted="" playsinline="" preload="metadata" poster="assets/posters/1778225384486-3d39b6.jpg" style="width: 100%; height: 100%; object-fit: cover; display: block;"></video>
         
         
         <span class="featured-stat editable">150%+ ROAS</span>
@@ -790,7 +793,7 @@ body.edit-mode .featured-item{overflow:visible!important}
         </div>
       </div>
       <div class="featured-right-grid">
-        <div class="featured-item" data-video="assets/1778232311009-v75h0z.mp4" style="position:relative"><video src="assets/1778232311009-v75h0z.mp4" loop="" playsinline="" muted="" preload="metadata" style="width: 100%; height: 100%; object-fit: cover; display: block;"></video>
+        <div class="featured-item" data-video="assets/1778232311009-v75h0z.mp4" style="position:relative"><video src="assets/1778232311009-v75h0z.mp4" loop="" playsinline="" muted="" preload="metadata" poster="assets/posters/1778232311009-v75h0z.jpg" style="width: 100%; height: 100%; object-fit: cover; display: block;"></video>
           
           <span class="featured-stat editable">25.66 CPA</span>
           <div class="featured-play"></div>
