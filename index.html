@@ -531,7 +531,135 @@ footer{
 
 }
 
-/* === BACKEND UI === */
+/* ===== MOBILE DEEP ADAPTATION (≤768px) ===== */
+@media(max-width:768px){
+  /* Nav: hide tag, compact links */
+  .nav{padding:12px 16px}
+  .nav-tag{display:none}
+  .nav-links{gap:12px}
+  .nav-links a{font-size:11px}
+  .nav-contact{padding:6px 12px!important;font-size:11px!important}
+
+  /* Hero: stack layout, reduce spacing */
+  .hero{min-height:auto;padding-top:80px;padding-bottom:40px;gap:24px}
+  .hero h1{font-size:clamp(1.6rem,7vw,2.4rem)}
+  .hero-bio{font-size:14px;line-height:1.7}
+  .hero-bio br{display:none}
+  .hero-cta{padding:12px 22px;font-size:13px}
+  .hero-right{min-height:300px}
+  .phone-mockups{height:300px;grid-template-columns:1fr 1.3fr 1fr;gap:6px}
+
+  /* Data section */
+  .data-section{padding:60px 20px;gap:32px;flex-direction:column}
+  .data-header{flex:none;text-align:center}
+  .data-header h2{font-size:1.4rem}
+  .data{flex-wrap:wrap;gap:16px}
+  .data-item{flex:0 0 calc(50% - 8px);padding:0;border-left:none}
+  .data-num{font-size:1.5rem}
+  .data-label{font-size:12px}
+
+  /* Featured cases: single column */
+  .featured-section{padding:60px 20px}
+  .featured-layout{flex-direction:column;gap:24px}
+  .featured-left{position:static;text-align:center;flex:none}
+  .featured-left h2{font-size:1.4rem}
+  .featured-grid{grid-template-columns:1fr;height:auto;gap:16px}
+  .featured-item.large{height:auto;aspect-ratio:9/16;max-height:60vh}
+  .featured-right-grid{grid-column:1;grid-template-columns:1fr 1fr;height:auto}
+  .featured-right-grid .featured-item{aspect-ratio:9/16;max-height:50vh}
+  .featured-overlay{padding:16px}
+  .featured-overlay h3{font-size:1rem}
+  .featured-stat{font-size:11px;padding:4px 10px}
+  .featured-play{width:40px;height:40px}
+  .featured-play::after{border-left-width:12px;border-top-width:7px;border-bottom-width:7px;margin-left:3px}
+
+  /* LP section: stack, hide 3D cards */
+  .lp-section{padding:60px 20px}
+  .lp-layout{grid-template-columns:1fr;gap:24px}
+  .lp-left h2{font-size:1.3rem}
+  .lp-desc{font-size:13px}
+  .lp-compare{margin-top:20px}
+  .lp-compare-metrics{flex-direction:column;gap:6px}
+  .lp-metric-value{font-size:13px}
+  .lp-right{height:300px;perspective:1000px}
+  .lp-card{width:280px}
+  .lp-card:nth-child(1){transform:rotateY(-15deg) translateX(-280px) translateZ(-40px)}
+  .lp-card:nth-child(2){transform:rotateY(0deg) translateZ(20px)}
+  .lp-card:nth-child(3){transform:rotateY(15deg) translateX(280px) translateZ(-40px)}
+
+  /* All works: change hint text for mobile */
+  .works-section{padding:60px 20px}
+  .works-header{flex-direction:column;gap:8px;text-align:center}
+  .works-hint-text{font-size:12px}
+  .scroll-wrapper{margin-bottom:16px}
+  .scroll-wrapper::before,.scroll-wrapper::after{width:40px}
+
+  /* AI Agent section */
+  .agent-section{padding:60px 20px}
+  .agent-layout{flex-direction:column;gap:24px}
+  .agent-left{flex:none;position:static;text-align:center}
+  .agent-left h2{font-size:1.4rem}
+  .agent-desc{font-size:13px}
+  .agent-stats{flex-direction:row;justify-content:center;gap:16px;flex-wrap:wrap}
+  .agent-tags{justify-content:center}
+  .agent-tabs{gap:6px;flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:8px}
+  .agent-tab-btn{padding:8px 12px;font-size:11px;flex-shrink:0}
+  .agent-panel-grid.cols-2,.agent-panel-grid.cols-3{grid-template-columns:1fr}
+  .agent-screenshot img{max-height:280px}
+
+  /* How I Work */
+  .how-section{padding:60px 20px}
+  .how-layout{flex-direction:column;gap:24px}
+  .how-left{flex:none;text-align:center}
+  .how-left h2{font-size:1.4rem}
+  .how-desc{font-size:16px}
+  .how-step{padding:16px;gap:12px}
+  .how-text{font-size:15px}
+  .how-detail{font-size:13px}
+
+  /* About */
+  .about-section{padding:60px 20px}
+  .about-layout{flex-direction:column;gap:32px;text-align:center}
+  .about-left h2{font-size:clamp(1.4rem,6vw,2rem)}
+  .about-desc{font-size:15px}
+  .about-focus{font-size:14px}
+
+  /* Footer */
+  footer{padding:60px 20px 30px}
+  .footer-cta{margin-bottom:40px}
+  .footer-cta h2{font-size:clamp(1.4rem,6vw,2rem)}
+  .footer-cta p{font-size:13px}
+  .footer-btn{padding:12px 28px;font-size:13px}
+  .footer-bottom{flex-direction:column;gap:12px;text-align:center}
+  .footer-links{gap:16px}
+}
+
+/* ===== VERY SMALL PHONES (≤400px) ===== */
+@media(max-width:400px){
+  .nav-links{gap:8px}
+  .nav-contact{display:none}
+  .hero{padding-top:70px}
+  .phone-mockups{grid-template-columns:1fr 1.5fr 1fr;height:240px}
+  .featured-right-grid{grid-template-columns:1fr}
+  .lp-right{display:none}
+  .agent-tab-btn{padding:6px 10px;font-size:10px}
+  .agent-tab-btn .tab-num{display:none}
+}
+
+/* ===== MOBILE TOUCH: tap to play for scroll-track videos ===== */
+@media(hover:none) and (pointer:coarse){
+  .works-hint-mobile{display:block}
+  .works-hint-desktop{display:none}
+  .video-card:hover{transform:none;border-color:rgba(255,255,255,0.04)}
+  .scroll-track{animation-play-state:paused!important}
+  .scroll-wrapper{overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch}
+  .scroll-wrapper::before,.scroll-wrapper::after{display:none}
+  .scroll-track{width:max-content;gap:12px;padding:0 16px}
+}
+@media(hover:hover){
+  .works-hint-mobile{display:none}
+  .works-hint-desktop{display:block}
+}
 .nav-user-btn{background:none;border:1px solid rgba(255,255,255,0.3);color:#fff;padding:6px 14px;border-radius:20px;cursor:pointer;font-size:13px;transition:all .3s}
 .nav-user-btn:hover{border-color:var(--magenta);color:var(--magenta)}
 .auth-modal{display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.8);justify-content:center;align-items:center}
@@ -737,7 +865,8 @@ body.edit-mode .featured-item{overflow:visible!important}
 <section class="works-section">
   <div class="works-header reveal visible">
     <h2>全部作品</h2>
-    <p style="color:rgba(255,255,255,0.45);font-size:0.85rem;margin-top:6px;">鼠标移动到视频上开始播放</p>
+    <p class="works-hint-desktop" style="color:rgba(255,255,255,0.45);font-size:0.85rem;margin-top:6px;">鼠标移动到视频上开始播放</p>
+    <p class="works-hint-mobile" style="color:rgba(255,255,255,0.45);font-size:0.85rem;margin-top:6px;">点击视频播放，左右滑动查看更多</p>
   </div>
 
   <div class="scroll-wrapper reveal visible">
@@ -1180,6 +1309,56 @@ document.querySelectorAll('.scroll-track .video-card.clone').forEach(card=>{
   });
 })();
 
+// === MOBILE: tap to play/pause for touch devices ===
+(function mobileTouch(){
+  const isTouchDevice=('ontouchstart' in window)||(navigator.maxTouchPoints>0);
+  if(!isTouchDevice) return;
+
+  // On mobile: disable clones (no infinite scroll), just show originals in a scrollable row
+  // Remove clone cards to reduce DOM size on mobile
+  document.querySelectorAll('.scroll-track .video-card.clone').forEach(c=>c.remove());
+
+  let activeCard=null;
+  function toggleCard(card){
+    if(!card) return;
+    const vid=card.querySelector('video');
+    const img=card.querySelector('img');
+    if(!vid||!img) return;
+    const src=vid.dataset.src||vid.getAttribute('data-src');
+
+    if(card===activeCard){
+      // Tap again to pause
+      vid.pause();vid.style.display='none';img.style.display='';
+      card.dataset.playing='0';
+      activeCard=null;
+    } else {
+      // Stop previous
+      if(activeCard){
+        const pv=activeCard.querySelector('video');
+        const pi=activeCard.querySelector('img');
+        if(pv&&pi){pv.pause();pv.style.display='none';pi.style.display='';}
+        activeCard.dataset.playing='0';
+      }
+      // Play this one
+      vid.style.display='';img.style.display='none';
+      card.dataset.playing='1';
+      if(!vid.src&&src){
+        vid.src=src;vid.muted=true;vid.load();
+        vid.addEventListener('canplay',()=>{vid.play().catch(()=>{});},{once:true});
+      } else {
+        vid.play().catch(()=>{});
+      }
+      activeCard=card;
+    }
+  }
+
+  document.querySelectorAll('.scroll-track .video-card').forEach(card=>{
+    card.addEventListener('click',e=>{
+      e.preventDefault();
+      toggleCard(card);
+    });
+  });
+})();
 
 // ===== SCROLL REVEAL =====
 const obs=new IntersectionObserver(entries=>{
