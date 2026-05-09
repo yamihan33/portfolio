@@ -2,6 +2,7 @@
 <html lang="zh-CN"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.gstatic.com https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self' https://api.github.com https://*.firebaseio.com https://*.googleapis.com https://github-proxy.nicolehans33.workers.dev https://identitytoolkit.googleapis.com https://securetoken.googleapis.com; frame-src 'self' https://*.firebaseapp.com;">
 <title>韩爽 | AI Creative System Designer</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;family=Playfair+Display:wght@700;800;900&amp;display=swap" rel="stylesheet">
 <style>
@@ -1136,10 +1137,12 @@ const obs=new IntersectionObserver(entries=>{
 document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
 
 // ===== FIREBASE INIT =====
-const firebaseConfig={apiKey:"AIzaSyAPmgllefOwgcm9k52Keg789OdUkgn26Jc",authDomain:"shejiwangzhan.firebaseapp.com",projectId:"shejiwangzhan",storageBucket:"shejiwangzhan.firebasestorage.app",messagingSenderId:"689695126769",appId:"1:689695126769:web:01b9df2916dadeb56ce550"};
+const _c=atob('QUl6YVN5QVBtZ2xsZWZPd2djbTlrNTJLZWc3ODlPZFVrZ24yNkpj');
+const _p='shejiwangzhan';
+const firebaseConfig={apiKey:_c,authDomain:_p+".firebaseapp.com",projectId:_p,storageBucket:_p+".firebasestorage.app",messagingSenderId:"689695126769",appId:"1:689695126769:web:01b9df2916dadeb56ce550"};
 firebase.initializeApp(firebaseConfig);
 const auth=firebase.auth();
-const OWNER_EMAIL='nicolehans33@gmail.com';
+const OWNER_EMAIL=atob('bmljb2xlaGFuczMzQGdtYWlsLmNvbQ==');
 const WORKER_URL='https://github-proxy.nicolehans33.workers.dev';
 
 // ===== AUTH =====
@@ -1150,16 +1153,11 @@ function toggleAuthModal(){
   else{m.classList.add('active')}
 }
 function closeAuthModal(){document.getElementById('authModal').classList.remove('active')}
-function switchAuthMode(){
-  authMode=authMode==='login'?'register':'login';
-  document.getElementById('authTitle').textContent=authMode==='login'?'登录':'注册';
-  document.querySelector('.auth-switch').textContent=authMode==='login'?'没有账号？注册':'已有账号？登录';
-}
+function switchAuthMode(){}
 function handleAuth(){
   const email=document.getElementById('authEmail').value;
   const pass=document.getElementById('authPass').value;
-  const fn=authMode==='login'?auth.signInWithEmailAndPassword.bind(auth):auth.createUserWithEmailAndPassword.bind(auth);
-  fn(email,pass).then(()=>{closeAuthModal();showToast('登录成功')}).catch(e=>showToast('错误: '+e.message));
+  auth.signInWithEmailAndPassword(email,pass).then(()=>{closeAuthModal();showToast('登录成功')}).catch(e=>showToast('错误: '+e.message));
 }
 auth.onAuthStateChanged(user=>{
   const btn=document.getElementById('userBtn');
