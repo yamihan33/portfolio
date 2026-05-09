@@ -312,6 +312,7 @@ section,.data-section{position:relative;z-index:1}
 }
 .scroll-track.reverse{animation:scrollR 400s linear infinite}
 .scroll-track:hover{animation-play-state:paused}
+.scroll-track.js-paused{animation-play-state:paused}
 @keyframes scrollL{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 @keyframes scrollR{0%{transform:translateX(-50%)}100%{transform:translateX(0)}}
 
@@ -1128,6 +1129,56 @@ document.querySelectorAll('.scroll-track .video-card.clone').forEach(card=>{
     vid.pause();vid.style.display='none';img.style.display='';
   });
 });
+
+// === CROSS-BROWSER FIX: mousemove-based hover detection ===
+// Some browsers (Safari) don't reliably fire mouseenter on children inside
+// CSS transform-animated parents. This adds a mousemove listener on the wrapper
+// that detects which card the mouse is over and triggers play/pause directly.
+// It coexists safely with the native mouseenter listeners above (guarded by data-attr).
+(function scrollTrackHoverFix(){
+  let activeCard=null;
+  function playCard(card){
+    if(!card||card.dataset.playing==='1') return;
+    card.dataset.playing='1';
+    const vid=card.querySelector('video');
+    const img=card.querySelector('img');
+    if(!vid||!img) return;
+    const src=vid.dataset.src||vid.getAttribute('data-src');
+    vid.style.display='';img.style.display='none';
+    if(!vid.src&&src){
+      vid.src=src;vid.muted=true;vid.load();
+      vid.addEventListener('canplay',()=>{vid.play().catch(()=>{});},{once:true});
+    } else if(vid.src){
+      vid.play().catch(()=>{});
+    }
+  }
+  function stopCard(card){
+    if(!card||card.dataset.playing!=='1') return;
+    card.dataset.playing='0';
+    const vid=card.querySelector('video');
+    const img=card.querySelector('img');
+    if(!vid||!img) return;
+    vid.pause();vid.style.display='none';img.style.display='';
+  }
+  document.querySelectorAll('.scroll-wrapper').forEach(wrapper=>{
+    wrapper.addEventListener('mouseenter',()=>{
+      wrapper.querySelectorAll('.scroll-track').forEach(t=>t.classList.add('js-paused'));
+    });
+    wrapper.addEventListener('mouseleave',()=>{
+      wrapper.querySelectorAll('.scroll-track').forEach(t=>t.classList.remove('js-paused'));
+      stopCard(activeCard);activeCard=null;
+    });
+    wrapper.addEventListener('mousemove',e=>{
+      const el=document.elementFromPoint(e.clientX,e.clientY);
+      const card=el?el.closest('.video-card'):null;
+      if(card!==activeCard){
+        stopCard(activeCard);
+        activeCard=card;
+        playCard(card);
+      }
+    });
+  });
+})();
 
 
 // ===== SCROLL REVEAL =====
