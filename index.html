@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN"><head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.gstatic.com https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self' https://api.github.com https://*.firebaseio.com https://*.googleapis.com https://github-proxy.nicolehans33.workers.dev https://identitytoolkit.googleapis.com https://securetoken.googleapis.com; frame-src 'self' https://*.firebaseapp.com;">
 <title>韩爽 | AI Creative System Designer</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;family=Playfair+Display:wght@700;800;900&amp;display=swap" rel="stylesheet">
@@ -583,7 +583,7 @@ footer{
   .lp-metric-value{font-size:13px}
   .lp-right{height:auto;perspective:none;position:static;display:flex;flex-direction:column;gap:16px;overflow:visible}
   .lp-card{position:static!important;width:100%!important;transform:none!important;box-shadow:0 8px 30px rgba(0,0,0,0.3)}
-  .lp-card-body img{max-height:300px;object-fit:cover}
+  .lp-card-body img{max-height:none;width:100%;object-fit:contain}
 
   /* All works: change hint text for mobile */
   .works-section{padding:60px 20px}
@@ -639,7 +639,7 @@ footer{
   .hero{padding-top:70px}
   .phone-mockups{grid-template-columns:1fr 1.5fr 1fr;height:240px}
   .featured-right-grid{grid-template-columns:1fr}
-  .lp-card-body img{max-height:200px}
+  .lp-card-body img{max-height:none}
   .agent-tab-btn{padding:6px 10px;font-size:10px}
   .agent-tab-btn .tab-num{display:none}
 }
