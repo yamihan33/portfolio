@@ -1066,22 +1066,47 @@ function observeVideos(){
 
 
 // For scroll-track videos: CSS animation moves cards so IntersectionObserver
-// on individual cards won't fire. Instead, load all track videos when wrapper enters viewport.
+// on individual cards won't fire. Instead, load track videos in batches when wrapper enters viewport.
+function loadVideosBatched(wrapper){
+  const vids=[...wrapper.querySelectorAll('.video-card video')].filter(v=>!v.src && v.dataset.src);
+  const BATCH=6; // load 6 at a time to respect browser connection limits
+  let i=0;
+  function loadBatch(){
+    const batch=vids.slice(i,i+BATCH);
+    if(!batch.length) return;
+    let loaded=0;
+    batch.forEach(vid=>{
+      vid.src=vid.dataset.src;
+      vid.muted=true;
+      vid.addEventListener('loadeddata',()=>{
+        vid.play().catch(()=>{});
+        loaded++;
+        if(loaded>=batch.length){i+=BATCH;loadBatch();}
+      },{once:true});
+      vid.addEventListener('error',()=>{
+        // Retry once on error after 2s
+        setTimeout(()=>{
+          vid.src='';
+          vid.src=vid.dataset.src;
+        },2000);
+        loaded++;
+        if(loaded>=batch.length){i+=BATCH;loadBatch();}
+      },{once:true});
+      vid.addEventListener('loadedmetadata',()=>{
+        if(vid.videoWidth>vid.videoHeight){
+          vid.closest('.video-card').classList.add('landscape');
+        }
+      },{once:true});
+    });
+    // Fallback: if batch doesn't finish in 8s, move on anyway
+    setTimeout(()=>{if(loaded<batch.length){i+=BATCH;loadBatch();}},8000);
+  }
+  loadBatch();
+}
 const wrapperObserver=new IntersectionObserver((entries)=>{
   entries.forEach(entry=>{
     if(entry.isIntersecting){
-      entry.target.querySelectorAll('.video-card video').forEach(vid=>{
-        if(!vid.src && vid.dataset.src){
-          vid.src=vid.dataset.src;
-          vid.muted=true;
-          vid.addEventListener('loadedmetadata',()=>{
-            if(vid.videoWidth>vid.videoHeight){
-              vid.closest('.video-card').classList.add('landscape');
-            }
-          },{once:true});
-        }
-        vid.play().catch(()=>{});
-      });
+      loadVideosBatched(entry.target);
       wrapperObserver.unobserve(entry.target);
     }
   });
